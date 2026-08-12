@@ -122,7 +122,26 @@
 
 <script setup>
 import { computed, onMounted, ref } from 'vue'
+import { BarChart, RadarChart } from 'echarts/charts'
+import {
+  GridComponent,
+  LegendComponent,
+  RadarComponent,
+  TooltipComponent,
+} from 'echarts/components'
+import { CanvasRenderer } from 'echarts/renderers'
+import { use } from 'echarts/core'
 import VChart from 'vue-echarts'
+
+use([
+  BarChart,
+  CanvasRenderer,
+  GridComponent,
+  LegendComponent,
+  RadarChart,
+  RadarComponent,
+  TooltipComponent,
+])
 
 const staticStats = [
   { icon: 'monitor_heart', label: 'Total Rallies', value: '114', sub: 'Avg 12.5 shots/rally' },
