@@ -2,7 +2,7 @@
   "name": "badminton-analysis",
   "version": "0.0.1",
   "description": "Badminton performance analysis system for coaches",
-  "productName": "CourtSense",
+  "productName": "AKP ShuttleTrace",
   "author": "kurotsuchi <126145510+hitsuga13@users.noreply.github.com>",
   "type": "module",
   "private": true,

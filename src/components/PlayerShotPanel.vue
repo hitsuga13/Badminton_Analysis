@@ -1,7 +1,8 @@
 <template>
-  <div :class="['shot-panel', `shot-panel--${side}`]">
+  <div :class="['shot-panel', `shot-panel--${side}`, isActive && 'shot-panel--active']">
     <header>
       <h2>{{ player }}</h2>
+      <span>{{ isActive ? 'Active Turn' : 'Waiting Turn' }}</span>
     </header>
 
     <div class="shot-grid">
@@ -10,6 +11,7 @@
         :key="shot.type"
         :class="['shot-button', `shot-button--${shot.category}`]"
         type="button"
+        :disabled="!isActive"
         @click="$emit('record', shot.type)"
       >
         <strong>{{ shot.type }}</strong>
@@ -34,6 +36,10 @@ defineProps({
   shots: {
     type: Array,
     required: true,
+  },
+  isActive: {
+    type: Boolean,
+    default: false,
   },
 })
 </script>

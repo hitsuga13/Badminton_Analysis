@@ -5,8 +5,8 @@
         <q-icon name="monitor_heart" size="32px" />
       </div>
 
-      <h1>Court<span>Sense</span></h1>
-      <p>Coach Authentication</p>
+      <h1>AKP ShuttleTrace</h1>
+      <p>Badminton Match & Stroke Notational Analysis System</p>
 
       <form class="login-form" @submit.prevent="$emit('login')">
         <label>
@@ -30,6 +30,6 @@ import { ref } from 'vue'
 
 defineEmits(['login'])
 
-const email = ref('coach@courtsense.app')
+const email = ref('coach@akpshuttletrace.app')
 const password = ref('password')
 </script>

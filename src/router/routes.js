@@ -7,14 +7,7 @@ const routes = [
       { path: 'login', component: () => import('@/pages/LoginPage.vue') },
       { path: 'live-match', component: () => import('@/pages/LiveMatchPage.vue') },
       { path: 'players', component: () => import('@/pages/PlayersPage.vue') },
-      {
-        path: 'history',
-        component: () => import('@/pages/UtilityPage.vue'),
-        props: {
-          title: 'Match History Module',
-          subtitle: 'Under Construction',
-        },
-      },
+      { path: 'history', component: () => import('@/pages/HistoryPage.vue') },
       {
         path: 'settings',
         component: () => import('@/pages/UtilityPage.vue'),

@@ -1,20 +1,33 @@
 <template>
   <q-layout view="hHh Lpr fFf" class="app-shell">
+    <button
+      v-if="isAuthenticated"
+      :class="['shell-toggle', drawerOpen && 'shell-toggle--open']"
+      type="button"
+      :aria-label="drawerOpen ? 'Hide sidebar' : 'Show sidebar'"
+      @click="drawerOpen = !drawerOpen"
+    >
+      <q-icon :name="drawerOpen ? 'menu_open' : 'menu'" size="20px" />
+    </button>
+
     <q-drawer
       v-if="isAuthenticated"
       v-model="drawerOpen"
       show-if-above
-      :width="256"
+      :width="280"
       class="cs-sidebar"
       bordered
     >
       <div class="brand-block">
-        <div class="brand-mark">
-          <div class="brand-ring">
-            <div />
-          </div>
+        <img
+          class="brand-mark"
+          src="/icons/akp-shuttletrace-mark.svg"
+          alt="AKP ShuttleTrace mark"
+        />
+        <div class="brand-copy">
+          <h1>AKP ShuttleTrace</h1>
+          <p>Badminton Match & Stroke Notational Analysis System</p>
         </div>
-        <h1>Court<span>Sense</span></h1>
       </div>
 
       <q-list class="nav-list">
