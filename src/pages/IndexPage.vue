@@ -40,15 +40,7 @@
             <h2>Shot Frequency & Distribution</h2>
             <p>Comparison of shot types used during the match.</p>
           </div>
-          <div class="bar-chart" aria-label="Shot frequency chart">
-            <div v-for="shot in shotData" :key="shot.name" class="bar-group">
-              <div class="bars">
-                <span class="bar bar--a" :style="{ height: `${shot.a}%` }" />
-                <span class="bar bar--b" :style="{ height: `${shot.b}%` }" />
-              </div>
-              <small>{{ shot.name }}</small>
-            </div>
-          </div>
+          <VChart class="chart chart--bar" :option="shotFrequencyOptions" />
         </article>
 
         <article class="panel">
@@ -56,13 +48,7 @@
             <h2>Performance Radar</h2>
             <p>Multi-dimensional analysis.</p>
           </div>
-          <div class="radar-wrap">
-            <div class="radar">
-              <span v-for="axis in radarData" :key="axis.subject">{{ axis.subject }}</span>
-              <div class="radar-poly radar-poly--a" />
-              <div class="radar-poly radar-poly--b" />
-            </div>
-          </div>
+          <VChart class="chart chart--radar" :option="performanceRadarOptions" />
         </article>
       </section>
 
@@ -83,6 +69,28 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
+import { BarChart, RadarChart } from 'echarts/charts'
+import {
+  GridComponent,
+  LegendComponent,
+  RadarComponent,
+  TooltipComponent,
+} from 'echarts/components'
+import { CanvasRenderer } from 'echarts/renderers'
+import { use } from 'echarts/core'
+import VChart from 'vue-echarts'
+
+use([
+  BarChart,
+  CanvasRenderer,
+  GridComponent,
+  LegendComponent,
+  RadarChart,
+  RadarComponent,
+  TooltipComponent,
+])
+
 const stats = [
   { icon: 'monitor_heart', label: 'Total Rallies', value: '114', sub: 'Avg 12.5 shots/rally' },
   { icon: 'gps_fixed', label: 'Longest Rally', value: '48', sub: 'Shots (Set 2)' },
@@ -91,22 +99,204 @@ const stats = [
 ]
 
 const shotData = [
-  { name: 'Smash', a: 88, b: 70 },
-  { name: 'Clear', a: 68, b: 80 },
-  { name: 'Drop', a: 45, b: 55 },
-  { name: 'Net', a: 60, b: 50 },
-  { name: 'Drive', a: 38, b: 48 },
-  { name: 'Lift', a: 55, b: 63 },
+  { name: 'Smash', axelsen: 35, lee: 28 },
+  { name: 'Clear', axelsen: 27, lee: 32 },
+  { name: 'Drop', axelsen: 18, lee: 22 },
+  { name: 'Net', axelsen: 24, lee: 20 },
+  { name: 'Drive', axelsen: 15, lee: 19 },
+  { name: 'Lift', axelsen: 22, lee: 25 },
 ]
 
 const radarData = [
-  { subject: 'Attack' },
-  { subject: 'Defence' },
-  { subject: 'Net Play' },
-  { subject: 'Speed' },
-  { subject: 'Stamina' },
-  { subject: 'Consistency' },
+  { subject: 'Attack', axelsen: 85, lee: 70 },
+  { subject: 'Defence', axelsen: 75, lee: 82 },
+  { subject: 'Net Play', axelsen: 90, lee: 75 },
+  { subject: 'Speed', axelsen: 80, lee: 85 },
+  { subject: 'Stamina', axelsen: 85, lee: 80 },
+  { subject: 'Consistency', axelsen: 78, lee: 88 },
 ]
+
+const chartTextColor = '#a1a1aa'
+const borderColor = '#27272a'
+const primaryColor = '#dfff00'
+const secondarySeriesColor = '#71717a'
+const cardColor = '#141416'
+const foregroundColor = '#fafafa'
+
+const shotFrequencyOptions = computed(() => ({
+  backgroundColor: 'transparent',
+  color: [primaryColor, secondarySeriesColor],
+  grid: {
+    top: 28,
+    right: 18,
+    bottom: 32,
+    left: 36,
+    containLabel: true,
+  },
+  legend: {
+    top: 0,
+    right: 0,
+    itemWidth: 10,
+    itemHeight: 10,
+    textStyle: {
+      color: chartTextColor,
+      fontFamily: 'Inter',
+      fontSize: 12,
+    },
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow',
+      shadowStyle: {
+        color: 'rgba(255,255,255,0.04)',
+      },
+    },
+    backgroundColor: cardColor,
+    borderColor,
+    textStyle: {
+      color: foregroundColor,
+      fontFamily: 'Inter',
+    },
+  },
+  xAxis: {
+    type: 'category',
+    data: shotData.map((shot) => shot.name),
+    axisLine: { show: false },
+    axisTick: { show: false },
+    axisLabel: {
+      color: chartTextColor,
+      fontFamily: 'Inter',
+      fontSize: 12,
+    },
+  },
+  yAxis: {
+    type: 'value',
+    splitNumber: 4,
+    axisLine: { show: false },
+    axisTick: { show: false },
+    axisLabel: {
+      color: chartTextColor,
+      fontFamily: 'Inter',
+      fontSize: 12,
+    },
+    splitLine: {
+      lineStyle: {
+        color: borderColor,
+        type: 'dashed',
+      },
+    },
+  },
+  series: [
+    {
+      name: 'Axelsen',
+      type: 'bar',
+      data: shotData.map((shot) => shot.axelsen),
+      barMaxWidth: 28,
+      itemStyle: {
+        borderRadius: [4, 4, 0, 0],
+      },
+      emphasis: {
+        focus: 'series',
+      },
+    },
+    {
+      name: 'Lee',
+      type: 'bar',
+      data: shotData.map((shot) => shot.lee),
+      barMaxWidth: 28,
+      itemStyle: {
+        borderRadius: [4, 4, 0, 0],
+      },
+      emphasis: {
+        focus: 'series',
+      },
+    },
+  ],
+}))
+
+const performanceRadarOptions = computed(() => ({
+  backgroundColor: 'transparent',
+  color: [primaryColor, secondarySeriesColor],
+  legend: {
+    bottom: 0,
+    itemWidth: 10,
+    itemHeight: 10,
+    textStyle: {
+      color: chartTextColor,
+      fontFamily: 'Inter',
+      fontSize: 12,
+    },
+  },
+  tooltip: {
+    backgroundColor: cardColor,
+    borderColor,
+    textStyle: {
+      color: foregroundColor,
+      fontFamily: 'Inter',
+    },
+  },
+  radar: {
+    center: ['50%', '46%'],
+    radius: '68%',
+    splitNumber: 4,
+    indicator: radarData.map((item) => ({
+      name: item.subject,
+      max: 100,
+    })),
+    axisName: {
+      color: chartTextColor,
+      fontFamily: 'Inter',
+      fontSize: 11,
+    },
+    axisLine: {
+      lineStyle: {
+        color: borderColor,
+      },
+    },
+    splitLine: {
+      lineStyle: {
+        color: borderColor,
+      },
+    },
+    splitArea: {
+      areaStyle: {
+        color: ['rgba(255,255,255,0.015)', 'rgba(255,255,255,0.035)'],
+      },
+    },
+  },
+  series: [
+    {
+      type: 'radar',
+      data: [
+        {
+          name: 'Axelsen',
+          value: radarData.map((item) => item.axelsen),
+          areaStyle: {
+            color: 'rgba(223, 255, 0, 0.28)',
+          },
+          lineStyle: {
+            width: 2,
+          },
+          symbol: 'circle',
+          symbolSize: 4,
+        },
+        {
+          name: 'Lee',
+          value: radarData.map((item) => item.lee),
+          areaStyle: {
+            color: 'rgba(113, 113, 122, 0.22)',
+          },
+          lineStyle: {
+            width: 2,
+          },
+          symbol: 'circle',
+          symbolSize: 4,
+        },
+      ],
+    },
+  ],
+}))
 
 const insights = [
   {

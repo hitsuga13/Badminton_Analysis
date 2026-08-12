@@ -497,6 +497,7 @@ button:disabled {
 
 .panel {
   padding: 24px;
+  overflow: hidden;
 }
 
 .panel-head {
@@ -511,135 +512,18 @@ button:disabled {
   margin: 4px 0 0;
 }
 
-.bar-chart {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(56px, 1fr));
-  align-items: end;
-  gap: 16px;
-  min-height: 300px;
-  padding-top: 24px;
-  border-top: 1px solid rgb(39 39 42 / 0.7);
+.chart {
+  width: 100%;
+  height: 320px;
+  min-height: 0;
 }
 
-.bar-group {
-  display: grid;
-  gap: 12px;
-  align-items: end;
-  height: 260px;
-  text-align: center;
+.chart--bar {
+  height: 340px;
 }
 
-.bars {
-  display: flex;
-  align-items: end;
-  justify-content: center;
-  gap: 6px;
-  height: 220px;
-}
-
-.bar {
-  width: 22px;
-  min-height: 12px;
-  border-radius: 4px 4px 0 0;
-}
-
-.bar--a {
-  background: var(--cs-primary);
-}
-
-.bar--b {
-  background: #71717a;
-}
-
-.bar-group small {
-  color: var(--cs-muted-foreground);
-  font-size: 12px;
-}
-
-.radar-wrap {
-  display: grid;
-  place-items: center;
-  min-height: 300px;
-}
-
-.radar {
-  position: relative;
-  width: min(100%, 280px);
-  aspect-ratio: 1;
-  border-radius: 999px;
-  background:
-    radial-gradient(circle, transparent 25%, var(--cs-border) 26%, transparent 27%),
-    radial-gradient(circle, transparent 49%, var(--cs-border) 50%, transparent 51%),
-    radial-gradient(circle, transparent 73%, var(--cs-border) 74%, transparent 75%),
-    conic-gradient(
-      from 0deg,
-      transparent 0 16%,
-      var(--cs-border) 16.2% 16.8%,
-      transparent 17% 33%,
-      var(--cs-border) 33.2% 33.8%,
-      transparent 34% 49.5%,
-      var(--cs-border) 49.7% 50.3%,
-      transparent 50.5% 66%,
-      var(--cs-border) 66.2% 66.8%,
-      transparent 67% 83%,
-      var(--cs-border) 83.2% 83.8%,
-      transparent 84%
-    );
-}
-
-.radar span {
-  position: absolute;
-  color: var(--cs-muted-foreground);
-  font-size: 11px;
-}
-
-.radar span:nth-child(1) {
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, -120%);
-}
-
-.radar span:nth-child(2) {
-  top: 24%;
-  right: -18px;
-}
-
-.radar span:nth-child(3) {
-  right: -26px;
-  bottom: 24%;
-}
-
-.radar span:nth-child(4) {
-  bottom: 0;
-  left: 50%;
-  transform: translate(-50%, 120%);
-}
-
-.radar span:nth-child(5) {
-  bottom: 24%;
-  left: -28px;
-}
-
-.radar span:nth-child(6) {
-  top: 24%;
-  left: -36px;
-}
-
-.radar-poly {
-  position: absolute;
-  inset: 44px;
-  clip-path: polygon(48% 0, 83% 24%, 82% 70%, 47% 95%, 18% 72%, 12% 26%);
-}
-
-.radar-poly--a {
-  background: rgb(223 255 0 / 0.28);
-  border: 1px solid var(--cs-primary);
-}
-
-.radar-poly--b {
-  inset: 64px 54px 58px;
-  background: rgb(113 113 122 / 0.22);
-  clip-path: polygon(48% 6%, 90% 20%, 72% 72%, 44% 89%, 26% 68%, 10% 20%);
+.chart--radar {
+  height: 340px;
 }
 
 .insight-grid {
@@ -1233,8 +1117,8 @@ tbody tr:hover {
     grid-template-columns: 1fr;
   }
 
-  .bar-chart {
-    overflow-x: auto;
+  .chart {
+    height: 300px;
   }
 
   .shot-panel {
