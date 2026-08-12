@@ -381,12 +381,12 @@ function getRadarPointStyle(index) {
 function getRadarTooltipStyle(metric) {
   const index = radarData.value.findIndex((item) => item.subject === metric.subject)
   const points = [
-    { left: '50%', top: '20%', transform: 'translate(-50%, -100%)' },
-    { left: '78%', top: '31%', transform: 'translate(10%, -50%)' },
-    { left: '78%', top: '60%', transform: 'translate(10%, -50%)' },
-    { left: '50%', top: '76%', transform: 'translate(-50%, 10%)' },
-    { left: '22%', top: '60%', transform: 'translate(-110%, -50%)' },
-    { left: '22%', top: '31%', transform: 'translate(-110%, -50%)' },
+    { left: '50%', top: '10%', transform: 'translateX(-50%)' },
+    { right: '12px', top: '24%', transform: 'none' },
+    { right: '12px', top: '56%', transform: 'none' },
+    { left: '50%', bottom: '8px', transform: 'translateX(-50%)' },
+    { left: '12px', top: '56%', transform: 'none' },
+    { left: '12px', top: '24%', transform: 'none' },
   ]
 
   return points[index] ?? points[0]

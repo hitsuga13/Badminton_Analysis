@@ -182,6 +182,8 @@
           side="a"
           :shots="shotTypes"
           :is-active="activePlayer === 'A'"
+          :require-serve="isFirstShotOfRally"
+          :disable-serve="!isFirstShotOfRally"
           @record="recordAction('A', $event)"
         />
         <PlayerShotPanel
@@ -189,6 +191,8 @@
           side="b"
           :shots="shotTypes"
           :is-active="activePlayer === 'B'"
+          :require-serve="isFirstShotOfRally"
+          :disable-serve="!isFirstShotOfRally"
           @record="recordAction('B', $event)"
         />
       </div>
@@ -286,8 +290,10 @@ const matchId = ref(null)
 const notationStorageKey = 'akp-shuttletrace:last-match-notation'
 const legacyHistoryStorageKey = `court${'sense'}:match-history`
 const historyStorageKey = 'akp-shuttletrace:match-history'
+const soundVolumeMultiplier = 5.5
 let rallyTimerId = null
 let coinFlipTimerId = null
+let audioContext = null
 
 const shotTypes = [
   { type: 'Smash', category: 'attack' },
@@ -304,6 +310,7 @@ const shotTypes = [
 const currentRallyActions = computed(() =>
   timeline.value.filter((action) => action.rallyNumber === currentRally.value),
 )
+const isFirstShotOfRally = computed(() => currentRallyActions.value.length === 0)
 const selectedPlayerA = computed(() => findAvailablePlayer(selectedPlayerAId.value))
 const selectedPlayerB = computed(() => findAvailablePlayer(selectedPlayerBId.value))
 const playerA = computed(() => selectedPlayerA.value?.name ?? 'Player A')
@@ -334,6 +341,8 @@ const coinFlipStatus = computed(() => {
 function recordAction(player, shot) {
   if (matchStatus.value !== 'live') return
   if (player !== activePlayer.value) return
+  if (isFirstShotOfRally.value && shot !== 'Serve') return
+  if (!isFirstShotOfRally.value && shot === 'Serve') return
   if (!rallyStartedAt.value) startRallyTimer()
 
   timeline.value.push({
@@ -346,6 +355,7 @@ function recordAction(player, shot) {
     timestamp: new Date().toISOString(),
     activeTurnBeforeAction: player,
   })
+  playShotSound(shot)
   activePlayer.value = opponentOf(player)
   saveNotation()
 }
@@ -361,6 +371,7 @@ function startCoinFlip() {
   isCoinFlipping.value = true
   rallyStartedAt.value = null
   rallyElapsedMs.value = 0
+  playCoinFlipSound()
 
   if (typeof window === 'undefined') {
     finishCoinFlip()
@@ -374,6 +385,7 @@ function finishCoinFlip() {
   coinWinner.value = Math.random() >= 0.5 ? 'A' : 'B'
   isCoinFlipping.value = false
   coinFlipTimerId = null
+  playCoinLandSound()
   saveNotation('coin-flip')
 }
 
@@ -568,8 +580,180 @@ function formatDuration(ms) {
   return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
 }
 
+function playShotSound(shot) {
+  if (typeof window === 'undefined') return
+
+  const sound = shotSoundMap[shot] ?? shotSoundMap.default
+  const context = getAudioContext()
+  if (!context) return
+
+  const startTime = context.currentTime
+  sound.tones.forEach((tone, index) => {
+    const oscillator = context.createOscillator()
+    const gain = context.createGain()
+    const delay = index * sound.spacing
+    const toneStart = startTime + delay
+    const toneEnd = toneStart + tone.duration
+
+    oscillator.type = tone.type
+    oscillator.frequency.setValueAtTime(tone.frequency, toneStart)
+    if (tone.endFrequency) {
+      oscillator.frequency.exponentialRampToValueAtTime(tone.endFrequency, toneEnd)
+    }
+
+    gain.gain.setValueAtTime(0.0001, toneStart)
+    gain.gain.exponentialRampToValueAtTime(
+      Math.min(tone.volume * soundVolumeMultiplier, 0.65),
+      toneStart + 0.012,
+    )
+    gain.gain.exponentialRampToValueAtTime(0.0001, toneEnd)
+
+    oscillator.connect(gain)
+    gain.connect(context.destination)
+    oscillator.start(toneStart)
+    oscillator.stop(toneEnd + 0.02)
+  })
+}
+
+function playCoinFlipSound() {
+  if (typeof window === 'undefined') return
+
+  const context = getAudioContext()
+  if (!context) return
+
+  const startTime = context.currentTime
+  const ticks = 16
+
+  for (let index = 0; index < ticks; index += 1) {
+    const progress = index / ticks
+    const toneStart = startTime + index * 0.085
+    const duration = 0.035 + progress * 0.018
+    const oscillator = context.createOscillator()
+    const gain = context.createGain()
+    const filter = context.createBiquadFilter()
+
+    oscillator.type = index % 2 === 0 ? 'triangle' : 'square'
+    oscillator.frequency.setValueAtTime(980 + index * 42, toneStart)
+    oscillator.frequency.exponentialRampToValueAtTime(520 + index * 18, toneStart + duration)
+    filter.type = 'highpass'
+    filter.frequency.setValueAtTime(420, toneStart)
+
+    gain.gain.setValueAtTime(0.0001, toneStart)
+    gain.gain.exponentialRampToValueAtTime(0.34, toneStart + 0.006)
+    gain.gain.exponentialRampToValueAtTime(0.0001, toneStart + duration)
+
+    oscillator.connect(filter)
+    filter.connect(gain)
+    gain.connect(context.destination)
+    oscillator.start(toneStart)
+    oscillator.stop(toneStart + duration + 0.02)
+  }
+}
+
+function playCoinLandSound() {
+  if (typeof window === 'undefined') return
+
+  const context = getAudioContext()
+  if (!context) return
+
+  const startTime = context.currentTime
+  const tones = [
+    { frequency: 780, endFrequency: 420, duration: 0.09, volume: 0.42, type: 'square' },
+    { frequency: 320, endFrequency: 180, duration: 0.16, volume: 0.5, type: 'triangle' },
+  ]
+
+  tones.forEach((tone, index) => {
+    const oscillator = context.createOscillator()
+    const gain = context.createGain()
+    const toneStart = startTime + index * 0.055
+    const toneEnd = toneStart + tone.duration
+
+    oscillator.type = tone.type
+    oscillator.frequency.setValueAtTime(tone.frequency, toneStart)
+    oscillator.frequency.exponentialRampToValueAtTime(tone.endFrequency, toneEnd)
+
+    gain.gain.setValueAtTime(0.0001, toneStart)
+    gain.gain.exponentialRampToValueAtTime(tone.volume, toneStart + 0.01)
+    gain.gain.exponentialRampToValueAtTime(0.0001, toneEnd)
+
+    oscillator.connect(gain)
+    gain.connect(context.destination)
+    oscillator.start(toneStart)
+    oscillator.stop(toneEnd + 0.02)
+  })
+}
+
+function getAudioContext() {
+  const AudioContext = window.AudioContext ?? window.webkitAudioContext
+  if (!AudioContext) return null
+
+  audioContext ??= new AudioContext()
+  if (audioContext.state === 'suspended') audioContext.resume()
+  return audioContext
+}
+
+const shotSoundMap = {
+  Serve: {
+    spacing: 0.045,
+    tones: [
+      { frequency: 520, endFrequency: 720, duration: 0.08, volume: 0.045, type: 'sine' },
+      { frequency: 780, duration: 0.06, volume: 0.035, type: 'triangle' },
+    ],
+  },
+  Smash: {
+    spacing: 0.025,
+    tones: [
+      { frequency: 150, endFrequency: 80, duration: 0.12, volume: 0.09, type: 'sawtooth' },
+      { frequency: 760, endFrequency: 360, duration: 0.08, volume: 0.045, type: 'square' },
+    ],
+  },
+  Drive: {
+    spacing: 0.035,
+    tones: [
+      { frequency: 420, endFrequency: 560, duration: 0.07, volume: 0.05, type: 'square' },
+      { frequency: 560, endFrequency: 420, duration: 0.07, volume: 0.035, type: 'square' },
+    ],
+  },
+  Clear: {
+    spacing: 0.05,
+    tones: [{ frequency: 360, endFrequency: 620, duration: 0.16, volume: 0.04, type: 'triangle' }],
+  },
+  Drop: {
+    spacing: 0.045,
+    tones: [{ frequency: 640, endFrequency: 410, duration: 0.14, volume: 0.035, type: 'sine' }],
+  },
+  Lift: {
+    spacing: 0.045,
+    tones: [{ frequency: 300, endFrequency: 700, duration: 0.18, volume: 0.04, type: 'triangle' }],
+  },
+  'Net Shot': {
+    spacing: 0.035,
+    tones: [
+      { frequency: 860, duration: 0.045, volume: 0.035, type: 'sine' },
+      { frequency: 1020, duration: 0.045, volume: 0.03, type: 'sine' },
+    ],
+  },
+  Block: {
+    spacing: 0.03,
+    tones: [{ frequency: 240, endFrequency: 210, duration: 0.08, volume: 0.055, type: 'triangle' }],
+  },
+  Error: {
+    spacing: 0.055,
+    tones: [
+      { frequency: 220, endFrequency: 140, duration: 0.12, volume: 0.06, type: 'sawtooth' },
+      { frequency: 150, endFrequency: 90, duration: 0.14, volume: 0.05, type: 'sawtooth' },
+    ],
+  },
+  default: {
+    spacing: 0.04,
+    tones: [{ frequency: 520, duration: 0.08, volume: 0.04, type: 'sine' }],
+  },
+}
+
 onUnmounted(() => {
   stopCoinFlip()
   stopRallyTimer()
+  audioContext?.close()
+  audioContext = null
 })
 </script>
