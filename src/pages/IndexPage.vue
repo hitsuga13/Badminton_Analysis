@@ -143,31 +143,6 @@ use([
   TooltipComponent,
 ])
 
-const staticStats = [
-  { icon: 'monitor_heart', label: 'Total Rallies', value: '114', sub: 'Avg 12.5 shots/rally' },
-  { icon: 'gps_fixed', label: 'Longest Rally', value: '48', sub: 'Shots (Set 2)' },
-  { icon: 'trending_up', label: 'Attack Ratio (A)', value: '65%', sub: '+12% from average' },
-  { icon: 'shield', label: 'Unforced Errors (A)', value: '12', sub: '-3 from average' },
-]
-
-const staticShotData = [
-  { name: 'Smash', playerA: 35, playerB: 28 },
-  { name: 'Clear', playerA: 27, playerB: 32 },
-  { name: 'Drop', playerA: 18, playerB: 22 },
-  { name: 'Net Shot', playerA: 24, playerB: 20 },
-  { name: 'Drive', playerA: 15, playerB: 19 },
-  { name: 'Lift', playerA: 22, playerB: 25 },
-]
-
-const staticRadarData = [
-  { subject: 'Attack', playerA: 85, playerB: 70 },
-  { subject: 'Defence', playerA: 75, playerB: 82 },
-  { subject: 'Net Play', playerA: 90, playerB: 75 },
-  { subject: 'Speed', playerA: 80, playerB: 85 },
-  { subject: 'Stamina', playerA: 85, playerB: 80 },
-  { subject: 'Consistency', playerA: 78, playerB: 88 },
-]
-
 const chartTextColor = '#a1a1aa'
 const borderColor = '#27272a'
 const primaryColor = '#dfff00'
@@ -393,8 +368,8 @@ function getRadarTooltipStyle(metric) {
 }
 
 function buildDashboardSummary(report) {
-  const playerA = report?.match?.playerA ?? 'Viktor Axelsen'
-  const playerB = report?.match?.playerB ?? 'Lee Zii Jia'
+  const playerA = report?.match?.playerA ?? 'No recorded match'
+  const playerB = report?.match?.playerB ?? 'No recorded match'
   const winnerCounts = countRallyWinners(report)
   const status = report?.match?.status ?? 'Static Dashboard Report'
   const hasNotation = hasLiveData(report)
@@ -404,14 +379,21 @@ function buildDashboardSummary(report) {
     playerB,
     subtitle: hasNotation
       ? `${statusLabel(status)} - ${report.match.totalShots ?? 0} recorded actions`
-      : 'Final Summary - 21-18, 19-21, 21-15',
+      : 'Record a Live Match to populate analytics.',
     playerALabel: winnerCounts.A > winnerCounts.B ? 'Leader' : 'Player A',
     playerBLabel: winnerCounts.B > winnerCounts.A ? 'Leader' : 'Player B',
   }
 }
 
 function buildStats(report) {
-  if (!hasLiveData(report)) return staticStats
+  if (!hasLiveData(report)) {
+    return [
+      { icon: 'monitor_heart', label: 'Total Rallies', value: '0', sub: 'No recorded match' },
+      { icon: 'gps_fixed', label: 'Longest Rally', value: '0', sub: 'No recorded match' },
+      { icon: 'trending_up', label: 'Attack Ratio (A)', value: '0%', sub: 'No recorded match' },
+      { icon: 'shield', label: 'Errors (A)', value: '0', sub: 'No recorded match' },
+    ]
+  }
 
   const notation = report.notation ?? []
   const rallyOutcomes = report.rallyOutcomes ?? []
@@ -425,9 +407,7 @@ function buildStats(report) {
   const playerAAttacks = playerAShots.filter(
     (action) => shotCategory(action.shot) === 'attack',
   ).length
-  const playerAErrors = playerAShots.filter(
-    (action) => shotCategory(action.shot) === 'error',
-  ).length
+  const playerAErrors = rallyOutcomes.filter((outcome) => outcome.errorBy === 'A').length
   const attackRatio =
     playerAShots.length > 0 ? Math.round((playerAAttacks / playerAShots.length) * 100) : 0
 
@@ -452,7 +432,7 @@ function buildStats(report) {
     },
     {
       icon: 'shield',
-      label: 'Unforced Errors (A)',
+      label: 'Errors (A)',
       value: String(playerAErrors),
       sub: 'From Error notation',
     },
@@ -460,8 +440,6 @@ function buildStats(report) {
 }
 
 function buildShotData(report) {
-  if (!hasLiveData(report)) return staticShotData
-
   const shotNames = [
     'Smash',
     'Clear',
@@ -475,16 +453,14 @@ function buildShotData(report) {
   ]
   return shotNames.map((name) => ({
     name,
-    playerA: countShots(report.notation, 'A', name),
-    playerB: countShots(report.notation, 'B', name),
+    playerA: countShots(report?.notation, 'A', name),
+    playerB: countShots(report?.notation, 'B', name),
   }))
 }
 
 function buildRadarData(report) {
-  if (!hasLiveData(report)) return staticRadarData
-
-  const notation = report.notation ?? []
-  const rallyOutcomes = report.rallyOutcomes ?? []
+  const notation = report?.notation ?? []
+  const rallyOutcomes = report?.rallyOutcomes ?? []
   const longestRally = Math.max(1, ...rallyOutcomes.map((outcome) => outcome.shots ?? 0))
 
   return [
@@ -522,24 +498,7 @@ function buildRadarData(report) {
 }
 
 function buildInsights(report) {
-  if (!hasLiveData(report)) {
-    return [
-      {
-        icon: 'bolt',
-        player: 'Viktor Axelsen',
-        title: 'Playing Style: Aggressive',
-        description:
-          'Player favored offensive shots in 65% of rallies. High success rate on cross-court net shots.',
-      },
-      {
-        icon: 'shield',
-        player: 'Lee Zii Jia',
-        title: 'Playing Style: Balanced/Counter',
-        description:
-          'Strong defensive presence with consistent lifts and blocks. Capitalized heavily on unforced errors.',
-      },
-    ]
-  }
+  if (!hasLiveData(report)) return []
 
   const summary = buildDashboardSummary(report)
   const playerAShots = report.notation.filter((action) => action.player === 'A').length
@@ -742,6 +701,9 @@ function countRallyWinners(report) {
   const counts = { A: 0, B: 0 }
 
   ;(report?.rallyOutcomes ?? []).forEach((outcome) => {
+    if (outcome.winner === 'A') counts.A += 1
+    if (outcome.winner === 'B') counts.B += 1
+    if (outcome.winner) return
     if (outcome.outcome === `Winner: ${report?.match?.playerA}`) counts.A += 1
     if (outcome.outcome === `Winner: ${report?.match?.playerB}`) counts.B += 1
   })
@@ -841,7 +803,7 @@ function buildCsvReport(notationReport) {
 }
 
 function totalStaticShots() {
-  return staticShotData.reduce((total, shot) => total + shot.playerA + shot.playerB, 0)
+  return 0
 }
 
 function toCsvRow(row) {

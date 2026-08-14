@@ -3,11 +3,17 @@
     <section v-if="matchStatus === 'setup'" class="match-setup">
       <div class="setup-card match-setup-card">
         <div>
-          <h1>New Match</h1>
-          <p>Select players from the player database.</p>
+          <h1>{{ setupStep === 'players' ? 'Select Players' : 'Match Rules' }}</h1>
+          <p>
+            {{
+              setupStep === 'players'
+                ? 'Select players from the player database.'
+                : 'Choose the number of sets and points for each set.'
+            }}
+          </p>
         </div>
 
-        <div class="match-player-select">
+        <div v-if="setupStep === 'players'" class="match-player-select">
           <div>
             <span class="select-label">Player A</span>
             <div class="player-select-grid">
@@ -52,6 +58,87 @@
         </div>
 
         <button
+          v-if="setupStep === 'players'"
+          class="primary-action"
+          type="button"
+          :disabled="!canStartSetup"
+          @click="setupStep = 'format'"
+        >
+          Next
+          <q-icon name="chevron_right" size="20px" />
+        </button>
+
+        <div v-else class="match-format-select">
+          <span class="select-label">Match format</span>
+          <div class="player-select-grid">
+            <button
+              v-for="format in matchFormatOptions"
+              :key="format.value"
+              :class="[
+                'player-select-card',
+                selectedMatchFormat === format.value && 'player-select-card--active',
+              ]"
+              type="button"
+              @click="selectedMatchFormat = format.value"
+            >
+              <strong>{{ format.label }}</strong>
+              <span>{{ format.description }}</span>
+            </button>
+          </div>
+          <label v-if="selectedMatchFormat === 'custom'" class="custom-set-control">
+            <span>Play up to</span>
+            <select v-model.number="customSetCount">
+              <option v-for="count in [1, 3, 5, 7, 9]" :key="count" :value="count">
+                {{ count }}
+              </option>
+            </select>
+            <span>sets (first to {{ setsToWin }} wins)</span>
+          </label>
+
+          <span class="select-label">Points per set</span>
+          <div class="player-select-grid">
+            <button
+              v-for="points in [11, 15, 21]"
+              :key="points"
+              :class="[
+                'player-select-card',
+                pointFormat === points && 'player-select-card--active',
+              ]"
+              type="button"
+              @click="pointFormat = points"
+            >
+              <strong>First to {{ points }}</strong>
+              <span>Win by 2, cap at {{ points + 9 }}</span>
+            </button>
+            <button
+              :class="[
+                'player-select-card',
+                pointFormat === 'custom' && 'player-select-card--active',
+              ]"
+              type="button"
+              @click="pointFormat = 'custom'"
+            >
+              <strong>Custom</strong>
+              <span>Choose a point target</span>
+            </button>
+          </div>
+          <label v-if="pointFormat === 'custom'" class="custom-set-control">
+            <span>First to</span>
+            <input v-model.number="customPointTarget" type="number" min="1" max="99" />
+            <span>points (win by 2, cap at {{ pointsToWin + 9 }})</span>
+          </label>
+        </div>
+
+        <button
+          v-if="setupStep === 'format'"
+          class="secondary-action"
+          type="button"
+          @click="setupStep = 'players'"
+        >
+          Back
+        </button>
+        <button
+          v-if="setupStep === 'format'"
           class="primary-action"
           type="button"
           :disabled="!canStartSetup"
@@ -127,6 +214,10 @@
             <strong>{{ currentRally - 1 }}</strong>
           </div>
           <div>
+            <span>Match Score</span>
+            <strong>{{ gamesA }} - {{ gamesB }}</strong>
+          </div>
+          <div>
             <span>Total Shots</span>
             <strong>{{ timeline.length }}</strong>
           </div>
@@ -168,6 +259,14 @@
           <div class="rally-chip rally-chip--turn">
             <span>Current Turn</span>
             <strong>{{ activePlayer || '-' }}</strong>
+          </div>
+          <div class="rally-chip">
+            <span>Score</span>
+            <strong>{{ scoreA }} - {{ scoreB }}</strong>
+          </div>
+          <div class="rally-chip">
+            <span>Sets</span>
+            <strong>{{ gamesA }} - {{ gamesB }}</strong>
           </div>
           <button class="danger-action" type="button" @click="endMatch">
             <q-icon name="stop" size="18px" />
@@ -220,7 +319,12 @@
             <q-icon name="undo" size="18px" />
             Undo Last Action
           </button>
-          <button class="primary-action" type="button" @click="showOutcomeDialog = true">
+          <button
+            class="primary-action"
+            type="button"
+            :disabled="!canEndRally"
+            @click="showOutcomeDialog = true"
+          >
             End Rally
             <q-icon name="chevron_right" size="20px" />
           </button>
@@ -245,20 +349,13 @@
           </div>
 
           <div class="dialog-section">
-            <span>Or Error Type</span>
-            <div class="dialog-grid">
-              <button class="error-choice" type="button" @click="endRally('Net Error')">
-                Net Error
+            <span>Error by player</span>
+            <div v-for="errorType in errorTypes" :key="errorType" class="dialog-grid">
+              <button class="error-choice" type="button" @click="endRally(errorType, 'A')">
+                {{ playerA }}: {{ errorType }}
               </button>
-              <button class="error-choice" type="button" @click="endRally('Out Error')">
-                Out Error
-              </button>
-              <button
-                class="error-choice dialog-wide"
-                type="button"
-                @click="endRally('Service Fault')"
-              >
-                Service Fault
+              <button class="error-choice" type="button" @click="endRally(errorType, 'B')">
+                {{ playerB }}: {{ errorType }}
               </button>
             </div>
           </div>
@@ -277,6 +374,15 @@ const matchStatus = ref('setup')
 const currentRally = ref(1)
 const timeline = ref([])
 const rallyOutcomes = ref([])
+const scoreA = ref(0)
+const scoreB = ref(0)
+const gamesA = ref(0)
+const gamesB = ref(0)
+const selectedMatchFormat = ref('best-of-3')
+const customSetCount = ref(3)
+const pointFormat = ref(21)
+const customPointTarget = ref(21)
+const setupStep = ref('players')
 const availablePlayers = ref(loadPlayers())
 const selectedPlayerAId = ref(availablePlayers.value[0]?.id ?? null)
 const selectedPlayerBId = ref(availablePlayers.value[1]?.id ?? null)
@@ -306,11 +412,18 @@ const shotTypes = [
   { type: 'Serve', category: 'neutral' },
   { type: 'Error', category: 'error' },
 ]
+const errorTypes = ['Net Error', 'Out Error', 'Service Fault']
+const matchFormatOptions = [
+  { value: 'best-of-3', label: 'Best of 3', description: 'First to win 2 sets' },
+  { value: 'best-of-5', label: 'Best of 5', description: 'First to win 3 sets' },
+  { value: 'custom', label: 'Custom', description: 'Choose how many sets to play' },
+]
 
 const currentRallyActions = computed(() =>
   timeline.value.filter((action) => action.rallyNumber === currentRally.value),
 )
 const isFirstShotOfRally = computed(() => currentRallyActions.value.length === 0)
+const canEndRally = computed(() => currentRallyActions.value.length > 0)
 const selectedPlayerA = computed(() => findAvailablePlayer(selectedPlayerAId.value))
 const selectedPlayerB = computed(() => findAvailablePlayer(selectedPlayerBId.value))
 const playerA = computed(() => selectedPlayerA.value?.name ?? 'Player A')
@@ -320,6 +433,24 @@ const canStartSetup = computed(
     Boolean(selectedPlayerA.value && selectedPlayerB.value) &&
     selectedPlayerAId.value !== selectedPlayerBId.value,
 )
+const customSetCountNormalized = computed(() => {
+  const value = Math.min(Math.max(Number(customSetCount.value) || 1, 1), 9)
+  return value % 2 === 0 ? value + 1 : value
+})
+const setsToWin = computed(() => {
+  if (selectedMatchFormat.value === 'best-of-5') return 3
+  if (selectedMatchFormat.value === 'custom') return Math.ceil(customSetCountNormalized.value / 2)
+  return 2
+})
+const matchFormatLabel = computed(() => {
+  if (selectedMatchFormat.value === 'custom') return `Best of ${customSetCountNormalized.value}`
+  return selectedMatchFormat.value === 'best-of-5' ? 'Best of 5' : 'Best of 3'
+})
+const pointsToWin = computed(() => {
+  if (pointFormat.value !== 'custom') return pointFormat.value
+  return Math.min(Math.max(Number(customPointTarget.value) || 1, 1), 99)
+})
+const pointCap = computed(() => pointsToWin.value + 9)
 const formattedRallyTime = computed(() => formatDuration(rallyElapsedMs.value))
 const lastRallyDurationLabel = computed(() => rallyOutcomes.value.at(-1)?.durationLabel ?? '00:00')
 const firstServerName = computed(() => {
@@ -409,10 +540,14 @@ function undoLastAction() {
   saveNotation()
 }
 
-function endRally(outcome) {
+function endRally(outcome, errorBy = null) {
+  if (!canEndRally.value) return
   const endedAt = new Date().toISOString()
   const startedAt = rallyStartedAt.value
   const durationMs = stopRallyTimer()
+  const winner = getOutcomeWinnerCode(outcome) ?? (errorBy ? opponentOf(errorBy) : null)
+
+  if (!winner) return
 
   rallyOutcomes.value.push({
     rallyNumber: currentRally.value,
@@ -422,12 +557,20 @@ function endRally(outcome) {
     durationLabel: formatDuration(durationMs),
     startedAt,
     endedAt,
+    winner,
+    errorBy,
   })
+  awardPoint(winner)
+  const latestOutcome = rallyOutcomes.value.at(-1)
+  latestOutcome.scoreA = scoreA.value
+  latestOutcome.scoreB = scoreB.value
+  latestOutcome.gamesA = gamesA.value
+  latestOutcome.gamesB = gamesB.value
   currentRally.value += 1
-  activePlayer.value = getOutcomeWinnerCode(outcome) ?? activePlayer.value ?? coinWinner.value
+  activePlayer.value = winner
   showOutcomeDialog.value = false
   saveNotation()
-  startRallyTimer()
+  if (matchStatus.value === 'live') startRallyTimer()
 }
 
 function endMatch() {
@@ -436,12 +579,41 @@ function endMatch() {
   saveNotation('ended')
 }
 
+function awardPoint(winner) {
+  if (winner === 'A') scoreA.value += 1
+  if (winner === 'B') scoreB.value += 1
+
+  const winnerScore = winner === 'A' ? scoreA.value : scoreB.value
+  const opponentScore = winner === 'A' ? scoreB.value : scoreA.value
+  const winsGame =
+    (winnerScore >= pointsToWin.value && winnerScore - opponentScore >= 2) ||
+    winnerScore === pointCap.value
+  if (!winsGame) return
+
+  if (winner === 'A') gamesA.value += 1
+  if (winner === 'B') gamesB.value += 1
+
+  if (gamesA.value === setsToWin.value || gamesB.value === setsToWin.value) {
+    matchStatus.value = 'ended'
+    stopRallyTimer()
+    return
+  }
+
+  scoreA.value = 0
+  scoreB.value = 0
+}
+
 function resetMatch() {
   stopRallyTimer()
   matchStatus.value = 'setup'
+  setupStep.value = 'players'
   currentRally.value = 1
   timeline.value = []
   rallyOutcomes.value = []
+  scoreA.value = 0
+  scoreB.value = 0
+  gamesA.value = 0
+  gamesB.value = 0
   showOutcomeDialog.value = false
   rallyStartedAt.value = null
   rallyElapsedMs.value = 0
@@ -497,6 +669,15 @@ function buildNotationReport(status = matchStatus.value) {
       firstServerCode: coinWinner.value,
       activePlayer: activePlayerName.value,
       activePlayerCode: activePlayer.value,
+      scoreA: scoreA.value,
+      scoreB: scoreB.value,
+      gamesA: gamesA.value,
+      gamesB: gamesB.value,
+      matchFormat: matchFormatLabel.value,
+      setsToWin: setsToWin.value,
+      pointsToWin: pointsToWin.value,
+      pointCap: pointCap.value,
+      scoringFormat: `${matchFormatLabel.value}, first to ${pointsToWin.value}, win-by-2, cap ${pointCap.value}`,
       savedAt: new Date().toISOString(),
     },
     notation: timeline.value,

@@ -2,7 +2,7 @@
   <q-page class="login-page">
     <section class="login-card">
       <div class="login-mark">
-        <q-icon name="monitor_heart" size="32px" />
+        <img src="/icons/akp-shuttletrace-mark.svg" alt="AKP ShuttleTrace" />
       </div>
 
       <h1>AKP ShuttleTrace</h1>
