@@ -4,6 +4,7 @@
   "description": "Badminton performance analysis system for coaches",
   "productName": "AKP ShuttleTrace",
   "author": "kurotsuchi <126145510+hitsuga13@users.noreply.github.com>",
+  "homepage": "https://hitsuga13.github.io/Badminton_Analysis/",
   "type": "module",
   "private": true,
   "scripts": {
@@ -12,6 +13,8 @@
     "dev": "quasar dev",
     "ai-server": "node server/ai-summary-server.mjs",
     "build": "quasar build",
+    "predeploy": "quasar build",
+    "deploy": "gh-pages -d dist/spa",
     "postinstall": "quasar prepare --silent"
   },
   "dependencies": {
@@ -29,6 +32,7 @@
     "autoprefixer": "^10.4.27",
     "eslint": "^10.8.0",
     "eslint-plugin-vue": "^10.8.0",
+    "gh-pages": "^6.3.0",
     "globals": "^17.4.0",
     "postcss": "^8.5.8",
     "prettier": "^3.8.1",

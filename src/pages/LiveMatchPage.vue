@@ -396,7 +396,12 @@ const shotTypes = [
   { type: 'Clear', category: 'neutral' },
   { type: 'Drop', category: 'neutral' },
   { type: 'Lift', category: 'defense' },
+<<<<<<< HEAD
   { type: 'Net Shot', category: 'neutral' },
+=======
+  { type: 'Netting', category: 'neutral' },
+  { type: 'Block', category: 'defense' },
+>>>>>>> 801d6cdd0228b64de90ef3e5ae5d5aef92da0b8e
   { type: 'Serve', category: 'neutral' },
 ]
 const matchFormatOptions = [
@@ -923,7 +928,7 @@ const shotSoundMap = {
     spacing: 0.045,
     tones: [{ frequency: 300, endFrequency: 700, duration: 0.18, volume: 0.04, type: 'triangle' }],
   },
-  'Net Shot': {
+  Netting: {
     spacing: 0.035,
     tones: [
       { frequency: 860, duration: 0.045, volume: 0.035, type: 'sine' },
