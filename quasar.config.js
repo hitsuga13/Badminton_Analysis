@@ -43,7 +43,7 @@ export default defineConfig((/* ctx */) => {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       // vueRouterBase,
 
-      // publicPath: '/',
+      publicPath: '/Badminton_Analysis/',
       // define: {},
       // defineEnv: {}
       // ignorePublicFolder: true,
