@@ -58,7 +58,7 @@
       </section>
 
       <section class="analytics-grid">
-        <article class="panel panel--wide">
+        <article v-if="settings.analytics.shotFrequency" class="panel panel--wide">
           <div class="panel-head">
             <h2>Shot Frequency & Distribution</h2>
             <p>Comparison of shot types used during the match.</p>
@@ -66,7 +66,7 @@
           <VChart class="chart chart--bar" :option="shotFrequencyOptions" />
         </article>
 
-        <article class="panel">
+        <article v-if="settings.analytics.radar" class="panel">
           <div class="panel-head">
             <h2>Performance Radar</h2>
             <p>Multi-dimensional analysis.</p>
@@ -104,7 +104,7 @@
         </article>
       </section>
 
-      <section class="insight-grid">
+      <section v-if="settings.analytics.insights" class="insight-grid">
         <article v-for="insight in insights" :key="insight.title" class="insight-card">
           <div class="insight-icon">
             <q-icon :name="insight.icon" size="26px" />
@@ -116,12 +116,29 @@
           </div>
         </article>
       </section>
+
+      <section v-if="notationReport?.analysis" class="panel ai-summary-panel">
+        <div class="panel-head">
+          <h2>AI Coach Summary</h2>
+          <p v-if="notationReport.analysis.status === 'generating'">Preparing coaching analysis…</p>
+          <p v-else-if="notationReport.analysis.status === 'unavailable'">
+            AI summary is unavailable.
+          </p>
+          <p v-else>Generated automatically when the match ended.</p>
+        </div>
+        <p v-if="notationReport.analysis.status === 'ready'" class="ai-summary-text">
+          {{ notationReport.analysis.summary }}
+        </p>
+        <p v-else-if="notationReport.analysis.status === 'unavailable'" class="ai-summary-text">
+          {{ notationReport.analysis.summary }}
+        </p>
+      </section>
     </div>
   </q-page>
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { BarChart, RadarChart } from 'echarts/charts'
 import {
   GridComponent,
@@ -132,6 +149,7 @@ import {
 import { CanvasRenderer } from 'echarts/renderers'
 import { use } from 'echarts/core'
 import VChart from 'vue-echarts'
+import { loadSettings } from '@/data/settings'
 
 use([
   BarChart,
@@ -157,6 +175,7 @@ const hoveredRadarMetric = ref(null)
 const notationReport = ref(null)
 const dashboardMatches = ref([])
 const selectedMatchId = ref('')
+const settings = loadSettings()
 
 const dashboardSummary = computed(() => buildDashboardSummary(notationReport.value))
 const stats = computed(() => buildStats(notationReport.value))
@@ -165,10 +184,21 @@ const radarData = computed(() => buildRadarData(notationReport.value))
 const insights = computed(() => buildInsights(notationReport.value))
 
 onMounted(() => {
-  dashboardMatches.value = loadDashboardMatches()
-  notationReport.value = dashboardMatches.value[0] ?? getStoredNotationReport()
-  selectedMatchId.value = notationReport.value?.match?.id ?? ''
+  refreshDashboardMatches()
+  window.addEventListener('akp-ai-summary-ready', refreshDashboardMatches)
 })
+
+onUnmounted(() => window.removeEventListener('akp-ai-summary-ready', refreshDashboardMatches))
+
+function refreshDashboardMatches() {
+  const currentMatchId = selectedMatchId.value
+  dashboardMatches.value = loadDashboardMatches()
+  notationReport.value =
+    dashboardMatches.value.find((matchReport) => matchReport.match.id === currentMatchId) ??
+    dashboardMatches.value[0] ??
+    getStoredNotationReport()
+  selectedMatchId.value = notationReport.value?.match?.id ?? ''
+}
 
 const shotFrequencyOptions = computed(() => ({
   backgroundColor: 'transparent',
@@ -391,7 +421,7 @@ function buildStats(report) {
       { icon: 'monitor_heart', label: 'Total Rallies', value: '0', sub: 'No recorded match' },
       { icon: 'gps_fixed', label: 'Longest Rally', value: '0', sub: 'No recorded match' },
       { icon: 'trending_up', label: 'Attack Ratio (A)', value: '0%', sub: 'No recorded match' },
-      { icon: 'shield', label: 'Errors (A)', value: '0', sub: 'No recorded match' },
+      { icon: 'timeline', label: 'Total Actions', value: '0', sub: 'No recorded match' },
     ]
   }
 
@@ -407,7 +437,6 @@ function buildStats(report) {
   const playerAAttacks = playerAShots.filter(
     (action) => shotCategory(action.shot) === 'attack',
   ).length
-  const playerAErrors = rallyOutcomes.filter((outcome) => outcome.errorBy === 'A').length
   const attackRatio =
     playerAShots.length > 0 ? Math.round((playerAAttacks / playerAShots.length) * 100) : 0
 
@@ -431,26 +460,16 @@ function buildStats(report) {
       sub: `${playerAAttacks} attack shots recorded`,
     },
     {
-      icon: 'shield',
-      label: 'Errors (A)',
-      value: String(playerAErrors),
-      sub: 'From Error notation',
+      icon: 'timeline',
+      label: 'Total Actions',
+      value: String(notation.length),
+      sub: 'Recorded live notation',
     },
   ]
 }
 
 function buildShotData(report) {
-  const shotNames = [
-    'Smash',
-    'Clear',
-    'Drop',
-    'Net Shot',
-    'Drive',
-    'Lift',
-    'Serve',
-    'Block',
-    'Error',
-  ]
+  const shotNames = ['Smash', 'Clear', 'Drop', 'Net Shot', 'Drive', 'Lift', 'Serve']
   return shotNames.map((name) => ({
     name,
     playerA: countShots(report?.notation, 'A', name),
@@ -488,11 +507,6 @@ function buildRadarData(report) {
       subject: 'Stamina',
       playerA: playerVolumeScore(notation, 'A'),
       playerB: playerVolumeScore(notation, 'B'),
-    },
-    {
-      subject: 'Consistency',
-      playerA: consistencyScore(notation, 'A'),
-      playerB: consistencyScore(notation, 'B'),
     },
   ]
 }
@@ -643,9 +657,7 @@ function shotCategory(shot) {
     Drop: 'neutral',
     Lift: 'defense',
     'Net Shot': 'neutral',
-    Block: 'defense',
     Serve: 'neutral',
-    Error: 'error',
   }
 
   return categories[shot] ?? 'neutral'
@@ -687,14 +699,6 @@ function playerVolumeScore(notation, player) {
   if (totalShots === 0) return 0
 
   return clampScore(Math.round((playerActions(notation, player).length / totalShots) * 100))
-}
-
-function consistencyScore(notation, player) {
-  const actions = playerActions(notation, player)
-  if (actions.length === 0) return 0
-
-  const errors = actions.filter((action) => shotCategory(action.shot) === 'error').length
-  return clampScore(Math.round(100 - (errors / actions.length) * 100))
 }
 
 function countRallyWinners(report) {

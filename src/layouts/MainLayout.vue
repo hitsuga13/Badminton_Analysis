@@ -62,13 +62,13 @@
           <span>Logout</span>
         </button>
 
-        <div class="coach-card">
-          <div class="coach-avatar">CO</div>
+        <button class="coach-card" type="button" @click="router.push('/profile')">
+          <div class="coach-avatar">{{ profile.initials }}</div>
           <div>
-            <div class="coach-name">Coach O.</div>
-            <div class="coach-role">Head Coach</div>
+            <div class="coach-name">{{ profile.name }}</div>
+            <div class="coach-role">{{ profile.role }}</div>
           </div>
-        </div>
+        </button>
       </div>
     </q-drawer>
 
@@ -79,12 +79,23 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { applyTheme, loadSettings } from '@/data/settings'
 
 const route = useRoute()
 const router = useRouter()
 const drawerOpen = ref(true)
+const profile = ref(loadSettings().profile)
+
+applyTheme(loadSettings().theme)
+
+function refreshProfile() {
+  profile.value = loadSettings().profile
+}
+
+onMounted(() => window.addEventListener('akp-settings-updated', refreshProfile))
+onUnmounted(() => window.removeEventListener('akp-settings-updated', refreshProfile))
 
 const navItems = [
   { label: 'Dashboard', icon: 'dashboard', to: '/' },

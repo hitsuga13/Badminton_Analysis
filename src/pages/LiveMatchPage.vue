@@ -347,18 +347,6 @@
               <button type="button" @click="endRally(`Winner: ${playerB}`)">{{ playerB }}</button>
             </div>
           </div>
-
-          <div class="dialog-section">
-            <span>Error by player</span>
-            <div v-for="errorType in errorTypes" :key="errorType" class="dialog-grid">
-              <button class="error-choice" type="button" @click="endRally(errorType, 'A')">
-                {{ playerA }}: {{ errorType }}
-              </button>
-              <button class="error-choice" type="button" @click="endRally(errorType, 'B')">
-                {{ playerB }}: {{ errorType }}
-              </button>
-            </div>
-          </div>
         </div>
       </q-dialog>
     </section>
@@ -369,6 +357,7 @@
 import { computed, onUnmounted, ref } from 'vue'
 import PlayerShotPanel from '@/components/PlayerShotPanel.vue'
 import { loadPlayers } from '@/data/players'
+import { loadSettings } from '@/data/settings'
 
 const matchStatus = ref('setup')
 const currentRally = ref(1)
@@ -378,10 +367,11 @@ const scoreA = ref(0)
 const scoreB = ref(0)
 const gamesA = ref(0)
 const gamesB = ref(0)
-const selectedMatchFormat = ref('best-of-3')
-const customSetCount = ref(3)
-const pointFormat = ref(21)
-const customPointTarget = ref(21)
+const settings = loadSettings()
+const selectedMatchFormat = ref(settings.matchFormat)
+const customSetCount = ref(settings.customSetCount)
+const pointFormat = ref(settings.pointFormat)
+const customPointTarget = ref(settings.customPointTarget)
 const setupStep = ref('players')
 const availablePlayers = ref(loadPlayers())
 const selectedPlayerAId = ref(availablePlayers.value[0]?.id ?? null)
@@ -396,7 +386,6 @@ const matchId = ref(null)
 const notationStorageKey = 'akp-shuttletrace:last-match-notation'
 const legacyHistoryStorageKey = `court${'sense'}:match-history`
 const historyStorageKey = 'akp-shuttletrace:match-history'
-const soundVolumeMultiplier = 5.5
 let rallyTimerId = null
 let coinFlipTimerId = null
 let audioContext = null
@@ -408,11 +397,8 @@ const shotTypes = [
   { type: 'Drop', category: 'neutral' },
   { type: 'Lift', category: 'defense' },
   { type: 'Net Shot', category: 'neutral' },
-  { type: 'Block', category: 'defense' },
   { type: 'Serve', category: 'neutral' },
-  { type: 'Error', category: 'error' },
 ]
-const errorTypes = ['Net Error', 'Out Error', 'Service Fault']
 const matchFormatOptions = [
   { value: 'best-of-3', label: 'Best of 3', description: 'First to win 2 sets' },
   { value: 'best-of-5', label: 'Best of 5', description: 'First to win 3 sets' },
@@ -540,12 +526,12 @@ function undoLastAction() {
   saveNotation()
 }
 
-function endRally(outcome, errorBy = null) {
+function endRally(outcome) {
   if (!canEndRally.value) return
   const endedAt = new Date().toISOString()
   const startedAt = rallyStartedAt.value
   const durationMs = stopRallyTimer()
-  const winner = getOutcomeWinnerCode(outcome) ?? (errorBy ? opponentOf(errorBy) : null)
+  const winner = getOutcomeWinnerCode(outcome)
 
   if (!winner) return
 
@@ -558,7 +544,6 @@ function endRally(outcome, errorBy = null) {
     startedAt,
     endedAt,
     winner,
-    errorBy,
   })
   awardPoint(winner)
   const latestOutcome = rallyOutcomes.value.at(-1)
@@ -690,7 +675,32 @@ function saveNotation(status) {
   const report = buildNotationReport(status)
   window.localStorage.setItem(notationStorageKey, JSON.stringify(report))
 
-  if (status === 'ended') saveHistoryReport(report)
+  if (status === 'ended') {
+    report.analysis = { status: 'generating', summary: '' }
+    saveHistoryReport(report)
+    window.localStorage.setItem(notationStorageKey, JSON.stringify(report))
+    void generateAiSummary(report)
+  }
+}
+
+async function generateAiSummary(report) {
+  try {
+    const response = await fetch('http://localhost:8787/api/ai-summary', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(report),
+    })
+    const result = await response.json()
+    if (!response.ok) throw new Error(result.error ?? 'AI summary failed.')
+
+    report.analysis = { status: 'ready', summary: result.summary }
+  } catch (error) {
+    report.analysis = { status: 'unavailable', summary: error.message ?? 'AI summary unavailable.' }
+  }
+
+  saveHistoryReport(report)
+  window.localStorage.setItem(notationStorageKey, JSON.stringify(report))
+  window.dispatchEvent(new Event('akp-ai-summary-ready'))
 }
 
 function saveHistoryReport(report) {
@@ -762,7 +772,7 @@ function formatDuration(ms) {
 }
 
 function playShotSound(shot) {
-  if (typeof window === 'undefined') return
+  if (typeof window === 'undefined' || !settings.soundEnabled) return
 
   const sound = shotSoundMap[shot] ?? shotSoundMap.default
   const context = getAudioContext()
@@ -784,7 +794,7 @@ function playShotSound(shot) {
 
     gain.gain.setValueAtTime(0.0001, toneStart)
     gain.gain.exponentialRampToValueAtTime(
-      Math.min(tone.volume * soundVolumeMultiplier, 0.65),
+      Math.min(tone.volume * (settings.soundVolume / 10), 0.65),
       toneStart + 0.012,
     )
     gain.gain.exponentialRampToValueAtTime(0.0001, toneEnd)
@@ -797,7 +807,7 @@ function playShotSound(shot) {
 }
 
 function playCoinFlipSound() {
-  if (typeof window === 'undefined') return
+  if (typeof window === 'undefined' || !settings.soundEnabled) return
 
   const context = getAudioContext()
   if (!context) return
@@ -820,7 +830,10 @@ function playCoinFlipSound() {
     filter.frequency.setValueAtTime(420, toneStart)
 
     gain.gain.setValueAtTime(0.0001, toneStart)
-    gain.gain.exponentialRampToValueAtTime(0.34, toneStart + 0.006)
+    gain.gain.exponentialRampToValueAtTime(
+      Math.min(0.34 * (settings.soundVolume / 10), 0.65),
+      toneStart + 0.006,
+    )
     gain.gain.exponentialRampToValueAtTime(0.0001, toneStart + duration)
 
     oscillator.connect(filter)
@@ -832,7 +845,7 @@ function playCoinFlipSound() {
 }
 
 function playCoinLandSound() {
-  if (typeof window === 'undefined') return
+  if (typeof window === 'undefined' || !settings.soundEnabled) return
 
   const context = getAudioContext()
   if (!context) return
@@ -854,7 +867,10 @@ function playCoinLandSound() {
     oscillator.frequency.exponentialRampToValueAtTime(tone.endFrequency, toneEnd)
 
     gain.gain.setValueAtTime(0.0001, toneStart)
-    gain.gain.exponentialRampToValueAtTime(tone.volume, toneStart + 0.01)
+    gain.gain.exponentialRampToValueAtTime(
+      Math.min(tone.volume * (settings.soundVolume / 10), 0.65),
+      toneStart + 0.01,
+    )
     gain.gain.exponentialRampToValueAtTime(0.0001, toneEnd)
 
     oscillator.connect(gain)
@@ -912,17 +928,6 @@ const shotSoundMap = {
     tones: [
       { frequency: 860, duration: 0.045, volume: 0.035, type: 'sine' },
       { frequency: 1020, duration: 0.045, volume: 0.03, type: 'sine' },
-    ],
-  },
-  Block: {
-    spacing: 0.03,
-    tones: [{ frequency: 240, endFrequency: 210, duration: 0.08, volume: 0.055, type: 'triangle' }],
-  },
-  Error: {
-    spacing: 0.055,
-    tones: [
-      { frequency: 220, endFrequency: 140, duration: 0.12, volume: 0.06, type: 'sawtooth' },
-      { frequency: 150, endFrequency: 90, duration: 0.14, volume: 0.05, type: 'sawtooth' },
     ],
   },
   default: {

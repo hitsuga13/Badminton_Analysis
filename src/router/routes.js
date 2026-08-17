@@ -8,6 +8,7 @@ const routes = [
       { path: 'live-match', component: () => import('@/pages/LiveMatchPage.vue') },
       { path: 'players', component: () => import('@/pages/PlayersPage.vue') },
       { path: 'history', component: () => import('@/pages/HistoryPage.vue') },
+      { path: 'profile', component: () => import('@/pages/ProfilePage.vue') },
       {
         path: 'settings',
         component: () => import('@/pages/UtilityPage.vue'),

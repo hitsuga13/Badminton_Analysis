@@ -10,6 +10,7 @@
     "lint": "prettier --write \"*.{js,html,md,json}\" \"src/**/*.{js,vue,css,scss}\" --ignore-path .gitignore && eslint --fix -c ./eslint.config.js \"./src*/**/*.{js,cjs,mjs,vue}\"",
     "lint:check": "prettier --check \"*.{js,html,md,json}\" \"src/**/*.{js,vue,css,scss}\" --ignore-path .gitignore && eslint -c ./eslint.config.js \"./src*/**/*.{js,cjs,mjs,vue}\"",
     "dev": "quasar dev",
+    "ai-server": "node server/ai-summary-server.mjs",
     "build": "quasar build",
     "postinstall": "quasar prepare --silent"
   },
