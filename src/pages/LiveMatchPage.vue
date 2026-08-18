@@ -396,12 +396,8 @@ const shotTypes = [
   { type: 'Clear', category: 'neutral' },
   { type: 'Drop', category: 'neutral' },
   { type: 'Lift', category: 'defense' },
-<<<<<<< HEAD
-  { type: 'Net Shot', category: 'neutral' },
-=======
   { type: 'Netting', category: 'neutral' },
   { type: 'Block', category: 'defense' },
->>>>>>> 801d6cdd0228b64de90ef3e5ae5d5aef92da0b8e
   { type: 'Serve', category: 'neutral' },
 ]
 const matchFormatOptions = [
