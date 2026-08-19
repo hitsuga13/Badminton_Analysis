@@ -297,8 +297,8 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
-import { loadPlayers, savePlayers } from '@/data/players'
+import { computed, ref, onMounted } from 'vue'
+import { api } from '../boot/axios'
 
 const search = ref('')
 
@@ -314,28 +314,32 @@ const newPlayer = ref({
   weightKg: 70,
 })
 
-const players = ref(loadPlayers())
+//const players = ref(loadPlayers())
+const players = ref([])
+
+onMounted(async () => {
+  const res = await api.get('/players')
+  players.value = res.data
+})
 
 const filteredPlayers = computed(() =>
   players.value.filter((player) => player.name.toLowerCase().includes(search.value.toLowerCase())),
 )
 
-function addPlayer() {
+async function addPlayer() {
   if (!newPlayer.value.name.trim()) return
 
-  players.value.push({
-    id: Date.now(),
+  const res = await api.post('/players', {
     name: newPlayer.value.name.trim(),
     hand: newPlayer.value.hand.trim(),
     category: newPlayer.value.category.trim(),
     age: Number(newPlayer.value.age),
     heightCm: Number(newPlayer.value.heightCm),
     weightKg: Number(newPlayer.value.weightKg),
-    rank: players.value.length + 1,
     form: [1, 1, 0, 1, 0],
   })
 
-  savePlayers(players.value)
+  players.value.push(res.data)
   resetNewPlayer()
   showAddDialog.value = false
 }
@@ -343,24 +347,22 @@ function addPlayer() {
 function startEditPlayer(player) {
   editingPlayer.value = {
     ...player,
-    form: [...player.form],
+    form: player.form ? [...player.form] : [], //edit player napi
   }
 }
 
-function saveEditPlayer() {
-  const playerIndex = players.value.findIndex((player) => player.id === editingPlayer.value.id)
-  if (playerIndex === -1) return
-
-  players.value[playerIndex] = {
-    ...editingPlayer.value,
+async function saveEditPlayer() {
+  const res = await api.put(`/players/${editingPlayer.value.id}`, {
     name: editingPlayer.value.name.trim(),
     hand: editingPlayer.value.hand.trim(),
     category: editingPlayer.value.category.trim(),
     age: Number(editingPlayer.value.age),
     heightCm: Number(editingPlayer.value.heightCm),
     weightKg: Number(editingPlayer.value.weightKg),
-  }
-  savePlayers(players.value)
+  })
+
+  const playerIndex = players.value.findIndex((player) => player.id === editingPlayer.value.id)
+  if (playerIndex !== -1) players.value[playerIndex] = res.data
   editingPlayer.value = null
 }
 
@@ -368,9 +370,9 @@ function cancelEditPlayer() {
   editingPlayer.value = null
 }
 
-function deletePlayer(playerId) {
+async function deletePlayer(playerId) {
+  await api.delete(`/players/${playerId}`)
   players.value = players.value.filter((player) => player.id !== playerId)
-  savePlayers(players.value)
   if (selectedPlayer.value?.id === playerId) selectedPlayer.value = null
   if (editingPlayer.value?.id === playerId) editingPlayer.value = null
 }
