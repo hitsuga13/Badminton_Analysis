@@ -1311,6 +1311,20 @@ button:disabled {
   text-align: right;
 }
 
+.rally-chip--timer select {
+  min-width: 116px;
+  padding: 2px 22px 2px 0;
+  border: 0;
+  background-color: transparent;
+  color: var(--cs-muted-foreground);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.rally-chip--timer select:focus {
+  outline: none;
+}
+
 .rally-chip--turn {
   border-color: rgb(223 255 0 / 0.4);
 }
@@ -1742,6 +1756,26 @@ button:disabled {
   margin-top: 16px;
 }
 
+.last-shot-summary {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border: 1px solid var(--cs-border);
+  border-radius: 8px;
+  background: var(--cs-secondary);
+}
+
+.last-shot-summary span {
+  color: var(--cs-muted-foreground);
+  font-family: var(--cs-font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.last-shot-summary strong {
+  color: var(--cs-primary);
+}
+
 .dialog-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1755,6 +1789,24 @@ button:disabled {
   background: var(--cs-secondary);
   color: var(--cs-foreground);
   font-weight: 700;
+}
+
+.dialog-grid button strong,
+.dialog-grid button span {
+  display: block;
+}
+
+.dialog-grid button span {
+  margin-top: 4px;
+  color: var(--cs-muted-foreground);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.dialog-grid .success-choice {
+  border-color: rgb(55 214 122 / 0.35);
+  background: rgb(55 214 122 / 0.1);
+  color: var(--cs-success);
 }
 
 .dialog-grid .error-choice {

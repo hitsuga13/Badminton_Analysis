@@ -469,7 +469,7 @@ function buildStats(report) {
 }
 
 function buildShotData(report) {
-  const shotNames = ['Smash', 'Clear', 'Drop', 'Net Shot', 'Drive', 'Lift', 'Serve']
+  const shotNames = ['Smash', 'Drop', 'Net Shot', 'Drive', 'Lift', 'Serve']
   return shotNames.map((name) => ({
     name,
     playerA: countShots(report?.notation, 'A', name),
@@ -653,7 +653,6 @@ function shotCategory(shot) {
   const categories = {
     Smash: 'attack',
     Drive: 'attack',
-    Clear: 'neutral',
     Drop: 'neutral',
     Lift: 'defense',
     'Net Shot': 'neutral',

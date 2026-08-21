@@ -249,8 +249,12 @@
             <strong>{{ currentRally }}</strong>
           </div>
           <div class="rally-chip rally-chip--timer">
-            <span>Rally Time</span>
-            <strong>{{ formattedRallyTime }}</strong>
+            <select v-model="selectedTimerDisplay" aria-label="Timer display">
+              <option v-for="timer in timerDisplayOptions" :key="timer.value" :value="timer.value">
+                {{ timer.label }}
+              </option>
+            </select>
+            <strong>{{ selectedTimerLabel }}</strong>
           </div>
           <div class="rally-chip">
             <span>First Serve</span>
@@ -340,11 +344,32 @@
             </button>
           </div>
 
+          <div v-if="lastRallyAction" class="last-shot-summary">
+            <span>Last Shot</span>
+            <strong>{{ lastRallyAction.playerName }} - {{ lastRallyAction.shot }}</strong>
+          </div>
+
           <div class="dialog-section">
-            <span>Winner</span>
+            <span>Reason</span>
             <div class="dialog-grid">
-              <button type="button" @click="endRally(`Winner: ${playerA}`)">{{ playerA }}</button>
-              <button type="button" @click="endRally(`Winner: ${playerB}`)">{{ playerB }}</button>
+              <button
+                v-for="option in rallyEndingOptions"
+                :key="option.value"
+                :class="option.awardsLastPlayer ? 'success-choice' : 'error-choice'"
+                type="button"
+                @click="endRally(option)"
+              >
+                <strong>{{ option.label }}</strong>
+                <span>{{ option.description }}</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="dialog-section">
+            <span>Manual Award</span>
+            <div class="dialog-grid">
+              <button type="button" @click="endRally(manualOutcome('A'))">{{ playerA }}</button>
+              <button type="button" @click="endRally(manualOutcome('B'))">{{ playerB }}</button>
             </div>
           </div>
         </div>
@@ -379,6 +404,12 @@ const selectedPlayerBId = ref(availablePlayers.value[1]?.id ?? null)
 const showOutcomeDialog = ref(false)
 const rallyStartedAt = ref(null)
 const rallyElapsedMs = ref(0)
+const overallStartedAt = ref(null)
+const overallElapsedMs = ref(0)
+const setStartedAt = ref(null)
+const setElapsedMs = ref(0)
+const setDurations = ref([])
+const selectedTimerDisplay = ref('overall')
 const coinWinner = ref(null)
 const isCoinFlipping = ref(false)
 const activePlayer = ref(null)
@@ -387,17 +418,22 @@ const notationStorageKey = 'akp-shuttletrace:last-match-notation'
 const legacyHistoryStorageKey = `court${'sense'}:match-history`
 const historyStorageKey = 'akp-shuttletrace:match-history'
 let rallyTimerId = null
+let overallTimerId = null
+let setTimerId = null
 let coinFlipTimerId = null
 let audioContext = null
 
 const shotTypes = [
   { type: 'Smash', category: 'attack' },
   { type: 'Drive', category: 'attack' },
-  { type: 'Clear', category: 'neutral' },
   { type: 'Drop', category: 'neutral' },
   { type: 'Lift', category: 'defense' },
+<<<<<<< Updated upstream
   { type: 'Netting', category: 'neutral' },
   { type: 'Block', category: 'defense' },
+=======
+  { type: 'Net Shot', category: 'neutral' },
+>>>>>>> Stashed changes
   { type: 'Serve', category: 'neutral' },
 ]
 const matchFormatOptions = [
@@ -409,6 +445,7 @@ const matchFormatOptions = [
 const currentRallyActions = computed(() =>
   timeline.value.filter((action) => action.rallyNumber === currentRally.value),
 )
+const lastRallyAction = computed(() => currentRallyActions.value.at(-1) ?? null)
 const isFirstShotOfRally = computed(() => currentRallyActions.value.length === 0)
 const canEndRally = computed(() => currentRallyActions.value.length > 0)
 const selectedPlayerA = computed(() => findAvailablePlayer(selectedPlayerAId.value))
@@ -439,7 +476,23 @@ const pointsToWin = computed(() => {
 })
 const pointCap = computed(() => pointsToWin.value + 9)
 const formattedRallyTime = computed(() => formatDuration(rallyElapsedMs.value))
+const formattedOverallTime = computed(() => formatDuration(overallElapsedMs.value))
+const formattedSetTime = computed(() => formatDuration(setElapsedMs.value))
 const lastRallyDurationLabel = computed(() => rallyOutcomes.value.at(-1)?.durationLabel ?? '00:00')
+const timerDisplayOptions = [
+  { value: 'overall', label: 'Overall Time' },
+  { value: 'rally', label: 'Rally Time' },
+  { value: 'set', label: 'Set Time' },
+]
+const selectedTimerLabel = computed(() => {
+  if (selectedTimerDisplay.value === 'rally') return formattedRallyTime.value
+  if (selectedTimerDisplay.value === 'set') return formattedSetTime.value
+  return formattedOverallTime.value
+})
+const rallyEndingOptions = computed(() => {
+  const shot = lastRallyAction.value?.shot ?? 'Shot'
+  return endingOptionsByShot[shot] ?? defaultEndingOptions
+})
 const firstServerName = computed(() => {
   if (coinWinner.value === 'A') return playerA.value
   if (coinWinner.value === 'B') return playerB.value
@@ -461,7 +514,7 @@ function recordAction(player, shot) {
   if (player !== activePlayer.value) return
   if (isFirstShotOfRally.value && shot !== 'Serve') return
   if (!isFirstShotOfRally.value && shot === 'Serve') return
-  if (!rallyStartedAt.value) startRallyTimer()
+  if (shot === 'Serve') startRallyTimer()
 
   timeline.value.push({
     id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
@@ -511,7 +564,8 @@ function startMatch() {
   if (!coinWinner.value) return
   activePlayer.value = coinWinner.value
   matchStatus.value = 'live'
-  startRallyTimer()
+  startOverallTimer()
+  startSetTimer()
   saveNotation()
 }
 
@@ -527,24 +581,33 @@ function undoLastAction() {
   saveNotation()
 }
 
-function endRally(outcome) {
+function endRally(outcomeOption) {
   if (!canEndRally.value) return
+  const endingAction = lastRallyAction.value
+  if (!endingAction) return
+
   const endedAt = new Date().toISOString()
   const startedAt = rallyStartedAt.value
   const durationMs = stopRallyTimer()
-  const winner = getOutcomeWinnerCode(outcome)
+  const winner = getOutcomeWinnerCode(outcomeOption, endingAction)
 
   if (!winner) return
 
   rallyOutcomes.value.push({
     rallyNumber: currentRally.value,
-    outcome,
+    outcome: formatOutcomeLabel(outcomeOption, endingAction, winner),
     shots: currentRallyActions.value.length,
     durationMs,
     durationLabel: formatDuration(durationMs),
     startedAt,
     endedAt,
     winner,
+    endingShot: endingAction.shot,
+    endingPlayer: endingAction.player,
+    endingPlayerName: endingAction.playerName,
+    endingReason: outcomeOption.reason ?? 'Manual',
+    endingType: outcomeOption.type ?? 'manual',
+    pointWinnerName: playerName(winner),
   })
   awardPoint(winner)
   const latestOutcome = rallyOutcomes.value.at(-1)
@@ -556,10 +619,12 @@ function endRally(outcome) {
   activePlayer.value = winner
   showOutcomeDialog.value = false
   saveNotation()
-  if (matchStatus.value === 'live') startRallyTimer()
+  if (matchStatus.value === 'live') resetRallyTimer()
 }
 
 function endMatch() {
+  finishCurrentSetTimer()
+  stopOverallTimer()
   stopRallyTimer()
   matchStatus.value = 'ended'
   saveNotation('ended')
@@ -581,15 +646,21 @@ function awardPoint(winner) {
 
   if (gamesA.value === setsToWin.value || gamesB.value === setsToWin.value) {
     matchStatus.value = 'ended'
+    finishCurrentSetTimer()
+    stopOverallTimer()
     stopRallyTimer()
     return
   }
 
+  finishCurrentSetTimer()
+  startSetTimer()
   scoreA.value = 0
   scoreB.value = 0
 }
 
 function resetMatch() {
+  stopOverallTimer()
+  stopSetTimer()
   stopRallyTimer()
   matchStatus.value = 'setup'
   setupStep.value = 'players'
@@ -603,6 +674,12 @@ function resetMatch() {
   showOutcomeDialog.value = false
   rallyStartedAt.value = null
   rallyElapsedMs.value = 0
+  overallStartedAt.value = null
+  overallElapsedMs.value = 0
+  setStartedAt.value = null
+  setElapsedMs.value = 0
+  setDurations.value = []
+  selectedTimerDisplay.value = 'overall'
   coinWinner.value = null
   isCoinFlipping.value = false
   activePlayer.value = null
@@ -628,10 +705,145 @@ function opponentOf(player) {
   return player === 'A' ? 'B' : 'A'
 }
 
-function getOutcomeWinnerCode(outcome) {
-  if (outcome === `Winner: ${playerA.value}`) return 'A'
-  if (outcome === `Winner: ${playerB.value}`) return 'B'
-  return null
+function getOutcomeWinnerCode(outcomeOption, endingAction) {
+  if (outcomeOption.winner) return outcomeOption.winner
+  if (outcomeOption.awardsLastPlayer) return endingAction.player
+  return opponentOf(endingAction.player)
+}
+
+function manualOutcome(winner) {
+  return {
+    type: 'manual',
+    reason: 'Manual',
+    winner,
+    label: `Manual: ${playerName(winner)}`,
+  }
+}
+
+function formatOutcomeLabel(outcomeOption, endingAction, winner) {
+  if (outcomeOption.type === 'manual') return `Winner: ${playerName(winner)}`
+
+  return `${endingAction.shot} by ${endingAction.playerName} ${outcomeOption.phrase}. Point: ${playerName(
+    winner,
+  )}`
+}
+
+const defaultEndingOptions = [
+  {
+    value: 'winner',
+    label: 'Successful',
+    reason: 'Winner',
+    type: 'winner',
+    phrase: 'won the rally',
+    description: 'Point to last hitter',
+    awardsLastPlayer: true,
+  },
+  {
+    value: 'out',
+    label: 'Out',
+    reason: 'Out',
+    type: 'error',
+    phrase: 'went out',
+    description: 'Point to opponent',
+    awardsLastPlayer: false,
+  },
+  {
+    value: 'net',
+    label: 'Net',
+    reason: 'Net',
+    type: 'error',
+    phrase: 'hit the net',
+    description: 'Point to opponent',
+    awardsLastPlayer: false,
+  },
+  {
+    value: 'fault',
+    label: 'Fault',
+    reason: 'Fault',
+    type: 'error',
+    phrase: 'ended in a fault',
+    description: 'Point to opponent',
+    awardsLastPlayer: false,
+  },
+]
+
+const endingOptionsByShot = {
+  Serve: [
+    {
+      value: 'ace',
+      label: 'Ace',
+      reason: 'Ace',
+      type: 'winner',
+      phrase: 'was an ace',
+      description: 'Point to server',
+      awardsLastPlayer: true,
+    },
+    {
+      value: 'serve-out',
+      label: 'Out',
+      reason: 'Out',
+      type: 'error',
+      phrase: 'went out',
+      description: 'Point to receiver',
+      awardsLastPlayer: false,
+    },
+    {
+      value: 'serve-net',
+      label: 'Net',
+      reason: 'Net',
+      type: 'error',
+      phrase: 'hit the net',
+      description: 'Point to receiver',
+      awardsLastPlayer: false,
+    },
+    {
+      value: 'serve-fault',
+      label: 'Fault',
+      reason: 'Fault',
+      type: 'error',
+      phrase: 'was a fault',
+      description: 'Point to receiver',
+      awardsLastPlayer: false,
+    },
+  ],
+  Lift: [
+    {
+      value: 'deep-lift',
+      label: 'Successful',
+      reason: 'Winner',
+      type: 'winner',
+      phrase: 'won the rally',
+      description: 'Point to last hitter',
+      awardsLastPlayer: true,
+    },
+    {
+      value: 'lift-out',
+      label: 'Out',
+      reason: 'Out',
+      type: 'error',
+      phrase: 'went long',
+      description: 'Point to opponent',
+      awardsLastPlayer: false,
+    },
+    {
+      value: 'lift-short',
+      label: 'Too Short',
+      reason: 'Short',
+      type: 'error',
+      phrase: 'landed too short',
+      description: 'Point to opponent',
+      awardsLastPlayer: false,
+    },
+    {
+      value: 'lift-net',
+      label: 'Net',
+      reason: 'Net',
+      type: 'error',
+      phrase: 'hit the net',
+      description: 'Point to opponent',
+      awardsLastPlayer: false,
+    },
+  ],
 }
 
 function buildNotationReport(status = matchStatus.value) {
@@ -651,6 +863,12 @@ function buildNotationReport(status = matchStatus.value) {
       currentRallyStartedAt: rallyStartedAt.value,
       currentRallyDurationMs: rallyElapsedMs.value,
       currentRallyDurationLabel: formattedRallyTime.value,
+      overallStartedAt: overallStartedAt.value,
+      overallDurationMs: overallElapsedMs.value,
+      overallDurationLabel: formattedOverallTime.value,
+      currentSetStartedAt: setStartedAt.value,
+      currentSetDurationMs: setElapsedMs.value,
+      currentSetDurationLabel: formattedSetTime.value,
       firstServer: firstServerName.value,
       firstServerCode: coinWinner.value,
       activePlayer: activePlayerName.value,
@@ -668,6 +886,7 @@ function buildNotationReport(status = matchStatus.value) {
     },
     notation: timeline.value,
     rallyOutcomes: rallyOutcomes.value,
+    setDurations: setDurations.value,
   }
 }
 
@@ -745,7 +964,7 @@ function startRallyTimer() {
   if (typeof window === 'undefined') return
 
   rallyTimerId = window.setInterval(() => {
-    rallyElapsedMs.value = elapsedFromStart()
+    rallyElapsedMs.value = elapsedFromStart(rallyStartedAt.value, rallyElapsedMs.value)
   }, 250)
 }
 
@@ -755,13 +974,82 @@ function stopRallyTimer() {
     rallyTimerId = null
   }
 
-  rallyElapsedMs.value = elapsedFromStart()
+  rallyElapsedMs.value = elapsedFromStart(rallyStartedAt.value, rallyElapsedMs.value)
   return rallyElapsedMs.value
 }
 
-function elapsedFromStart() {
-  if (!rallyStartedAt.value) return rallyElapsedMs.value
-  return Math.max(Date.now() - new Date(rallyStartedAt.value).getTime(), 0)
+function resetRallyTimer() {
+  stopRallyTimer()
+  rallyStartedAt.value = null
+  rallyElapsedMs.value = 0
+}
+
+function startOverallTimer() {
+  stopOverallTimer()
+  overallStartedAt.value = new Date().toISOString()
+  overallElapsedMs.value = 0
+
+  if (typeof window === 'undefined') return
+
+  overallTimerId = window.setInterval(() => {
+    overallElapsedMs.value = elapsedFromStart(overallStartedAt.value, overallElapsedMs.value)
+  }, 250)
+}
+
+function stopOverallTimer() {
+  if (overallTimerId && typeof window !== 'undefined') {
+    window.clearInterval(overallTimerId)
+    overallTimerId = null
+  }
+
+  overallElapsedMs.value = elapsedFromStart(overallStartedAt.value, overallElapsedMs.value)
+  return overallElapsedMs.value
+}
+
+function startSetTimer() {
+  stopSetTimer()
+  setStartedAt.value = new Date().toISOString()
+  setElapsedMs.value = 0
+
+  if (typeof window === 'undefined') return
+
+  setTimerId = window.setInterval(() => {
+    setElapsedMs.value = elapsedFromStart(setStartedAt.value, setElapsedMs.value)
+  }, 250)
+}
+
+function stopSetTimer() {
+  if (setTimerId && typeof window !== 'undefined') {
+    window.clearInterval(setTimerId)
+    setTimerId = null
+  }
+
+  setElapsedMs.value = elapsedFromStart(setStartedAt.value, setElapsedMs.value)
+  return setElapsedMs.value
+}
+
+function finishCurrentSetTimer() {
+  const durationMs = stopSetTimer()
+  if (!setStartedAt.value) return durationMs
+
+  setDurations.value.push({
+    setNumber: setDurations.value.length + 1,
+    startedAt: setStartedAt.value,
+    endedAt: new Date().toISOString(),
+    durationMs,
+    durationLabel: formatDuration(durationMs),
+    scoreA: scoreA.value,
+    scoreB: scoreB.value,
+    gamesA: gamesA.value,
+    gamesB: gamesB.value,
+  })
+  setStartedAt.value = null
+  return durationMs
+}
+
+function elapsedFromStart(startedAt, fallbackMs = 0) {
+  if (!startedAt) return fallbackMs
+  return Math.max(Date.now() - new Date(startedAt).getTime(), 0)
 }
 
 function formatDuration(ms) {
@@ -912,10 +1200,6 @@ const shotSoundMap = {
       { frequency: 560, endFrequency: 420, duration: 0.07, volume: 0.035, type: 'square' },
     ],
   },
-  Clear: {
-    spacing: 0.05,
-    tones: [{ frequency: 360, endFrequency: 620, duration: 0.16, volume: 0.04, type: 'triangle' }],
-  },
   Drop: {
     spacing: 0.045,
     tones: [{ frequency: 640, endFrequency: 410, duration: 0.14, volume: 0.035, type: 'sine' }],
@@ -924,7 +1208,7 @@ const shotSoundMap = {
     spacing: 0.045,
     tones: [{ frequency: 300, endFrequency: 700, duration: 0.18, volume: 0.04, type: 'triangle' }],
   },
-  Netting: {
+  'Net Shot': {
     spacing: 0.035,
     tones: [
       { frequency: 860, duration: 0.045, volume: 0.035, type: 'sine' },
@@ -939,6 +1223,8 @@ const shotSoundMap = {
 
 onUnmounted(() => {
   stopCoinFlip()
+  stopOverallTimer()
+  stopSetTimer()
   stopRallyTimer()
   audioContext?.close()
   audioContext = null
