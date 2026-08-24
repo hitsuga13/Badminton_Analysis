@@ -428,12 +428,8 @@ const shotTypes = [
   { type: 'Drive', category: 'attack' },
   { type: 'Drop', category: 'neutral' },
   { type: 'Lift', category: 'defense' },
-<<<<<<< Updated upstream
   { type: 'Netting', category: 'neutral' },
   { type: 'Block', category: 'defense' },
-=======
-  { type: 'Net Shot', category: 'neutral' },
->>>>>>> Stashed changes
   { type: 'Serve', category: 'neutral' },
 ]
 const matchFormatOptions = [
