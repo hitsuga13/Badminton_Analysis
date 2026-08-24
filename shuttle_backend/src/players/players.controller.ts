@@ -18,6 +18,11 @@ export class PlayersController {
     return this.playersService.findAll();
   }
 
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.playersService.findOne(Number(id));
+  }
+
   @Post()
   create(@Body() body) {
     return this.playersService.create(body);

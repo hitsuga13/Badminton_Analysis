@@ -6,6 +6,7 @@ const routes = [
       { path: '', component: () => import('@/pages/IndexPage.vue') },
       { path: 'login', component: () => import('@/pages/LoginPage.vue') },
       { path: 'live-match', component: () => import('@/pages/LiveMatchPage.vue') },
+      { path: 'training-mode', component: () => import('@/pages/TrainingModePage.vue') },
       { path: 'players', component: () => import('@/pages/PlayersPage.vue') },
       { path: 'history', component: () => import('@/pages/HistoryPage.vue') },
       { path: 'profile', component: () => import('@/pages/ProfilePage.vue') },

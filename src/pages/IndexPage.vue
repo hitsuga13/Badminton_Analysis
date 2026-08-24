@@ -1,15 +1,15 @@
 <template>
-  <q-page class="dashboard-page">
+  <q-page :class="['dashboard-page', isTrainingReport && 'dashboard-page--training']">
     <div class="content-wrap">
       <header class="dashboard-header">
         <div>
-          <h1>Post-Match Analytics</h1>
+          <h1>{{ dashboardTitle }}</h1>
           <p>{{ dashboardSummary.subtitle }}</p>
         </div>
 
         <div class="match-card">
           <label class="dashboard-match-select">
-            <span>Match</span>
+            <span>{{ isTrainingReport ? 'Session' : 'Match' }}</span>
             <select
               v-model="selectedMatchId"
               :disabled="dashboardMatches.length === 0"
@@ -28,7 +28,17 @@
           <button class="secondary-action" type="button" @click="exportReport">
             Export Report
           </button>
-          <div class="matchup">
+          <div v-if="isTrainingReport" class="training-dashboard-hero">
+            <div>
+              <span>Drill</span>
+              <strong>{{ notationReport.training?.shot ?? dashboardSummary.playerB }}</strong>
+            </div>
+            <div>
+              <span>Accuracy</span>
+              <strong>{{ notationReport.training?.accuracy ?? 0 }}%</strong>
+            </div>
+          </div>
+          <div v-else class="matchup">
             <div class="player player--right">
               <strong>{{ dashboardSummary.playerA }}</strong>
               <span :class="dashboardSummary.playerALabel === 'Leader' && 'winner'">
@@ -58,15 +68,28 @@
       </section>
 
       <section class="analytics-grid">
-        <article v-if="settings.analytics.shotFrequency" class="panel panel--wide">
+        <article
+          v-if="settings.analytics.shotFrequency"
+          :class="['panel', isTrainingReport ? 'panel--wide' : 'panel--wide']"
+        >
           <div class="panel-head">
-            <h2>Shot Frequency & Distribution</h2>
-            <p>Comparison of shot types used during the match.</p>
+            <h2>
+              {{
+                isTrainingReport ? 'Training Result Distribution' : 'Shot Frequency & Distribution'
+              }}
+            </h2>
+            <p>
+              {{
+                isTrainingReport
+                  ? 'Successful and unsuccessful repetitions from this drill.'
+                  : 'Comparison of shot types used during the match.'
+              }}
+            </p>
           </div>
           <VChart class="chart chart--bar" :option="shotFrequencyOptions" />
         </article>
 
-        <article v-if="settings.analytics.radar" class="panel">
+        <article v-if="settings.analytics.radar && !isTrainingReport" class="panel">
           <div class="panel-head">
             <h2>Performance Radar</h2>
             <p>Multi-dimensional analysis.</p>
@@ -99,6 +122,35 @@
                 <strong>{{ shortPlayerName(dashboardSummary.playerB) }}</strong>
                 <em>{{ hoveredRadarMetric.playerB }}</em>
               </div>
+            </div>
+          </div>
+        </article>
+
+        <article v-if="isTrainingReport" class="panel training-dashboard-panel">
+          <div class="panel-head">
+            <h2>Drill Breakdown</h2>
+            <p>Session progress and coach-facing training outcome.</p>
+          </div>
+          <div class="training-dashboard-breakdown">
+            <div>
+              <span>Target</span>
+              <strong>{{ notationReport.training?.targetReps ?? 0 }}</strong>
+              <small>planned reps</small>
+            </div>
+            <div>
+              <span>Completed</span>
+              <strong>{{ notationReport.training?.completedReps ?? 0 }}</strong>
+              <small>recorded reps</small>
+            </div>
+            <div>
+              <span>Successful</span>
+              <strong>{{ notationReport.training?.successfulReps ?? 0 }}</strong>
+              <small>clean reps</small>
+            </div>
+            <div>
+              <span>Unsuccessful</span>
+              <strong>{{ notationReport.training?.unsuccessfulReps ?? 0 }}</strong>
+              <small>missed reps</small>
             </div>
           </div>
         </article>
@@ -177,6 +229,10 @@ const dashboardMatches = ref([])
 const selectedMatchId = ref('')
 const settings = loadSettings()
 
+const isTrainingReport = computed(() => reportIsTraining(notationReport.value))
+const dashboardTitle = computed(() =>
+  isTrainingReport.value ? 'Training Analytics' : 'Post-Match Analytics',
+)
 const dashboardSummary = computed(() => buildDashboardSummary(notationReport.value))
 const stats = computed(() => buildStats(notationReport.value))
 const shotData = computed(() => buildShotData(notationReport.value))
@@ -398,6 +454,22 @@ function getRadarTooltipStyle(metric) {
 }
 
 function buildDashboardSummary(report) {
+  if (reportIsTraining(report)) {
+    const training = report.training ?? {}
+    const shot = training.shot ?? report.match?.playerB ?? 'Training Drill'
+    const completed = training.completedReps ?? report.match?.totalShots ?? 0
+    const target = training.targetReps ?? completed
+    const accuracyValue = training.accuracy ?? 0
+
+    return {
+      playerA: 'Successful',
+      playerB: 'Unsuccessful',
+      subtitle: `${shot} training - ${completed}/${target} reps completed, ${accuracyValue}% accuracy`,
+      playerALabel: 'Clean reps',
+      playerBLabel: 'Missed reps',
+    }
+  }
+
   const playerA = report?.match?.playerA ?? 'No recorded match'
   const playerB = report?.match?.playerB ?? 'No recorded match'
   const winnerCounts = countRallyWinners(report)
@@ -416,6 +488,44 @@ function buildDashboardSummary(report) {
 }
 
 function buildStats(report) {
+  if (reportIsTraining(report)) {
+    const training = report.training ?? {}
+    const target = training.targetReps ?? report.match?.totalShots ?? 0
+    const completed = training.completedReps ?? report.match?.totalShots ?? 0
+    const successful = training.successfulReps ?? report.match?.scoreA ?? 0
+    const unsuccessful = training.unsuccessfulReps ?? report.match?.scoreB ?? 0
+    const accuracyValue =
+      training.accuracy ?? (completed ? Math.round((successful / completed) * 100) : 0)
+    const completion = target ? Math.round((completed / target) * 100) : 0
+
+    return [
+      {
+        icon: 'fitness_center',
+        label: 'Drill',
+        value: training.shot ?? report.match?.playerB ?? '-',
+        sub: `${target} target repetitions`,
+      },
+      {
+        icon: 'task_alt',
+        label: 'Accuracy',
+        value: `${accuracyValue}%`,
+        sub: `${successful} successful reps`,
+      },
+      {
+        icon: 'timeline',
+        label: 'Completed',
+        value: String(completed),
+        sub: `${completion}% of target`,
+      },
+      {
+        icon: 'cancel',
+        label: 'Unsuccessful',
+        value: String(unsuccessful),
+        sub: 'Needs coach review',
+      },
+    ]
+  }
+
   if (!hasLiveData(report)) {
     return [
       { icon: 'monitor_heart', label: 'Total Rallies', value: '0', sub: 'No recorded match' },
@@ -469,6 +579,17 @@ function buildStats(report) {
 }
 
 function buildShotData(report) {
+  if (reportIsTraining(report)) {
+    const training = report.training ?? {}
+    return [
+      {
+        name: training.shot ?? report.match?.playerB ?? 'Training',
+        playerA: training.successfulReps ?? report.match?.scoreA ?? 0,
+        playerB: training.unsuccessfulReps ?? report.match?.scoreB ?? 0,
+      },
+    ]
+  }
+
   const shotNames = ['Smash', 'Drop', 'Net Shot', 'Drive', 'Lift', 'Serve']
   return shotNames.map((name) => ({
     name,
@@ -512,6 +633,32 @@ function buildRadarData(report) {
 }
 
 function buildInsights(report) {
+  if (reportIsTraining(report)) {
+    const training = report.training ?? {}
+    const accuracyValue = training.accuracy ?? 0
+    const completed = training.completedReps ?? 0
+    const successful = training.successfulReps ?? 0
+    const unsuccessful = training.unsuccessfulReps ?? 0
+
+    return [
+      {
+        icon: 'track_changes',
+        player: training.shot ?? 'Training',
+        title: 'Drill Outcome',
+        description: `${successful}/${completed} reps were successful, with ${accuracyValue}% accuracy for this session.`,
+      },
+      {
+        icon: unsuccessful > successful ? 'priority_high' : 'verified',
+        player: 'Coach Note',
+        title: unsuccessful > successful ? 'Review Technique' : 'Good Control',
+        description:
+          unsuccessful > successful
+            ? `${unsuccessful} unsuccessful reps recorded. Consider slowing the next set and focusing on contact quality.`
+            : `${successful} successful reps recorded. This drill is trending in a controlled direction.`,
+      },
+    ]
+  }
+
   if (!hasLiveData(report)) return []
 
   const summary = buildDashboardSummary(report)
@@ -619,6 +766,13 @@ function matchOptionLabel(matchReport) {
   const date = matchReport.match.savedAt
     ? formatMatchDate(matchReport.match.savedAt)
     : 'Unknown date'
+  if (reportIsTraining(matchReport)) {
+    const shot = matchReport.training?.shot ?? matchReport.match.playerB
+    const playerName = matchReport.training?.playerName ?? matchReport.match.playerA
+    const accuracyValue = matchReport.training?.accuracy ?? 0
+    return `${date} - ${playerName}: ${shot} (${accuracyValue}%)`
+  }
+
   return `${date} - ${matchReport.match.playerA} vs ${matchReport.match.playerB}`
 }
 
@@ -635,11 +789,16 @@ function hasLiveData(report) {
   return Boolean(report?.match && Array.isArray(report.notation) && report.notation.length > 0)
 }
 
+function reportIsTraining(report) {
+  return report?.match?.status === 'training' || Boolean(report?.training)
+}
+
 function statusLabel(status) {
   const labels = {
     ended: 'Match Ended',
     live: 'Live Match',
     'coin-flip': 'Coin Flip Complete',
+    training: 'Training',
   }
 
   return labels[status] ?? status

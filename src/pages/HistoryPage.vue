@@ -3,7 +3,10 @@
     <header class="section-topbar">
       <div>
         <h1>Match History</h1>
-        <p>{{ history.length }} saved matches - {{ deletedHistory.length }} recently deleted</p>
+        <p>
+          {{ filteredHistory.length }} shown - {{ history.length }} saved -
+          {{ deletedHistory.length }} recently deleted
+        </p>
       </div>
 
       <button class="primary-action" type="button" @click="$router.push('/live-match')">
@@ -12,14 +15,41 @@
       </button>
     </header>
 
+    <section class="history-filter-bar">
+      <button
+        v-for="option in historyFilterOptions"
+        :key="option.value"
+        :class="[
+          'history-filter-button',
+          historyFilter === option.value && 'history-filter-button--active',
+        ]"
+        type="button"
+        @click="historyFilter = option.value"
+      >
+        <q-icon :name="option.icon" size="18px" />
+        <span>{{ option.label }}</span>
+        <strong>{{ filterCount(option.value) }}</strong>
+      </button>
+    </section>
+
     <section v-if="history.length === 0" class="history-empty">
       <q-icon name="history" size="42px" />
       <h2>No match history yet</h2>
-      <p>End a Live Match first, then the saved match will appear here.</p>
+      <p>End a Live Match or Training session first, then the saved record will appear here.</p>
+    </section>
+
+    <section v-else-if="filteredHistory.length === 0" class="history-empty">
+      <q-icon name="filter_alt" size="42px" />
+      <h2>No {{ activeFilterLabel }} records</h2>
+      <p>Choose another filter or save a new {{ activeFilterLabel }} session.</p>
     </section>
 
     <section v-else class="history-list">
-      <article v-for="matchReport in history" :key="matchReport.match.id" class="history-card">
+      <article
+        v-for="matchReport in filteredHistory"
+        :key="matchReport.match.id"
+        class="history-card"
+      >
         <div class="history-card-main">
           <div>
             <span>{{ formatDate(matchReport.match.savedAt) }}</span>
@@ -161,7 +191,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 const historyStorageKey = 'akp-shuttletrace:match-history'
 const legacyHistoryStorageKey = `court${'sense'}:match-history`
@@ -171,6 +201,23 @@ const notationStorageKey = 'akp-shuttletrace:last-match-notation'
 const history = ref([])
 const deletedHistory = ref([])
 const selectedMatch = ref(null)
+const historyFilter = ref('all')
+const historyFilterOptions = [
+  { value: 'all', label: 'All', icon: 'apps' },
+  { value: 'live-match', label: 'Live Match', icon: 'monitor_heart' },
+  { value: 'training', label: 'Training', icon: 'fitness_center' },
+]
+
+const filteredHistory = computed(() => {
+  if (historyFilter.value === 'all') return history.value
+  return history.value.filter((item) => historyType(item) === historyFilter.value)
+})
+
+const activeFilterLabel = computed(
+  () =>
+    historyFilterOptions.find((option) => option.value === historyFilter.value)?.label ??
+    'selected',
+)
 
 onMounted(() => {
   history.value = loadHistory()
@@ -304,9 +351,19 @@ function statusLabel(status) {
     ended: 'Ended',
     live: 'Live',
     'coin-flip': 'Coin Flip',
+    training: 'Training',
   }
 
   return labels[status] ?? status ?? 'Unknown'
+}
+
+function historyType(matchReport) {
+  return matchReport?.match?.status === 'training' ? 'training' : 'live-match'
+}
+
+function filterCount(filterValue) {
+  if (filterValue === 'all') return history.value.length
+  return history.value.filter((item) => historyType(item) === filterValue).length
 }
 
 function longestRally(matchReport) {

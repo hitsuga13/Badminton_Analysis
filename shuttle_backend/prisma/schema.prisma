@@ -15,22 +15,89 @@ datasource db {
 }
 
 model Player {
-  id        Int      @id @default(autoincrement())
-  name      String
-  category  String
-  hand      String
-  age       Int
-  heightCm  Int
-  weightKg  Int
-  rank      Int
-  form      Int[]
+  id               Int               @id @default(autoincrement())
+  name             String
+  category         String
+  hand             String
+  age              Int
+  heightCm         Int
+  weightKg         Int
+  rank             Int
+  form             Int[]
+  matchesAsPlayer1 Match[]           @relation("Player1Matches")
+  matchesAsPlayer2 Match[]           @relation("Player2Matches")
+  ralliesWon       Rally[]           @relation("RallyWinner")
+  shotRecords      ShotRecord[]
+  trainingSessions TrainingSession[]
 }
 
 model Match {
-  id          Int      @id @default(autoincrement())
-  player1Id   Int
-  player2Id   Int
+  id           Int          @id @default(autoincrement())
+  player1Id    Int
+  player2Id    Int
   player1Score Int
   player2Score Int
-  date        DateTime
+  date         DateTime     @default(now())
+  status       String       @default("ended")
+  totalRallies Int          @default(0)
+  totalShots   Int          @default(0)
+  matchFormat  String?
+  player1      Player       @relation("Player1Matches", fields: [player1Id], references: [id])
+  player2      Player       @relation("Player2Matches", fields: [player2Id], references: [id])
+  rallies      Rally[]
+  shotRecords  ShotRecord[]
+}
+
+model Rally {
+  id          Int          @id @default(autoincrement())
+  matchId     Int
+  rallyNumber Int
+  winnerId    Int?
+  outcome     String
+  shots       Int          @default(0)
+  durationMs  Int?
+  startedAt   DateTime?
+  endedAt     DateTime?
+  match       Match        @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  winner      Player?      @relation("RallyWinner", fields: [winnerId], references: [id])
+  shotRecords ShotRecord[]
+}
+
+model ShotRecord {
+  id        Int      @id @default(autoincrement())
+  matchId   Int
+  rallyId   Int?
+  playerId  Int
+  sequence  Int
+  shot      String
+  category  String?
+  result    String?
+  timestamp DateTime @default(now())
+  match     Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  rally     Rally?   @relation(fields: [rallyId], references: [id], onDelete: SetNull)
+  player    Player   @relation(fields: [playerId], references: [id])
+}
+
+model TrainingSession {
+  id               Int           @id @default(autoincrement())
+  playerId         Int
+  shot             String
+  targetReps       Int
+  completedReps    Int
+  successfulReps   Int
+  unsuccessfulReps Int
+  accuracy         Int
+  durationMs       Int?
+  savedAt          DateTime      @default(now())
+  player           Player        @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  reps             TrainingRep[]
+}
+
+model TrainingRep {
+  id                Int             @id @default(autoincrement())
+  trainingSessionId Int
+  repNumber         Int
+  successful        Boolean
+  recordedAt        DateTime        @default(now())
+  trainingSession   TrainingSession @relation(fields: [trainingSessionId], references: [id], onDelete: Cascade)
 }

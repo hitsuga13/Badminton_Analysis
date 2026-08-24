@@ -51,6 +51,10 @@ export function clonePlayers(players = defaultPlayers) {
   return players.map((player) => ({
     ...player,
     form: [...(player.form ?? [])],
+    trainingHistory: (player.trainingHistory ?? []).map((session) => ({
+      ...session,
+      records: [...(session.records ?? [])],
+    })),
   }))
 }
 

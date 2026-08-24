@@ -6,7 +6,15 @@ export class PlayersService {
   constructor(private prisma: PrismaService) {}
 
   findAll() {
-    return this.prisma.player.findMany();
+    return this.prisma.player.findMany({
+      include: {
+        trainingSessions: {
+          include: {
+            reps: true,
+          },
+        },
+      },
+    });
   }
 
   create(data: {
@@ -46,6 +54,19 @@ export class PlayersService {
   remove(id: number) {
     return this.prisma.player.delete({
       where: { id },
+    });
+  }
+
+  findOne(id: number) {
+    return this.prisma.player.findUnique({
+      where: { id },
+      include: {
+        trainingSessions: {
+          include: {
+            reps: true,
+          },
+        },
+      },
     });
   }
 }

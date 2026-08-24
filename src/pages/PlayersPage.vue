@@ -94,11 +94,11 @@
       </table>
     </section>
 
-    <q-dialog v-model="showAddDialog" persistent>
-      <form class="player-dialog" @submit.prevent="addPlayer">
+    <div v-if="showAddDialog" class="player-modal" role="dialog" aria-modal="true">
+      <form class="player-dialog" @click.stop @submit.prevent="addPlayer">
         <div class="dialog-head">
           <h2>Add Player</h2>
-          <button type="button" @click="showAddDialog = false">
+          <button type="button" @click="closeAddPlayerDialog">
             <q-icon name="close" size="20px" />
           </button>
         </div>
@@ -128,11 +128,11 @@
           <label>
             <span>Age</span>
             <div class="number-stepper">
-              <button type="button" @click="adjustNewPlayerValue('age', -1)">
+              <button type="button" @click.prevent.stop="adjustNewPlayerValue('age', -1)">
                 <q-icon name="remove" size="18px" />
               </button>
               <input v-model.number="newPlayer.age" min="1" type="number" required />
-              <button type="button" @click="adjustNewPlayerValue('age', 1)">
+              <button type="button" @click.prevent.stop="adjustNewPlayerValue('age', 1)">
                 <q-icon name="add" size="18px" />
               </button>
             </div>
@@ -141,11 +141,11 @@
           <label>
             <span>Height (cm)</span>
             <div class="number-stepper">
-              <button type="button" @click="adjustNewPlayerValue('heightCm', -1)">
+              <button type="button" @click.prevent.stop="adjustNewPlayerValue('heightCm', -1)">
                 <q-icon name="remove" size="18px" />
               </button>
               <input v-model.number="newPlayer.heightCm" min="1" type="number" required />
-              <button type="button" @click="adjustNewPlayerValue('heightCm', 1)">
+              <button type="button" @click.prevent.stop="adjustNewPlayerValue('heightCm', 1)">
                 <q-icon name="add" size="18px" />
               </button>
             </div>
@@ -154,11 +154,11 @@
           <label>
             <span>Weight (kg)</span>
             <div class="number-stepper">
-              <button type="button" @click="adjustNewPlayerValue('weightKg', -1)">
+              <button type="button" @click.prevent.stop="adjustNewPlayerValue('weightKg', -1)">
                 <q-icon name="remove" size="18px" />
               </button>
               <input v-model.number="newPlayer.weightKg" min="1" type="number" required />
-              <button type="button" @click="adjustNewPlayerValue('weightKg', 1)">
+              <button type="button" @click.prevent.stop="adjustNewPlayerValue('weightKg', 1)">
                 <q-icon name="add" size="18px" />
               </button>
             </div>
@@ -170,16 +170,16 @@
           </div>
         </div>
 
-        <button class="primary-action" type="submit">Save Player</button>
-      </form>
-    </q-dialog>
+        <p v-if="playerError" class="form-error">{{ playerError }}</p>
 
-    <q-dialog
-      :model-value="Boolean(editingPlayer)"
-      persistent
-      @update:model-value="cancelEditPlayer"
-    >
-      <form v-if="editingPlayer" class="player-dialog" @submit.prevent="saveEditPlayer">
+        <button class="primary-action" type="submit" :disabled="isSavingPlayer">
+          {{ isSavingPlayer ? 'Saving...' : 'Save Player' }}
+        </button>
+      </form>
+    </div>
+
+    <div v-if="editingPlayer" class="player-modal" role="dialog" aria-modal="true">
+      <form v-if="editingPlayer" class="player-dialog" @click.stop @submit.prevent="saveEditPlayer">
         <div class="dialog-head">
           <h2>Edit Player</h2>
           <button type="button" @click="cancelEditPlayer">
@@ -206,11 +206,11 @@
           <label>
             <span>Age</span>
             <div class="number-stepper">
-              <button type="button" @click="adjustEditingPlayerValue('age', -1)">
+              <button type="button" @click.prevent.stop="adjustEditingPlayerValue('age', -1)">
                 <q-icon name="remove" size="18px" />
               </button>
               <input v-model.number="editingPlayer.age" min="1" type="number" required />
-              <button type="button" @click="adjustEditingPlayerValue('age', 1)">
+              <button type="button" @click.prevent.stop="adjustEditingPlayerValue('age', 1)">
                 <q-icon name="add" size="18px" />
               </button>
             </div>
@@ -219,11 +219,11 @@
           <label>
             <span>Height (cm)</span>
             <div class="number-stepper">
-              <button type="button" @click="adjustEditingPlayerValue('heightCm', -1)">
+              <button type="button" @click.prevent.stop="adjustEditingPlayerValue('heightCm', -1)">
                 <q-icon name="remove" size="18px" />
               </button>
               <input v-model.number="editingPlayer.heightCm" min="1" type="number" required />
-              <button type="button" @click="adjustEditingPlayerValue('heightCm', 1)">
+              <button type="button" @click.prevent.stop="adjustEditingPlayerValue('heightCm', 1)">
                 <q-icon name="add" size="18px" />
               </button>
             </div>
@@ -232,11 +232,11 @@
           <label>
             <span>Weight (kg)</span>
             <div class="number-stepper">
-              <button type="button" @click="adjustEditingPlayerValue('weightKg', -1)">
+              <button type="button" @click.prevent.stop="adjustEditingPlayerValue('weightKg', -1)">
                 <q-icon name="remove" size="18px" />
               </button>
               <input v-model.number="editingPlayer.weightKg" min="1" type="number" required />
-              <button type="button" @click="adjustEditingPlayerValue('weightKg', 1)">
+              <button type="button" @click.prevent.stop="adjustEditingPlayerValue('weightKg', 1)">
                 <q-icon name="add" size="18px" />
               </button>
             </div>
@@ -248,9 +248,11 @@
           </div>
         </div>
 
+        <p v-if="playerError" class="form-error">{{ playerError }}</p>
+
         <button class="primary-action" type="submit">Update Player</button>
       </form>
-    </q-dialog>
+    </div>
 
     <q-dialog :model-value="Boolean(selectedPlayer)" @update:model-value="selectedPlayer = null">
       <div v-if="selectedPlayer" class="player-dialog">
@@ -291,6 +293,41 @@
             <strong>{{ calculateBmi(selectedPlayer) }}</strong>
           </div>
         </div>
+
+        <section class="player-training-panel">
+          <div class="player-training-head">
+            <div>
+              <span>Training History</span>
+              <strong>{{ playerTrainingHistory(selectedPlayer).length }} sessions</strong>
+            </div>
+            <em>{{ playerTrainingSummary(selectedPlayer) }}</em>
+          </div>
+
+          <div v-if="playerTrainingHistory(selectedPlayer).length === 0" class="history-muted">
+            No training sessions recorded for this player yet.
+          </div>
+
+          <div v-else class="player-training-list">
+            <article
+              v-for="session in playerTrainingHistory(selectedPlayer).slice(0, 5)"
+              :key="session.id"
+              class="player-training-card"
+            >
+              <div>
+                <span>{{ formatTrainingDate(session.savedAt) }}</span>
+                <strong>{{ session.shot }}</strong>
+              </div>
+              <div>
+                <span>Reps</span>
+                <strong>{{ session.completedReps }}/{{ session.targetReps }}</strong>
+              </div>
+              <div>
+                <span>Accuracy</span>
+                <strong>{{ session.accuracy }}%</strong>
+              </div>
+            </article>
+          </div>
+        </section>
       </div>
     </q-dialog>
   </q-page>
@@ -299,12 +336,15 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue'
 import { api } from '../boot/axios'
+import { loadPlayers, savePlayers } from '@/data/players'
 
 const search = ref('')
 
 const showAddDialog = ref(false)
 const selectedPlayer = ref(null)
 const editingPlayer = ref(null)
+const playerError = ref('')
+const isSavingPlayer = ref(false)
 const newPlayer = ref({
   name: '',
   category: "Men's Singles",
@@ -314,12 +354,16 @@ const newPlayer = ref({
   weightKg: 70,
 })
 
-//const players = ref(loadPlayers())
-const players = ref([])
+const players = ref(loadPlayers())
 
 onMounted(async () => {
-  const res = await api.get('/players')
-  players.value = res.data
+  try {
+    const res = await api.get('/players')
+    players.value = mergeStoredPlayerData(normalizePlayers(res.data), loadPlayers())
+    savePlayers(players.value)
+  } catch (error) {
+    playerError.value = getPlayerErrorMessage(error)
+  }
 })
 
 const filteredPlayers = computed(() =>
@@ -329,19 +373,29 @@ const filteredPlayers = computed(() =>
 async function addPlayer() {
   if (!newPlayer.value.name.trim()) return
 
-  const res = await api.post('/players', {
-    name: newPlayer.value.name.trim(),
-    hand: newPlayer.value.hand.trim(),
-    category: newPlayer.value.category.trim(),
-    age: Number(newPlayer.value.age),
-    heightCm: Number(newPlayer.value.heightCm),
-    weightKg: Number(newPlayer.value.weightKg),
-    form: [1, 1, 0, 1, 0],
-  })
+  isSavingPlayer.value = true
+  playerError.value = ''
 
-  players.value.push(res.data)
-  resetNewPlayer()
-  showAddDialog.value = false
+  try {
+    const res = await api.post('/players', {
+      name: newPlayer.value.name.trim(),
+      hand: newPlayer.value.hand.trim(),
+      category: newPlayer.value.category.trim(),
+      age: Number(newPlayer.value.age),
+      heightCm: Number(newPlayer.value.heightCm),
+      weightKg: Number(newPlayer.value.weightKg),
+      form: [1, 1, 0, 1, 0],
+    })
+
+    players.value.push(normalizePlayer(res.data))
+    savePlayers(players.value)
+    resetNewPlayer()
+    showAddDialog.value = false
+  } catch (error) {
+    playerError.value = getPlayerErrorMessage(error)
+  } finally {
+    isSavingPlayer.value = false
+  }
 }
 
 function startEditPlayer(player) {
@@ -352,29 +406,54 @@ function startEditPlayer(player) {
 }
 
 async function saveEditPlayer() {
-  const res = await api.put(`/players/${editingPlayer.value.id}`, {
-    name: editingPlayer.value.name.trim(),
-    hand: editingPlayer.value.hand.trim(),
-    category: editingPlayer.value.category.trim(),
-    age: Number(editingPlayer.value.age),
-    heightCm: Number(editingPlayer.value.heightCm),
-    weightKg: Number(editingPlayer.value.weightKg),
-  })
+  playerError.value = ''
 
-  const playerIndex = players.value.findIndex((player) => player.id === editingPlayer.value.id)
-  if (playerIndex !== -1) players.value[playerIndex] = res.data
-  editingPlayer.value = null
+  try {
+    const res = await api.put(`/players/${editingPlayer.value.id}`, {
+      name: editingPlayer.value.name.trim(),
+      hand: editingPlayer.value.hand.trim(),
+      category: editingPlayer.value.category.trim(),
+      age: Number(editingPlayer.value.age),
+      heightCm: Number(editingPlayer.value.heightCm),
+      weightKg: Number(editingPlayer.value.weightKg),
+    })
+
+    const playerIndex = players.value.findIndex((player) => player.id === editingPlayer.value.id)
+    if (playerIndex !== -1) players.value[playerIndex] = normalizePlayer(res.data)
+    savePlayers(players.value)
+    editingPlayer.value = null
+  } catch (error) {
+    playerError.value = getPlayerErrorMessage(error)
+  }
 }
 
 function cancelEditPlayer() {
   editingPlayer.value = null
+  clearPlayerDialogState()
+}
+
+function closeAddPlayerDialog() {
+  showAddDialog.value = false
+  clearPlayerDialogState()
+}
+
+function clearPlayerDialogState() {
+  playerError.value = ''
+  isSavingPlayer.value = false
 }
 
 async function deletePlayer(playerId) {
-  await api.delete(`/players/${playerId}`)
-  players.value = players.value.filter((player) => player.id !== playerId)
-  if (selectedPlayer.value?.id === playerId) selectedPlayer.value = null
-  if (editingPlayer.value?.id === playerId) editingPlayer.value = null
+  playerError.value = ''
+
+  try {
+    await api.delete(`/players/${playerId}`)
+    players.value = players.value.filter((player) => player.id !== playerId)
+    savePlayers(players.value)
+    if (selectedPlayer.value?.id === playerId) selectedPlayer.value = null
+    if (editingPlayer.value?.id === playerId) editingPlayer.value = null
+  } catch (error) {
+    playerError.value = getPlayerErrorMessage(error)
+  }
 }
 
 function adjustNewPlayerValue(field, amount) {
@@ -408,5 +487,64 @@ function resetNewPlayer() {
     heightCm: 175,
     weightKg: 70,
   }
+}
+
+function normalizePlayers(playersList) {
+  if (!Array.isArray(playersList)) return []
+  return playersList.map(normalizePlayer)
+}
+
+function normalizePlayer(player) {
+  return {
+    ...player,
+    rank: player.rank ?? 0,
+    form: Array.isArray(player.form) ? player.form : [],
+    trainingHistory: Array.isArray(player.trainingHistory) ? player.trainingHistory : [],
+  }
+}
+
+function mergeStoredPlayerData(fetchedPlayers, storedPlayers) {
+  return fetchedPlayers.map((player) => {
+    const storedPlayer = storedPlayers.find((stored) => stored.id === player.id)
+    return {
+      ...player,
+      trainingHistory: storedPlayer?.trainingHistory ?? player.trainingHistory ?? [],
+    }
+  })
+}
+
+function playerTrainingHistory(player) {
+  return [...(player?.trainingHistory ?? [])].sort(
+    (a, b) => new Date(b.savedAt ?? 0) - new Date(a.savedAt ?? 0),
+  )
+}
+
+function playerTrainingSummary(player) {
+  const sessions = playerTrainingHistory(player)
+  if (sessions.length === 0) return 'No embedded training data'
+
+  const totalReps = sessions.reduce((sum, session) => sum + (session.completedReps ?? 0), 0)
+  const successfulReps = sessions.reduce((sum, session) => sum + (session.successfulReps ?? 0), 0)
+  const accuracy = totalReps ? Math.round((successfulReps / totalReps) * 100) : 0
+  return `${totalReps} reps logged - ${accuracy}% accuracy`
+}
+
+function formatTrainingDate(value) {
+  if (!value) return 'Unknown date'
+
+  return new Intl.DateTimeFormat('en-MY', {
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(new Date(value))
+}
+
+function getPlayerErrorMessage(error) {
+  if (error?.code === 'ECONNABORTED') {
+    return 'Backend took too long to respond. You can close this dialog and try again.'
+  }
+
+  return error?.response?.data?.message ?? 'Player could not be saved. Check backend connection.'
 }
 </script>

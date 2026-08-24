@@ -100,6 +100,7 @@ onUnmounted(() => window.removeEventListener('akp-settings-updated', refreshProf
 const navItems = [
   { label: 'Dashboard', icon: 'dashboard', to: '/' },
   { label: 'Live Match', icon: 'monitor_heart', to: '/live-match' },
+  { label: 'Training Mode', icon: 'fitness_center', to: '/training-mode' },
   { label: 'Players', icon: 'groups', to: '/players' },
   { label: 'History', icon: 'history', to: '/history' },
 ]
