@@ -11,17 +11,6 @@ async function bootstrap() {
   ];
 
   app.enableCors({
-<<<<<<< Updated upstream
-    origin: [
-      'http://localhost:9000',
-      'http://localhost:9001',
-      'https://hitsuga13.github.io',
-    ],
-    credentials: true,
-  });
-  //await app.listen(process.env.PORT ?? 3000);
-  await app.listen(process.env.PORT || 3000);
-=======
     origin(origin, callback) {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
@@ -34,6 +23,5 @@ async function bootstrap() {
   });
 
   await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
->>>>>>> Stashed changes
 }
 bootstrap();
