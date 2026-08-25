@@ -1,0 +1,9 @@
+{
+  "name": "ai-summary-server",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "ai-summary-server.mjs",
+  "scripts": {
+    "start": "node ai-summary-server.mjs"
+  }
+}
