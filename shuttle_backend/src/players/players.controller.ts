@@ -34,8 +34,8 @@ export class PlayersController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    this.playersService.remove(Number(id));
-    return { deleted: true };
+  async remove(@Param('id') id: string) {
+    await this.playersService.remove(Number(id));
+    return { deleted: true, id: Number(id) };
   }
 }

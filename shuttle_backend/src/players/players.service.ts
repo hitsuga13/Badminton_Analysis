@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -52,8 +52,24 @@ export class PlayersService {
   }
 
   remove(id: number) {
-    return this.prisma.player.delete({
-      where: { id },
+    return this.prisma.$transaction(async (tx) => {
+      const relatedMatchCount = await tx.match.count({
+        where: {
+          OR: [{ player1Id: id }, { player2Id: id }],
+        },
+      });
+      const relatedShotCount = await tx.shotRecord.count({ where: { playerId: id } });
+      const relatedWinCount = await tx.rally.count({ where: { winnerId: id } });
+
+      if (relatedMatchCount || relatedShotCount || relatedWinCount) {
+        throw new BadRequestException(
+          'Player has match history and cannot be deleted without removing related match data first.',
+        );
+      }
+
+      return tx.player.delete({
+        where: { id },
+      });
     });
   }
 
