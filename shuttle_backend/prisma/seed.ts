@@ -243,7 +243,8 @@ async function createTrainingSession(
       coachId,
       playerId,
       shot,
-      shotTypeId: (await prisma.shotType.findUnique({ where: { name: shot } }))?.id,
+      shotTypeId: (await prisma.shotType.findUnique({ where: { name: shot } }))
+        ?.id,
       targetReps,
       completedReps,
       successfulReps,
