@@ -976,7 +976,8 @@ button:disabled {
 }
 
 .radar-hover-point:hover,
-.radar-hover-point:focus-visible {
+.radar-hover-point:focus-visible,
+.radar-hover-point--active {
   border-color: rgb(223 255 0 / 0.45);
   background: rgb(223 255 0 / 0.08);
   outline: 0;
@@ -994,7 +995,8 @@ button:disabled {
 }
 
 .radar-hover-point:hover::after,
-.radar-hover-point:focus-visible::after {
+.radar-hover-point:focus-visible::after,
+.radar-hover-point--active::after {
   opacity: 1;
 }
 

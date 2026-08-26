@@ -99,10 +99,14 @@
             <button
               v-for="(metric, index) in radarData"
               :key="metric.subject"
-              class="radar-hover-point"
+              :class="[
+                'radar-hover-point',
+                hoveredRadarMetric?.subject === metric.subject && 'radar-hover-point--active',
+              ]"
               type="button"
               :style="getRadarPointStyle(index)"
               :aria-label="`${metric.subject} values`"
+              @click="hoveredRadarMetric = metric"
               @mouseenter="hoveredRadarMetric = metric"
               @focus="hoveredRadarMetric = metric"
               @blur="hoveredRadarMetric = null"
@@ -429,30 +433,32 @@ const performanceRadarOptions = computed(() => ({
 }))
 
 function getRadarPointStyle(index) {
-  const points = [
-    { left: '50%', top: '13%' },
-    { left: '82%', top: '29%' },
-    { left: '82%', top: '62%' },
-    { left: '50%', top: '78%' },
-    { left: '18%', top: '62%' },
-    { left: '18%', top: '29%' },
-  ]
-
-  return points[index] ?? points[0]
+  const point = radarPoint(index)
+  return {
+    left: `${point.left}%`,
+    top: `${point.top}%`,
+  }
 }
 
 function getRadarTooltipStyle(metric) {
   const index = radarData.value.findIndex((item) => item.subject === metric.subject)
-  const points = [
-    { left: '50%', top: '10%', transform: 'translateX(-50%)' },
-    { right: '12px', top: '24%', transform: 'none' },
-    { right: '12px', top: '56%', transform: 'none' },
-    { left: '50%', bottom: '8px', transform: 'translateX(-50%)' },
-    { left: '12px', top: '56%', transform: 'none' },
-    { left: '12px', top: '24%', transform: 'none' },
-  ]
+  const point = radarPoint(Math.max(index, 0))
 
-  return points[index] ?? points[0]
+  if (point.top < 24) return { left: '50%', top: '8px', transform: 'translateX(-50%)' }
+  if (point.top > 68) return { left: '50%', bottom: '8px', transform: 'translateX(-50%)' }
+  if (point.left >= 50) return { right: '12px', top: `${Math.max(point.top - 8, 12)}%` }
+  return { left: '12px', top: `${Math.max(point.top - 8, 12)}%` }
+}
+
+function radarPoint(index) {
+  const metricCount = Math.max(radarData.value.length, 1)
+  const angle = -Math.PI / 2 + (index / metricCount) * Math.PI * 2
+  const radius = 33
+
+  return {
+    left: 50 + Math.cos(angle) * radius,
+    top: 46 + Math.sin(angle) * radius,
+  }
 }
 
 function buildDashboardSummary(report) {
