@@ -93,31 +93,7 @@
           <div class="panel-head">
             <h2>Performance Radar</h2>
             <p>Multi-dimensional analysis.</p>
-          </div>
-          <div class="radar-chart-shell">
-            <VChart class="chart chart--radar" :option="performanceRadarOptions" />
-            <button
-              v-for="(metric, index) in radarData"
-              :key="metric.subject"
-              :class="[
-                'radar-label-hit',
-                hoveredRadarMetric?.subject === metric.subject && 'radar-label-hit--active',
-              ]"
-              type="button"
-              :style="getRadarLabelStyle(index)"
-              :aria-label="`${metric.subject} values`"
-              @click="selectRadarMetric(metric)"
-              @mouseenter="selectRadarMetric(metric)"
-              @focus="selectRadarMetric(metric)"
-            >
-              {{ metric.subject }}
-            </button>
-
-            <div
-              v-if="selectedRadarMetric"
-              class="radar-metric-tooltip"
-              :style="getRadarTooltipStyle(selectedRadarMetric)"
-            >
+            <div v-if="selectedRadarMetric" class="radar-selected-summary">
               <span>{{ selectedRadarMetric.subject }}</span>
               <div>
                 <strong>{{ shortPlayerName(dashboardSummary.playerA) }}</strong>
@@ -128,6 +104,20 @@
                 <em>{{ selectedRadarMetric.playerB }}</em>
               </div>
             </div>
+          </div>
+          <div class="radar-chart-shell">
+            <VChart class="chart chart--radar" :option="performanceRadarOptions" />
+            <button
+              v-for="(metric, index) in radarData"
+              :key="metric.subject"
+              class="radar-label-hit"
+              type="button"
+              :style="getRadarLabelStyle(index)"
+              :aria-label="`${metric.subject} values`"
+              @click="selectRadarMetric(metric)"
+            >
+              {{ metric.subject }}
+            </button>
           </div>
         </article>
 
@@ -357,6 +347,7 @@ const shotFrequencyOptions = computed(() => ({
 }))
 
 const performanceRadarOptions = computed(() => ({
+  animation: false,
   backgroundColor: 'transparent',
   color: [primaryColor, secondarySeriesColor],
   legend: {
@@ -442,16 +433,6 @@ function getRadarLabelStyle(index) {
     left: `${point.left}%`,
     top: `${point.top}%`,
   }
-}
-
-function getRadarTooltipStyle(metric) {
-  const index = radarData.value.findIndex((item) => item.subject === metric.subject)
-  const point = radarPoint(Math.max(index, 0), 28)
-
-  if (point.top < 24) return { left: '50%', top: '8px', transform: 'translateX(-50%)' }
-  if (point.top > 68) return { left: '50%', bottom: '8px', transform: 'translateX(-50%)' }
-  if (point.left >= 50) return { right: '12px', top: `${Math.max(point.top - 8, 12)}%` }
-  return { left: '12px', top: `${Math.max(point.top - 8, 12)}%` }
 }
 
 function radarPoint(index, radius = 28) {
