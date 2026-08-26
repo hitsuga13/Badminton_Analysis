@@ -203,6 +203,7 @@ import { use } from 'echarts/core'
 import VChart from 'vue-echarts'
 import { loadSettings } from '@/data/settings'
 import { isLoggedIn, scopedStorageKey } from '@/data/auth'
+import { api } from '../boot/axios'
 
 use([
   BarChart,
@@ -241,15 +242,15 @@ const radarData = computed(() => buildRadarData(notationReport.value))
 const insights = computed(() => buildInsights(notationReport.value))
 
 onMounted(() => {
-  refreshDashboardMatches()
+  void refreshDashboardMatches()
   window.addEventListener('akp-ai-summary-ready', refreshDashboardMatches)
 })
 
 onUnmounted(() => window.removeEventListener('akp-ai-summary-ready', refreshDashboardMatches))
 
-function refreshDashboardMatches() {
+async function refreshDashboardMatches() {
   const currentMatchId = selectedMatchId.value
-  dashboardMatches.value = loadDashboardMatches()
+  dashboardMatches.value = await loadDashboardMatches()
   notationReport.value =
     dashboardMatches.value.find((matchReport) => matchReport.match.id === currentMatchId) ??
     dashboardMatches.value[0] ??
@@ -705,31 +706,177 @@ function selectDashboardMatch() {
   hoveredRadarMetric.value = null
 }
 
-function loadDashboardMatches() {
+async function loadDashboardMatches() {
   if (typeof window === 'undefined') return []
 
-  const history = normalizeReports(
+  const history = loadLocalDashboardMatches()
+  const remoteHistory = await loadRemoteDashboardMatches()
+  const latest = getStoredNotationReport()
+  const reportsById = new Map()
+
+  remoteHistory.forEach((report) => {
+    reportsById.set(report.match.id, report)
+  })
+
+  history.forEach((report) => {
+    if (!reportsById.has(report.match.id)) reportsById.set(report.match.id, report)
+  })
+
+  if (latest?.match) {
+    const normalizedLatest = normalizeReports([latest])[0]
+    if (!reportsById.has(normalizedLatest.match.id)) reportsById.set(normalizedLatest.match.id, normalizedLatest)
+  }
+
+  const reports = [...reportsById.values()].sort(
+    (a, b) => new Date(b.match.savedAt ?? 0) - new Date(a.match.savedAt ?? 0),
+  )
+  persistDashboardCache(reports)
+  return reports
+}
+
+function loadLocalDashboardMatches() {
+  return normalizeReports(
     parseStoredJson(
       window.localStorage.getItem(historyStorageKey) ??
         (isLoggedIn() ? null : window.localStorage.getItem(legacyHistoryStorageKey)),
       [],
     ),
   )
-  const latest = getStoredNotationReport()
-  const reportsById = new Map()
+}
 
-  history.forEach((report) => {
-    reportsById.set(report.match.id, report)
-  })
+async function loadRemoteDashboardMatches() {
+  try {
+    const [matchesResponse, trainingResponse] = await Promise.all([
+      api.get('/matches'),
+      api.get('/training'),
+    ])
 
-  if (latest?.match) {
-    const normalizedLatest = normalizeReports([latest])[0]
-    reportsById.set(normalizedLatest.match.id, normalizedLatest)
+    return normalizeReports([
+      ...normalizeRemoteMatches(matchesResponse.data),
+      ...normalizeRemoteTraining(trainingResponse.data),
+    ])
+  } catch {
+    return []
   }
+}
 
-  return [...reportsById.values()].sort(
-    (a, b) => new Date(b.match.savedAt ?? 0) - new Date(a.match.savedAt ?? 0),
-  )
+function normalizeRemoteMatches(matches) {
+  if (!Array.isArray(matches)) return []
+
+  return matches.map((match) => ({
+    match: {
+      id: `db-match-${match.id}`,
+      databaseId: match.id,
+      status: match.status ?? 'ended',
+      playerA: match.player1?.name ?? 'Player A',
+      playerB: match.player2?.name ?? 'Player B',
+      playerAId: match.player1Id,
+      playerBId: match.player2Id,
+      totalRallies: match.totalRallies ?? match.rallies?.length ?? 0,
+      totalShots: match.totalShots ?? match.shotRecords?.length ?? 0,
+      scoreA: match.player1Score ?? 0,
+      scoreB: match.player2Score ?? 0,
+      gamesA: match.sets?.filter((set) => set.winnerId === match.player1Id).length ?? 0,
+      gamesB: match.sets?.filter((set) => set.winnerId === match.player2Id).length ?? 0,
+      firstServer: '-',
+      firstServerCode: '-',
+      scoringFormat: match.matchFormat ?? '-',
+      savedAt: match.endedAt ?? match.date,
+    },
+    notation: (match.rallies ?? []).flatMap((rally) =>
+      (rally.shotRecords ?? []).map((shot) => ({
+        id: `db-shot-${shot.id}`,
+        rallyNumber: rally.rallyNumber,
+        player: shot.playerId === match.player1Id ? 'A' : 'B',
+        playerName: shot.player?.name ?? '-',
+        shot: shot.shotType?.name ?? shot.shot,
+        timestamp: shot.timestamp,
+        result: shot.result,
+      })),
+    ),
+    rallyOutcomes: (match.rallies ?? []).map((rally) => ({
+      rallyNumber: rally.rallyNumber,
+      outcome: rally.outcome,
+      shots: rally.shots,
+      durationMs: rally.durationMs,
+      durationLabel: formatDashboardDuration(rally.durationMs ?? 0),
+      endingType: rally.outcomeType,
+      endingReason: rally.outcomeReason,
+      pointWinnerName: rally.winner?.name ?? '-',
+    })),
+    setDurations: match.sets ?? [],
+    database: { status: 'saved', id: match.id },
+  }))
+}
+
+function normalizeRemoteTraining(sessions) {
+  if (!Array.isArray(sessions)) return []
+
+  return sessions.map((session) => ({
+    match: {
+      id: `db-training-${session.id}`,
+      databaseId: session.id,
+      status: 'training',
+      playerA: session.player?.name ?? 'Training Player',
+      playerB: session.shotType?.name ?? session.shot,
+      firstServer: session.player?.name ?? 'Training Player',
+      firstServerCode: 'Training',
+      totalRallies: session.completedReps ?? 0,
+      totalShots: session.completedReps ?? 0,
+      scoreA: session.successfulReps ?? 0,
+      scoreB: session.unsuccessfulReps ?? 0,
+      gamesA: session.successfulReps ?? 0,
+      gamesB: session.unsuccessfulReps ?? 0,
+      scoringFormat: `${session.targetReps} repetitions, ${session.accuracy}% accuracy`,
+      savedAt: session.savedAt,
+    },
+    notation: (session.reps ?? []).map((rep) => ({
+      id: `db-rep-${rep.id}`,
+      rallyNumber: rep.repNumber,
+      player: 'Training',
+      playerName: session.player?.name ?? 'Training Player',
+      shot: session.shotType?.name ?? session.shot,
+      timestamp: rep.recordedAt,
+      result: rep.successful ? 'Successful' : 'Unsuccessful',
+    })),
+    rallyOutcomes: [
+      {
+        rallyNumber: 1,
+        outcome: `${session.shotType?.name ?? session.shot} drill: ${session.successfulReps} successful, ${session.unsuccessfulReps} unsuccessful`,
+        shots: session.completedReps,
+        durationMs: session.durationMs,
+        durationLabel: formatDashboardDuration(session.durationMs ?? 0),
+        endingType: 'training',
+        pointWinnerName: `${session.accuracy}% accuracy`,
+      },
+    ],
+    training: {
+      playerId: session.playerId,
+      playerName: session.player?.name ?? 'Training Player',
+      shot: session.shotType?.name ?? session.shot,
+      targetReps: session.targetReps,
+      completedReps: session.completedReps,
+      successfulReps: session.successfulReps,
+      unsuccessfulReps: session.unsuccessfulReps,
+      accuracy: session.accuracy,
+      records: session.reps ?? [],
+    },
+    database: { status: 'saved', id: session.id },
+  }))
+}
+
+function persistDashboardCache(reports) {
+  if (typeof window === 'undefined') return
+  window.localStorage.setItem(historyStorageKey, JSON.stringify(reports))
+  if (reports[0]) window.localStorage.setItem(notationStorageKey, JSON.stringify(reports[0]))
+}
+
+function formatDashboardDuration(ms) {
+  const totalSeconds = Math.floor(ms / 1000)
+  const minutes = Math.floor(totalSeconds / 60)
+  const seconds = totalSeconds % 60
+
+  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
 }
 
 function normalizeReports(reports) {
