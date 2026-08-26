@@ -570,6 +570,34 @@ button:disabled {
   text-align: center;
 }
 
+.auth-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  margin-bottom: 24px;
+  padding: 4px;
+  border: 1px solid var(--cs-border);
+  border-radius: 8px;
+  background: var(--cs-secondary);
+}
+
+.auth-switch button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--cs-muted);
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.auth-switch button.auth-switch--active {
+  background: var(--cs-primary);
+  color: #000;
+}
+
 .login-form,
 .setup-card {
   display: grid;
@@ -594,6 +622,7 @@ button:disabled {
 }
 
 .login-form input,
+.login-form select,
 .setup-card input,
 .search-box input {
   width: 100%;
@@ -605,12 +634,14 @@ button:disabled {
 }
 
 .login-form input,
+.login-form select,
 .setup-card input {
   padding: 12px 16px;
   border-radius: 8px;
 }
 
 .login-form input:focus,
+.login-form select:focus,
 .setup-card input:focus,
 .search-box input:focus {
   border-color: transparent;
