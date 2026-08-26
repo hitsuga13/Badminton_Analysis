@@ -94,7 +94,7 @@
             <h2>Performance Radar</h2>
             <p>Multi-dimensional analysis.</p>
           </div>
-          <div class="radar-chart-shell" @mouseleave="hoveredRadarMetric = null">
+          <div class="radar-chart-shell">
             <VChart class="chart chart--radar" :option="performanceRadarOptions" />
             <button
               v-for="(metric, index) in radarData"
@@ -106,27 +106,41 @@
               type="button"
               :style="getRadarPointStyle(index)"
               :aria-label="`${metric.subject} values`"
-              @click="hoveredRadarMetric = metric"
-              @mouseenter="hoveredRadarMetric = metric"
-              @focus="hoveredRadarMetric = metric"
-              @blur="hoveredRadarMetric = null"
+              @click="selectRadarMetric(metric)"
+              @mouseenter="selectRadarMetric(metric)"
+              @focus="selectRadarMetric(metric)"
             />
 
             <div
-              v-if="hoveredRadarMetric"
+              v-if="selectedRadarMetric"
               class="radar-metric-tooltip"
-              :style="getRadarTooltipStyle(hoveredRadarMetric)"
+              :style="getRadarTooltipStyle(selectedRadarMetric)"
             >
-              <span>{{ hoveredRadarMetric.subject }}</span>
+              <span>{{ selectedRadarMetric.subject }}</span>
               <div>
                 <strong>{{ shortPlayerName(dashboardSummary.playerA) }}</strong>
-                <em>{{ hoveredRadarMetric.playerA }}</em>
+                <em>{{ selectedRadarMetric.playerA }}</em>
               </div>
               <div>
                 <strong>{{ shortPlayerName(dashboardSummary.playerB) }}</strong>
-                <em>{{ hoveredRadarMetric.playerB }}</em>
+                <em>{{ selectedRadarMetric.playerB }}</em>
               </div>
             </div>
+          </div>
+          <div class="radar-metric-list" aria-label="Radar metrics">
+            <button
+              v-for="metric in radarData"
+              :key="`metric-${metric.subject}`"
+              :class="[
+                'radar-metric-button',
+                selectedRadarMetric?.subject === metric.subject && 'radar-metric-button--active',
+              ]"
+              type="button"
+              @click="selectRadarMetric(metric)"
+            >
+              <span>{{ metric.subject }}</span>
+              <strong>{{ metric.playerA }} / {{ metric.playerB }}</strong>
+            </button>
           </div>
         </article>
 
@@ -244,6 +258,7 @@ const stats = computed(() => buildStats(notationReport.value))
 const shotData = computed(() => buildShotData(notationReport.value))
 const radarData = computed(() => buildRadarData(notationReport.value))
 const insights = computed(() => buildInsights(notationReport.value))
+const selectedRadarMetric = computed(() => hoveredRadarMetric.value ?? radarData.value[0] ?? null)
 
 onMounted(() => {
   void refreshDashboardMatches()
@@ -372,7 +387,7 @@ const performanceRadarOptions = computed(() => ({
   },
   radar: {
     center: ['50%', '46%'],
-    radius: '68%',
+    radius: '58%',
     splitNumber: 4,
     indicator: radarData.value.map((item) => ({
       name: item.subject,
@@ -381,7 +396,9 @@ const performanceRadarOptions = computed(() => ({
     axisName: {
       color: chartTextColor,
       fontFamily: 'Inter',
-      fontSize: 11,
+      fontSize: 13,
+      fontWeight: 700,
+      padding: [3, 5],
     },
     axisLine: {
       lineStyle: {
@@ -453,7 +470,7 @@ function getRadarTooltipStyle(metric) {
 function radarPoint(index) {
   const metricCount = Math.max(radarData.value.length, 1)
   const angle = -Math.PI / 2 + (index / metricCount) * Math.PI * 2
-  const radius = 33
+  const radius = 28
 
   return {
     left: 50 + Math.cos(angle) * radius,
@@ -713,6 +730,10 @@ function selectDashboardMatch() {
     dashboardMatches.value.find((matchReport) => matchReport.match.id === selectedMatchId.value) ??
     null
   hoveredRadarMetric.value = null
+}
+
+function selectRadarMetric(metric) {
+  hoveredRadarMetric.value = metric
 }
 
 async function loadDashboardMatches() {

@@ -960,15 +960,15 @@ button:disabled {
 
 .radar-chart-shell {
   position: relative;
-  min-height: 340px;
+  min-height: 360px;
   overflow: hidden;
 }
 
 .radar-hover-point {
   position: absolute;
   z-index: 3;
-  width: 36px;
-  height: 36px;
+  width: 52px;
+  height: 52px;
   border: 1px solid transparent;
   border-radius: 999px;
   background: transparent;
@@ -986,7 +986,7 @@ button:disabled {
 .radar-hover-point::after {
   content: '';
   position: absolute;
-  inset: 14px;
+  inset: 20px;
   border-radius: 999px;
   background: var(--cs-primary);
   box-shadow: 0 0 14px rgb(223 255 0 / 0.45);
@@ -1036,6 +1036,57 @@ button:disabled {
   color: var(--cs-foreground);
   font-style: normal;
   font-weight: 800;
+}
+
+.radar-metric-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.radar-metric-button {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  min-height: 52px;
+  padding: 9px 10px;
+  border: 1px solid var(--cs-border);
+  border-radius: 8px;
+  background: var(--cs-secondary);
+  color: var(--cs-muted-foreground);
+  text-align: left;
+}
+
+.radar-metric-button span,
+.radar-metric-button strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.radar-metric-button span {
+  font-family: var(--cs-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.radar-metric-button strong {
+  color: var(--cs-foreground);
+  font-family: var(--cs-font-heading);
+  font-size: 16px;
+  line-height: 1;
+}
+
+.radar-metric-button--active {
+  border-color: rgb(223 255 0 / 0.55);
+  background: rgb(223 255 0 / 0.12);
+  color: var(--cs-primary);
+}
+
+.radar-metric-button--active strong {
+  color: var(--cs-primary);
 }
 
 .insight-grid {
@@ -2776,6 +2827,10 @@ tbody tr:hover {
   .training-rep-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
+  .radar-metric-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 760px) {
@@ -2894,113 +2949,125 @@ tbody tr:hover {
   }
 
   .radar-chart-shell {
-    min-height: 300px;
+    min-height: 340px;
   }
 
-  .shot-panel {
-    min-height: 0;
-    border-right: 0;
-    border-bottom: 1px solid var(--cs-border);
+  .chart--radar {
+    height: 340px;
   }
 
-  .live-recorder .shot-panel:first-child {
-    border-right: 1px solid var(--cs-border);
+  .radar-metric-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .timeline-panel {
-    height: clamp(96px, 20vh, 132px);
-    flex-direction: row;
+  .radar-metric-button {
+    min-height: 48px;
   }
+}
 
-  .timeline-track {
-    min-height: 0;
-    padding: 10px;
-  }
+.shot-panel {
+  min-height: 0;
+  border-right: 0;
+  border-bottom: 1px solid var(--cs-border);
+}
 
-  .timeline-controls {
-    width: min(42vw, 220px);
-    gap: 8px;
-    padding: 10px;
-    border-top: 0;
-    border-left: 1px solid var(--cs-border);
-  }
+.live-recorder .shot-panel:first-child {
+  border-right: 1px solid var(--cs-border);
+}
 
-  .timeline-controls button {
-    min-height: 0;
-    padding: 6px 8px;
-    font-size: clamp(11px, 2.5vw, 13px);
-    line-height: 1.1;
-  }
+.timeline-panel {
+  height: clamp(96px, 20vh, 132px);
+  flex-direction: row;
+}
 
-  .player-tools {
-    width: 100%;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-  }
+.timeline-track {
+  min-height: 0;
+  padding: 10px;
+}
 
-  .search-box input {
-    width: 100%;
-  }
+.timeline-controls {
+  width: min(42vw, 220px);
+  gap: 8px;
+  padding: 10px;
+  border-top: 0;
+  border-left: 1px solid var(--cs-border);
+}
 
-  .table-wrap {
-    width: calc(100% - 32px);
-    margin: 16px;
-  }
+.timeline-controls button {
+  min-height: 0;
+  padding: 6px 8px;
+  font-size: clamp(11px, 2.5vw, 13px);
+  line-height: 1.1;
+}
 
-  .history-list {
-    width: calc(100% - 32px);
-    margin: 16px;
-  }
+.player-tools {
+  width: 100%;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
 
-  .history-filter-bar {
-    width: calc(100% - 32px);
-    margin: 16px;
-  }
+.search-box input {
+  width: 100%;
+}
 
-  .history-filter-button {
-    flex: 1 1 100%;
-    justify-content: space-between;
-  }
+.table-wrap {
+  width: calc(100% - 32px);
+  margin: 16px;
+}
 
-  .history-deleted-section {
-    width: calc(100% - 32px);
-    margin: 24px 16px;
-  }
+.history-list {
+  width: calc(100% - 32px);
+  margin: 16px;
+}
 
-  .history-card-main,
-  .history-actions,
-  .history-section-head,
-  .history-deleted-card {
-    align-items: stretch;
-    flex-direction: column;
-  }
+.history-filter-bar {
+  width: calc(100% - 32px);
+  margin: 16px;
+}
 
-  .history-badges {
-    justify-content: flex-start;
-  }
+.history-filter-button {
+  flex: 1 1 100%;
+  justify-content: space-between;
+}
 
-  .history-metrics,
-  .history-detail-grid,
-  .history-rally-row,
-  .player-form-grid,
-  .player-training-card,
-  .training-action-grid,
-  .training-summary {
-    grid-template-columns: 1fr;
-  }
+.history-deleted-section {
+  width: calc(100% - 32px);
+  margin: 24px 16px;
+}
 
-  .training-action-grid {
-    padding: 20px;
-  }
+.history-card-main,
+.history-actions,
+.history-section-head,
+.history-deleted-card {
+  align-items: stretch;
+  flex-direction: column;
+}
 
-  .training-result-button {
-    min-height: 180px;
-  }
+.history-badges {
+  justify-content: flex-start;
+}
 
-  .training-rep-grid,
-  .training-player-grid,
-  .training-variable-grid {
-    grid-template-columns: 1fr;
-  }
+.history-metrics,
+.history-detail-grid,
+.history-rally-row,
+.player-form-grid,
+.player-training-card,
+.training-action-grid,
+.training-summary {
+  grid-template-columns: 1fr;
+}
+
+.training-action-grid {
+  padding: 20px;
+}
+
+.training-result-button {
+  min-height: 180px;
+}
+
+.training-rep-grid,
+.training-player-grid,
+.training-variable-grid {
+  grid-template-columns: 1fr;
 }
