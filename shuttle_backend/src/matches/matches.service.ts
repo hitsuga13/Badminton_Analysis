@@ -13,7 +13,8 @@ export class MatchesService {
   ) {}
 
   async findAll(authorization?: string) {
-    const user = await this.authService.getOptionalUserFromAuthorization(authorization);
+    const user =
+      await this.authService.getOptionalUserFromAuthorization(authorization);
     const where: any = { deletedAt: null };
     if (user?.role === 'coach' || user?.role === 'admin') {
       where.recordedByCoachId = user.id;
@@ -43,14 +44,17 @@ export class MatchesService {
   }
 
   async create(data: any, authorization?: string) {
-    const user = await this.authService.getOptionalUserFromAuthorization(authorization);
+    const user =
+      await this.authService.getOptionalUserFromAuthorization(authorization);
     const player1Id = Number(data.player1Id);
     const player2Id = Number(data.player2Id);
-    if (player1Id === player2Id) throw new BadRequestException('A match needs two different players.');
+    if (player1Id === player2Id)
+      throw new BadRequestException('A match needs two different players.');
 
     return this.prismaService.match.create({
       data: {
-        recordedByCoachId: user?.role === 'coach' || user?.role === 'admin' ? user.id : null,
+        recordedByCoachId:
+          user?.role === 'coach' || user?.role === 'admin' ? user.id : null,
         player1Id,
         player2Id,
         player1Score: Number(data.player1Score ?? 0),
@@ -70,41 +74,61 @@ export class MatchesService {
   }
 
   async createReport(report: any, authorization?: string) {
-    const user = await this.authService.getOptionalUserFromAuthorization(authorization);
+    const user =
+      await this.authService.getOptionalUserFromAuthorization(authorization);
     const matchData = report?.match;
     if (!matchData) throw new BadRequestException('Match report is required.');
 
     const player1Id = Number(matchData.playerAId);
     const player2Id = Number(matchData.playerBId);
-    if (!player1Id || !player2Id) throw new BadRequestException('Both match players are required.');
-    if (player1Id === player2Id) throw new BadRequestException('A match needs two different players.');
+    if (!player1Id || !player2Id)
+      throw new BadRequestException('Both match players are required.');
+    if (player1Id === player2Id)
+      throw new BadRequestException('A match needs two different players.');
 
     const playerIds = new Set([player1Id, player2Id]);
-    const winnerId = this.playerCodeToId(matchData.gamesA > matchData.gamesB ? 'A' : 'B', player1Id, player2Id);
+    const winnerId = this.playerCodeToId(
+      matchData.gamesA > matchData.gamesB ? 'A' : 'B',
+      player1Id,
+      player2Id,
+    );
+    const roundOutcomes = report.roundOutcomes ?? report.rallyOutcomes ?? [];
+    const notation = report.notation ?? [];
 
     return this.prismaService.$transaction(async (tx) => {
       const players = await tx.player.findMany({
         where: { id: { in: [player1Id, player2Id] } },
         select: { id: true },
       });
-      if (players.length !== 2) throw new BadRequestException('One or both players do not exist.');
+      if (players.length !== 2)
+        throw new BadRequestException('One or both players do not exist.');
 
       const match = await tx.match.create({
         data: {
-          recordedByCoachId: user?.role === 'coach' || user?.role === 'admin' ? user.id : null,
+          recordedByCoachId:
+            user?.role === 'coach' || user?.role === 'admin' ? user.id : null,
           player1Id,
           player2Id,
           winnerId: playerIds.has(winnerId) ? winnerId : null,
           player1Score: Number(matchData.scoreA ?? 0),
           player2Score: Number(matchData.scoreB ?? 0),
           status: 'ended',
-          totalRallies: Number(matchData.totalRallies ?? report.rallyOutcomes?.length ?? 0),
-          totalShots: Number(matchData.totalShots ?? report.notation?.length ?? 0),
+          totalRallies: Number(
+            matchData.totalRounds ??
+              report.rallyOutcomes?.length ??
+              roundOutcomes.length ??
+              0,
+          ),
+          totalShots: Number(matchData.totalShots ?? notation.length ?? 0),
           matchFormat: matchData.scoringFormat ?? matchData.matchFormat,
-          pointsToWin: matchData.pointsToWin ? Number(matchData.pointsToWin) : null,
+          pointsToWin: matchData.pointsToWin
+            ? Number(matchData.pointsToWin)
+            : null,
           setsToWin: matchData.setsToWin ? Number(matchData.setsToWin) : null,
           date: matchData.savedAt ? new Date(matchData.savedAt) : new Date(),
-          startedAt: matchData.overallStartedAt ? new Date(matchData.overallStartedAt) : null,
+          startedAt: matchData.overallStartedAt
+            ? new Date(matchData.overallStartedAt)
+            : null,
           endedAt: matchData.savedAt ? new Date(matchData.savedAt) : new Date(),
         },
       });
@@ -128,21 +152,28 @@ export class MatchesService {
         });
       }
 
-      for (const outcome of report.rallyOutcomes ?? []) {
-        const rallyNumber = Number(outcome.rallyNumber);
-        const rallyShots = (report.notation ?? []).filter(
-          (shot) => Number(shot.rallyNumber) === rallyNumber,
+      for (const outcome of roundOutcomes) {
+        const rallyNumber = Number(outcome.roundNumber ?? outcome.rallyNumber);
+        const rallyShots = notation.filter(
+          (shot) =>
+            Number(shot.roundNumber ?? shot.rallyNumber) === rallyNumber,
         );
-        const winner = this.playerCodeToId(outcome.winner, player1Id, player2Id);
+        const winner = this.playerCodeToId(
+          outcome.winner,
+          player1Id,
+          player2Id,
+        );
         const rally = await tx.rally.create({
           data: {
             matchId: match.id,
             rallyNumber,
             winnerId: playerIds.has(winner) ? winner : null,
-            outcome: outcome.outcome ?? 'Rally ended',
+            outcome: outcome.outcome ?? 'Round ended',
             outcomeType: outcome.endingType ?? null,
             outcomeReason: outcome.endingReason ?? null,
-            shots: Number(outcome.shots ?? rallyShots.length),
+            shots: Number(
+              outcome.rallies ?? outcome.shots ?? rallyShots.length,
+            ),
             durationMs: outcome.durationMs ? Number(outcome.durationMs) : null,
             startedAt: outcome.startedAt ? new Date(outcome.startedAt) : null,
             endedAt: outcome.endedAt ? new Date(outcome.endedAt) : null,
@@ -150,9 +181,15 @@ export class MatchesService {
         });
 
         for (const [index, shot] of rallyShots.entries()) {
-          const playerId = this.playerCodeToId(shot.player, player1Id, player2Id);
+          const playerId = this.playerCodeToId(
+            shot.player,
+            player1Id,
+            player2Id,
+          );
           if (!playerIds.has(playerId)) continue;
-          const shotType = await tx.shotType.findUnique({ where: { name: shot.shot } });
+          const shotType = await tx.shotType.findUnique({
+            where: { name: shot.shot },
+          });
           await tx.shotRecord.create({
             data: {
               matchId: match.id,
@@ -229,7 +266,8 @@ export class MatchesService {
   }
 
   async remove(id: number, authorization?: string) {
-    const user = await this.authService.getOptionalUserFromAuthorization(authorization);
+    const user =
+      await this.authService.getOptionalUserFromAuthorization(authorization);
     const where: any = { id };
     if (user?.role === 'coach' || user?.role === 'admin') {
       where.recordedByCoachId = user.id;
@@ -241,7 +279,11 @@ export class MatchesService {
     });
   }
 
-  private playerCodeToId(code: string | undefined, player1Id: number, player2Id: number) {
+  private playerCodeToId(
+    code: string | undefined,
+    player1Id: number,
+    player2Id: number,
+  ) {
     if (code === 'A') return player1Id;
     if (code === 'B') return player2Id;
     return Number(code ?? 0);

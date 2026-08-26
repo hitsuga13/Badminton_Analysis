@@ -64,8 +64,10 @@
 
         <div class="history-metrics">
           <div>
-            <span>Rallies</span>
-            <strong>{{ matchReport.match.totalRallies ?? 0 }}</strong>
+            <span>Rounds</span>
+            <strong>{{
+              matchReport.match.totalRounds ?? matchReport.match.totalRallies ?? 0
+            }}</strong>
           </div>
           <div>
             <span>Shots</span>
@@ -171,18 +173,21 @@
         </div>
 
         <div class="history-timeline">
-          <h3>Rally Outcomes</h3>
+          <h3>Round Outcomes</h3>
           <div v-if="selectedMatch.rallyOutcomes.length === 0" class="history-muted">
-            No rally outcomes recorded.
+            No round outcomes recorded.
           </div>
           <div
             v-for="outcome in selectedMatch.rallyOutcomes"
             :key="`${selectedMatch.match.id}-${outcome.rallyNumber}`"
             class="history-rally-row"
           >
-            <span>Rally {{ outcome.rallyNumber }}</span>
+            <span>Round {{ outcome.roundNumber ?? outcome.rallyNumber }}</span>
             <strong>{{ outcome.outcome }}</strong>
-            <em>{{ outcome.shots }} shots - {{ outcome.durationLabel ?? '00:00' }}</em>
+            <em
+              >{{ outcome.rallies ?? outcome.shots }} rallies -
+              {{ outcome.durationLabel ?? '00:00' }}</em
+            >
           </div>
         </div>
       </div>
@@ -288,7 +293,8 @@ function normalizeRemoteMatches(matches) {
       playerB: match.player2?.name ?? 'Player B',
       playerAId: match.player1Id,
       playerBId: match.player2Id,
-      totalRallies: match.totalRallies ?? match.rallies?.length ?? 0,
+      totalRounds: match.totalRallies ?? match.rallies?.length ?? 0,
+      totalRallies: match.totalShots ?? match.shotRecords?.length ?? 0,
       totalShots: match.totalShots ?? match.shotRecords?.length ?? 0,
       scoreA: match.player1Score ?? 0,
       scoreB: match.player2Score ?? 0,
@@ -302,6 +308,7 @@ function normalizeRemoteMatches(matches) {
     notation: (match.rallies ?? []).flatMap((rally) =>
       (rally.shotRecords ?? []).map((shot) => ({
         id: `db-shot-${shot.id}`,
+        roundNumber: rally.rallyNumber,
         rallyNumber: rally.rallyNumber,
         player: shot.playerId === match.player1Id ? 'A' : 'B',
         playerName: shot.player?.name ?? '-',
@@ -311,6 +318,7 @@ function normalizeRemoteMatches(matches) {
       })),
     ),
     rallyOutcomes: (match.rallies ?? []).map((rally) => ({
+      roundNumber: rally.rallyNumber,
       rallyNumber: rally.rallyNumber,
       outcome: rally.outcome,
       shots: rally.shots,
@@ -403,7 +411,7 @@ function normalizeHistory(items) {
         id: item.match.id ?? `legacy-${item.match.savedAt ?? item.match.playerA}`,
       },
       notation: item.notation ?? [],
-      rallyOutcomes: item.rallyOutcomes ?? [],
+      rallyOutcomes: item.roundOutcomes ?? item.rallyOutcomes ?? [],
     }))
     .sort((a, b) => new Date(b.match.savedAt ?? 0) - new Date(a.match.savedAt ?? 0))
 }
@@ -521,7 +529,10 @@ function filterCount(filterValue) {
 }
 
 function longestRally(matchReport) {
-  return Math.max(0, ...matchReport.rallyOutcomes.map((outcome) => outcome.shots ?? 0))
+  return Math.max(
+    0,
+    ...matchReport.rallyOutcomes.map((outcome) => outcome.rallies ?? outcome.shots ?? 0),
+  )
 }
 
 function totalDuration(matchReport) {

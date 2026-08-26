@@ -530,7 +530,7 @@ function buildStats(report) {
 
   if (!hasLiveData(report)) {
     return [
-      { icon: 'monitor_heart', label: 'Total Rallies', value: '0', sub: 'No recorded match' },
+      { icon: 'monitor_heart', label: 'Total Rounds', value: '0', sub: 'No recorded match' },
       { icon: 'gps_fixed', label: 'Longest Rally', value: '0', sub: 'No recorded match' },
       { icon: 'trending_up', label: 'Attack Ratio (A)', value: '0%', sub: 'No recorded match' },
       { icon: 'timeline', label: 'Total Actions', value: '0', sub: 'No recorded match' },
@@ -538,13 +538,16 @@ function buildStats(report) {
   }
 
   const notation = report.notation ?? []
-  const rallyOutcomes = report.rallyOutcomes ?? []
-  const rallyCount = Math.max(
-    report.match?.totalRallies ?? rallyOutcomes.length,
+  const rallyOutcomes = report.roundOutcomes ?? report.rallyOutcomes ?? []
+  const roundCount = Math.max(
+    report.match?.totalRounds ?? report.match?.totalRallies ?? rallyOutcomes.length,
     rallyOutcomes.length,
   )
-  const avgShots = rallyCount > 0 ? notation.length / rallyCount : 0
-  const longestRally = Math.max(0, ...rallyOutcomes.map((outcome) => outcome.shots ?? 0))
+  const avgShots = roundCount > 0 ? notation.length / roundCount : 0
+  const longestRally = Math.max(
+    0,
+    ...rallyOutcomes.map((outcome) => outcome.rallies ?? outcome.shots ?? 0),
+  )
   const playerAShots = notation.filter((action) => action.player === 'A')
   const playerAAttacks = playerAShots.filter(
     (action) => shotCategory(action.shot) === 'attack',
@@ -555,9 +558,9 @@ function buildStats(report) {
   return [
     {
       icon: 'monitor_heart',
-      label: 'Total Rallies',
-      value: String(rallyCount),
-      sub: `Avg ${avgShots.toFixed(1)} shots/rally`,
+      label: 'Total Rounds',
+      value: String(roundCount),
+      sub: `Avg ${avgShots.toFixed(1)} rallies/round`,
     },
     {
       icon: 'gps_fixed',
@@ -724,7 +727,8 @@ async function loadDashboardMatches() {
 
   if (latest?.match) {
     const normalizedLatest = normalizeReports([latest])[0]
-    if (!reportsById.has(normalizedLatest.match.id)) reportsById.set(normalizedLatest.match.id, normalizedLatest)
+    if (!reportsById.has(normalizedLatest.match.id))
+      reportsById.set(normalizedLatest.match.id, normalizedLatest)
   }
 
   const reports = [...reportsById.values()].sort(
@@ -772,7 +776,8 @@ function normalizeRemoteMatches(matches) {
       playerB: match.player2?.name ?? 'Player B',
       playerAId: match.player1Id,
       playerBId: match.player2Id,
-      totalRallies: match.totalRallies ?? match.rallies?.length ?? 0,
+      totalRounds: match.totalRallies ?? match.rallies?.length ?? 0,
+      totalRallies: match.totalShots ?? match.shotRecords?.length ?? 0,
       totalShots: match.totalShots ?? match.shotRecords?.length ?? 0,
       scoreA: match.player1Score ?? 0,
       scoreB: match.player2Score ?? 0,
@@ -786,6 +791,7 @@ function normalizeRemoteMatches(matches) {
     notation: (match.rallies ?? []).flatMap((rally) =>
       (rally.shotRecords ?? []).map((shot) => ({
         id: `db-shot-${shot.id}`,
+        roundNumber: rally.rallyNumber,
         rallyNumber: rally.rallyNumber,
         player: shot.playerId === match.player1Id ? 'A' : 'B',
         playerName: shot.player?.name ?? '-',
@@ -795,6 +801,7 @@ function normalizeRemoteMatches(matches) {
       })),
     ),
     rallyOutcomes: (match.rallies ?? []).map((rally) => ({
+      roundNumber: rally.rallyNumber,
       rallyNumber: rally.rallyNumber,
       outcome: rally.outcome,
       shots: rally.shots,
@@ -1034,16 +1041,30 @@ function buildCsvReport(notationReport) {
     ['Player A', notationReport?.match?.playerA ?? 'Viktor Axelsen'],
     ['Player B', notationReport?.match?.playerB ?? 'Lee Zii Jia'],
     ['Status', notationReport?.match?.status ?? 'Static Dashboard Report'],
-    ['Total Rallies', notationReport?.match?.totalRallies ?? 114],
+    [
+      'Total Rounds',
+      notationReport?.match?.totalRounds ?? notationReport?.match?.totalRallies ?? 114,
+    ],
+    [
+      'Total Rallies',
+      notationReport?.match?.totalShots ??
+        notationReport?.match?.totalRallies ??
+        totalStaticShots(),
+    ],
     ['Total Shots', notationReport?.match?.totalShots ?? totalStaticShots()],
-    ['Current Rally Timer', notationReport?.match?.currentRallyDurationLabel ?? '00:00'],
+    [
+      'Current Round Timer',
+      notationReport?.match?.currentRoundDurationLabel ??
+        notationReport?.match?.currentRallyDurationLabel ??
+        '00:00',
+    ],
     ['First Server', notationReport?.match?.firstServer ?? 'Not recorded'],
     ['First Server Code', notationReport?.match?.firstServerCode ?? ''],
     ['Active Player', notationReport?.match?.activePlayer ?? 'Not recorded'],
     ['Active Player Code', notationReport?.match?.activePlayerCode ?? ''],
     [],
     ['Recorded Notation'],
-    ['Sequence', 'Rally Number', 'Player Code', 'Player Name', 'Shot Type', 'Timestamp'],
+    ['Sequence', 'Round Number', 'Player Code', 'Player Name', 'Shot Type', 'Timestamp'],
   ]
 
   const notationRows = notationReport?.notation ?? []
@@ -1054,7 +1075,7 @@ function buildCsvReport(notationReport) {
     notationRows.forEach((action, index) => {
       rows.push([
         action.sequence ?? index + 1,
-        action.rallyNumber,
+        action.roundNumber ?? action.rallyNumber,
         action.player,
         action.playerName,
         action.shot,
@@ -1065,11 +1086,11 @@ function buildCsvReport(notationReport) {
 
   rows.push(
     [],
-    ['Rally Outcomes'],
+    ['Round Outcomes'],
     [
-      'Rally Number',
+      'Round Number',
       'Outcome',
-      'Shots In Rally',
+      'Rallies In Round',
       'Duration',
       'Duration (ms)',
       'Started At',
@@ -1077,15 +1098,15 @@ function buildCsvReport(notationReport) {
     ],
   )
 
-  const outcomeRows = notationReport?.rallyOutcomes ?? []
+  const outcomeRows = notationReport?.roundOutcomes ?? notationReport?.rallyOutcomes ?? []
   if (outcomeRows.length === 0) {
-    rows.push(['No rally outcomes recorded.'])
+    rows.push(['No round outcomes recorded.'])
   } else {
     outcomeRows.forEach((outcome) => {
       rows.push([
-        outcome.rallyNumber,
+        outcome.roundNumber ?? outcome.rallyNumber,
         outcome.outcome,
-        outcome.shots,
+        outcome.rallies ?? outcome.shots,
         outcome.durationLabel,
         outcome.durationMs,
         outcome.startedAt,

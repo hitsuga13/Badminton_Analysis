@@ -210,7 +210,7 @@
 
         <div class="ended-stats">
           <div>
-            <span>Total Rallies</span>
+            <span>Total Rounds</span>
             <strong>{{ currentRally - 1 }}</strong>
           </div>
           <div>
@@ -222,7 +222,7 @@
             <strong>{{ timeline.length }}</strong>
           </div>
           <div>
-            <span>Last Rally Time</span>
+            <span>Last Round Time</span>
             <strong>{{ lastRallyDurationLabel }}</strong>
           </div>
         </div>
@@ -238,15 +238,20 @@
       <header class="live-topbar">
         <div class="live-title">
           <div class="recording-dot" />
-          <span>Live Recording</span>
-          <i />
-          <strong>{{ playerA }} <em>vs</em> {{ playerB }}</strong>
+          <div>
+            <span>Live Recording</span>
+            <strong>{{ playerA }} <em>vs</em> {{ playerB }}</strong>
+          </div>
         </div>
 
         <div class="live-actions">
-          <div class="rally-chip">
-            <span>Rally</span>
+          <div class="rally-chip rally-chip--round">
+            <span>Round</span>
             <strong>{{ currentRally }}</strong>
+          </div>
+          <div class="rally-chip rally-chip--round">
+            <span>Rally</span>
+            <strong>{{ currentRallyActions.length }}</strong>
           </div>
           <div class="rally-chip rally-chip--timer">
             <select v-model="selectedTimerDisplay" aria-label="Timer display">
@@ -264,17 +269,21 @@
             <span>Current Turn</span>
             <strong>{{ activePlayer || '-' }}</strong>
           </div>
-          <div class="rally-chip">
-            <span>Score</span>
-            <strong>{{ scoreA }} - {{ scoreB }}</strong>
+          <div class="live-scoreboard">
+            <div>
+              <span>{{ firstName(playerA) }}</span>
+              <strong>{{ scoreA }}</strong>
+              <small>{{ gamesA }} sets</small>
+            </div>
+            <div>
+              <span>{{ firstName(playerB) }}</span>
+              <strong>{{ scoreB }}</strong>
+              <small>{{ gamesB }} sets</small>
+            </div>
           </div>
-          <div class="rally-chip">
-            <span>Sets</span>
-            <strong>{{ gamesA }} - {{ gamesB }}</strong>
-          </div>
-          <button class="danger-action" type="button" @click="endMatch">
+          <button class="danger-action" type="button" aria-label="End match" @click="endMatch">
             <q-icon name="stop" size="18px" />
-            End Match
+            <span>End Match</span>
           </button>
         </div>
       </header>
@@ -303,7 +312,7 @@
       <footer class="timeline-panel">
         <div class="timeline-track">
           <div v-if="currentRallyActions.length === 0" class="timeline-empty">
-            Waiting for first shot in Rally {{ currentRally }}...
+            Waiting for first shot in Round {{ currentRally }}...
           </div>
           <template v-for="(action, index) in currentRallyActions" :key="action.id">
             <q-icon v-if="index > 0" name="chevron_right" class="timeline-arrow" size="18px" />
@@ -329,7 +338,7 @@
             :disabled="!canEndRally"
             @click="showOutcomeDialog = true"
           >
-            End Rally
+            End Round
             <q-icon name="chevron_right" size="20px" />
           </button>
         </div>
@@ -338,7 +347,7 @@
       <q-dialog v-model="showOutcomeDialog">
         <div class="outcome-dialog">
           <div class="dialog-head">
-            <h2>Rally {{ currentRally }} Outcome</h2>
+            <h2>Round {{ currentRally }} Outcome</h2>
             <button type="button" @click="showOutcomeDialog = false">
               <q-icon name="close" size="20px" />
             </button>
@@ -481,7 +490,7 @@ const formattedSetTime = computed(() => formatDuration(setElapsedMs.value))
 const lastRallyDurationLabel = computed(() => rallyOutcomes.value.at(-1)?.durationLabel ?? '00:00')
 const timerDisplayOptions = [
   { value: 'overall', label: 'Overall Time' },
-  { value: 'rally', label: 'Rally Time' },
+  { value: 'rally', label: 'Round Time' },
   { value: 'set', label: 'Set Time' },
 ]
 const selectedTimerLabel = computed(() => {
@@ -505,7 +514,7 @@ const firstServerInitial = computed(() => {
 const activePlayerName = computed(() => playerName(activePlayer.value))
 const coinFlipStatus = computed(() => {
   if (isCoinFlipping.value) return 'Coin is flipping to decide the first server.'
-  if (coinWinner.value) return `${firstServerName.value} starts the first rally.`
+  if (coinWinner.value) return `${firstServerName.value} starts the first round.`
   return 'Player A is heads. Player B is tails.'
 })
 
@@ -518,9 +527,8 @@ onMounted(async () => {
         selectedPlayerAId.value = availablePlayers.value[0]?.id ?? null
       }
       if (!findAvailablePlayer(selectedPlayerBId.value)) {
-        selectedPlayerBId.value = availablePlayers.value.find(
-          (player) => player.id !== selectedPlayerAId.value,
-        )?.id ?? null
+        selectedPlayerBId.value =
+          availablePlayers.value.find((player) => player.id !== selectedPlayerAId.value)?.id ?? null
       }
     }
   } catch {
@@ -541,6 +549,7 @@ function recordAction(player, shot) {
     playerName: playerName(player),
     shot,
     sequence: timeline.value.length + 1,
+    roundNumber: currentRally.value,
     rallyNumber: currentRally.value,
     timestamp: new Date().toISOString(),
     activeTurnBeforeAction: player,
@@ -753,7 +762,7 @@ const defaultEndingOptions = [
     label: 'Successful',
     reason: 'Winner',
     type: 'winner',
-    phrase: 'won the rally',
+    phrase: 'won the round',
     description: 'Point to last hitter',
     awardsLastPlayer: true,
   },
@@ -831,7 +840,7 @@ const endingOptionsByShot = {
       label: 'Successful',
       reason: 'Winner',
       type: 'winner',
-      phrase: 'won the rally',
+      phrase: 'won the round',
       description: 'Point to last hitter',
       awardsLastPlayer: true,
     },
@@ -876,9 +885,14 @@ function buildNotationReport(status = matchStatus.value) {
       playerAProfile: selectedPlayerA.value,
       playerBProfile: selectedPlayerB.value,
       status,
-      currentRally: currentRally.value,
-      totalRallies: Math.max(currentRally.value - 1, 0),
+      currentRound: currentRally.value,
+      currentRally: currentRallyActions.value.length,
+      totalRounds: Math.max(currentRally.value - 1, 0),
+      totalRallies: timeline.value.length,
       totalShots: timeline.value.length,
+      currentRoundStartedAt: rallyStartedAt.value,
+      currentRoundDurationMs: rallyElapsedMs.value,
+      currentRoundDurationLabel: formattedRallyTime.value,
       currentRallyStartedAt: rallyStartedAt.value,
       currentRallyDurationMs: rallyElapsedMs.value,
       currentRallyDurationLabel: formattedRallyTime.value,
@@ -904,6 +918,11 @@ function buildNotationReport(status = matchStatus.value) {
       savedAt: new Date().toISOString(),
     },
     notation: timeline.value,
+    roundOutcomes: rallyOutcomes.value.map((outcome) => ({
+      ...outcome,
+      roundNumber: outcome.rallyNumber,
+      rallies: outcome.shots,
+    })),
     rallyOutcomes: rallyOutcomes.value,
     setDurations: setDurations.value,
   }
