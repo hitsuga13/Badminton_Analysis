@@ -82,11 +82,14 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { applyTheme, loadSettings } from '@/data/settings'
+import { clearAuth, loadAuth } from '@/data/auth'
+import { api } from '../boot/axios'
 
 const route = useRoute()
 const router = useRouter()
 const drawerOpen = ref(true)
 const profile = ref(loadSettings().profile)
+const auth = ref(loadAuth())
 
 applyTheme(loadSettings().theme)
 
@@ -105,14 +108,21 @@ const navItems = [
   { label: 'History', icon: 'history', to: '/history' },
 ]
 
-const isAuthenticated = computed(() => route.path !== '/login')
+const isAuthenticated = computed(() => Boolean(auth.value?.token) && route.path !== '/login')
 
 function handleLogin() {
-  router.push('/')
+  auth.value = loadAuth()
 }
 
-function logout() {
+async function logout() {
   if (window.confirm('Are you sure you want to log out?')) {
+    try {
+      await api.post('/auth/logout')
+    } catch {
+      // Local logout should still proceed if the session already expired.
+    }
+    clearAuth()
+    auth.value = null
     router.push('/login')
   }
 }

@@ -1,7 +1,10 @@
 import 'dotenv/config';
+import { randomBytes, scrypt as scryptCallback } from 'node:crypto';
+import { promisify } from 'node:util';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
+const scrypt = promisify(scryptCallback);
 
 const shotCategory = {
   Smash: 'attack',
@@ -16,6 +19,15 @@ const shotCategory = {
 
 async function main() {
   await clearDatabase();
+
+  await prisma.user.create({
+    data: {
+      email: 'coach@akpshuttletrace.app',
+      name: 'AKP Coach',
+      role: 'coach',
+      passwordHash: await hashPassword('password'),
+    },
+  });
 
   const napi = await prisma.player.create({
     data: {
@@ -128,12 +140,20 @@ async function main() {
 }
 
 async function clearDatabase() {
+  await prisma.authSession.deleteMany();
   await prisma.shotRecord.deleteMany();
   await prisma.rally.deleteMany();
   await prisma.trainingRep.deleteMany();
   await prisma.trainingSession.deleteMany();
   await prisma.match.deleteMany();
   await prisma.player.deleteMany();
+  await prisma.user.deleteMany();
+}
+
+async function hashPassword(password: string) {
+  const salt = randomBytes(16).toString('hex');
+  const derivedKey = (await scrypt(password, salt, 64)) as Buffer;
+  return `${salt}:${derivedKey.toString('hex')}`;
 }
 
 async function createRallyWithShots(

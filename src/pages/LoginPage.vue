@@ -8,7 +8,7 @@
       <h1>AKP ShuttleTrace</h1>
       <p>Badminton Match & Stroke Notational Analysis System</p>
 
-      <form class="login-form" @submit.prevent="$emit('login')">
+      <form class="login-form" @submit.prevent="login">
         <label>
           <span>Username / Email</span>
           <input v-model="email" type="email" required />
@@ -19,7 +19,11 @@
           <input v-model="password" type="password" required />
         </label>
 
-        <button type="submit">Secure Login</button>
+        <p v-if="authError" class="form-error">{{ authError }}</p>
+
+        <button type="submit" :disabled="isLoading">
+          {{ isLoading ? 'Logging in...' : 'Secure Login' }}
+        </button>
       </form>
     </section>
   </q-page>
@@ -27,9 +31,32 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { api } from '../boot/axios'
+import { saveAuth } from '@/data/auth'
 
-defineEmits(['login'])
-
+const router = useRouter()
 const email = ref('coach@akpshuttletrace.app')
 const password = ref('password')
+const authError = ref('')
+const isLoading = ref(false)
+
+async function login() {
+  authError.value = ''
+  isLoading.value = true
+
+  try {
+    const res = await api.post('/auth/login', {
+      email: email.value,
+      password: password.value,
+    })
+
+    saveAuth(res.data)
+    router.push('/')
+  } catch (error) {
+    authError.value = error?.response?.data?.message ?? 'Login failed. Check your credentials.'
+  } finally {
+    isLoading.value = false
+  }
+}
 </script>
