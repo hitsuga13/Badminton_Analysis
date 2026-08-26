@@ -2,7 +2,7 @@
   <q-page class="login-page">
     <section class="login-card">
       <div class="login-mark">
-        <img src="/icons/akp-shuttletrace-mark.svg" alt="AKP ShuttleTrace" />
+        <img :src="logoSrc" alt="AKP ShuttleTrace" />
       </div>
 
       <h1>AKP ShuttleTrace</h1>
@@ -73,6 +73,7 @@ const password = ref('password')
 const role = ref('coach')
 const authError = ref('')
 const isLoading = ref(false)
+const logoSrc = `${import.meta.env.BASE_URL}icons/akp-shuttletrace-mark.svg`
 
 const submitLabel = computed(() => {
   if (isLoading.value) return authMode.value === 'signup' ? 'Creating account...' : 'Logging in...'

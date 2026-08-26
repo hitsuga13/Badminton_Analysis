@@ -21,7 +21,7 @@
       <div class="brand-block">
         <img
           class="brand-mark"
-          src="/icons/akp-shuttletrace-mark.svg"
+          :src="logoSrc"
           alt="AKP ShuttleTrace mark"
         />
         <div class="brand-copy">
@@ -90,6 +90,7 @@ const router = useRouter()
 const drawerOpen = ref(true)
 const profile = ref(loadSettings().profile)
 const auth = ref(loadAuth())
+const logoSrc = `${import.meta.env.BASE_URL}icons/akp-shuttletrace-mark.svg`
 
 applyTheme(loadSettings().theme)
 
@@ -97,8 +98,19 @@ function refreshProfile() {
   profile.value = loadSettings().profile
 }
 
-onMounted(() => window.addEventListener('akp-settings-updated', refreshProfile))
-onUnmounted(() => window.removeEventListener('akp-settings-updated', refreshProfile))
+function refreshAuth() {
+  auth.value = loadAuth()
+}
+
+onMounted(() => {
+  window.addEventListener('akp-settings-updated', refreshProfile)
+  window.addEventListener('akp-auth-updated', refreshAuth)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('akp-settings-updated', refreshProfile)
+  window.removeEventListener('akp-auth-updated', refreshAuth)
+})
 
 const navItems = [
   { label: 'Dashboard', icon: 'dashboard', to: '/' },
@@ -111,7 +123,7 @@ const navItems = [
 const isAuthenticated = computed(() => Boolean(auth.value?.token) && route.path !== '/login')
 
 function handleLogin() {
-  auth.value = loadAuth()
+  refreshAuth()
 }
 
 async function logout() {

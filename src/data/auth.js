@@ -19,11 +19,13 @@ export function loadAuth() {
 export function saveAuth(auth) {
   if (typeof window === 'undefined') return
   window.localStorage.setItem(authStorageKey, JSON.stringify(auth))
+  window.dispatchEvent(new Event('akp-auth-updated'))
 }
 
 export function clearAuth() {
   if (typeof window === 'undefined') return
   window.localStorage.removeItem(authStorageKey)
+  window.dispatchEvent(new Event('akp-auth-updated'))
 }
 
 export function isLoggedIn() {

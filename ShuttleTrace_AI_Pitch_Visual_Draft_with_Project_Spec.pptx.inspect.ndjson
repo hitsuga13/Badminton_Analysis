@@ -1,0 +1,326 @@
+{"kind":"deck","id":"pr/euvqva","name":"Deck"}
+{"kind":"layout","layoutId":"/ppt/slideMasters/slideMaster1.xml","name":"","type":"master","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"body","type":"body","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"dateTime","type":"dateTime","textPreview":"1/27/13"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout1.xml","name":"Title Slide","type":"title","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"subtitle","type":"subtitle","textPreview":"Click to edit Master subtitle style"},{"name":"dateTime","type":"dateTime","textPreview":"1/27/13"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout2.xml","name":"Title and Content","type":"obj","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"content placeholder 2","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"dateTime","type":"dateTime","textPreview":"1/27/13"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout3.xml","name":"Section Header","type":"secHead","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"body","type":"body","textPreview":"Click to edit Master text styles"},{"name":"dateTime","type":"dateTime","textPreview":"1/27/13"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout4.xml","name":"Two Content","type":"twoObj","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"content placeholder 2","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"content placeholder 3","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"dateTime","type":"dateTime","textPreview":"1/27/13"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout5.xml","name":"Comparison","type":"twoTxTwoObj","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"body","type":"body","textPreview":"Click to edit Master text styles"},{"name":"content placeholder 3","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"body","type":"body","textPreview":"Click to edit Master text styles"},{"name":"content placeholder 5","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"dateTime","type":"dateTime","textPreview":"1/27/13"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout6.xml","name":"Title Only","type":"titleOnly","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"dateTime","type":"dateTime","textPreview":"1/27/13"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout7.xml","name":"Blank","type":"blank","placeholders":[{"name":"dateTime","type":"dateTime","textPreview":"1/27/13"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout8.xml","name":"Content with Caption","type":"objTx","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"content placeholder 2","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"body","type":"body","textPreview":"Click to edit Master text styles"},{"name":"dateTime","type":"dateTime","textPreview":"1/27/13"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout9.xml","name":"Picture with Caption","type":"picTx","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"picture","type":"picture"},{"name":"body","type":"body","textPreview":"Click to edit Master text styles"},{"name":"dateTime","type":"dateTime","textPreview":"1/27/13"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout10.xml","name":"Title and Vertical Text","type":"vertTx","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"body","type":"body","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"dateTime","type":"dateTime","textPreview":"1/27/13"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout11.xml","name":"Vertical Title and Text","type":"vertTitleAndTx","placeholders":[{"name":"title","type":"title","textPreview":"Click to edit Master title style"},{"name":"body","type":"body","textPreview":"Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level"},{"name":"dateTime","type":"dateTime","textPreview":"1/27/13"},{"name":"footer","type":"footer"},{"name":"slideNumber","type":"slideNumber","textPreview":"‹#›"}]}
+{"kind":"slide","id":"sl/y90nupkv","slide":1,"title":"AKP / BADMINTON PERFORMANCE INTELLIGENCE","textShapes":6}
+{"kind":"shape","id":"sh/547294r6","slide":1,"name":"cover-accent","bbox":[62,74,7,74]}
+{"kind":"textbox","id":"sh/k3yl0zql","slide":1,"name":"cover-eyebrow","text":"AKP / BADMINTON PERFORMANCE INTELLIGENCE","textPreview":"AKP / BADMINTON PERFORMANCE INTELLIGENCE","textChars":40,"textLines":1,"bbox":[86,66,520,36]}
+{"kind":"textbox","id":"sh/7qp4be9c","slide":1,"name":"cover-title","text":"SHUTTLETRACE","textPreview":"SHUTTLETRACE","textChars":12,"textLines":1,"bbox":[78,148,565,100]}
+{"kind":"textbox","id":"sh/65g3298r","slide":1,"name":"cover-claim","text":"Turn every rally into\na coaching decision.","textPreview":"Turn every rally into | a coaching decision.","textChars":42,"textLines":2,"bbox":[80,247,535,126]}
+{"kind":"textbox","id":"sh/ts7md4r2","slide":1,"name":"cover-subtitle","text":"Real-time badminton notation, player tracking and post-match analytics — using the devices coaches already own.","textPreview":"Real-time badminton notation, player tracking and post-match analytics — using the devices coaches already own.","textChars":111,"textLines":1,"bbox":[82,395,500,92]}
+{"kind":"shape","id":"sh/sryl4zqx","slide":1,"name":"cover-proof","bbox":[80,522,420,54]}
+{"kind":"textbox","id":"sh/fu94fe98","slide":1,"name":"cover-proof-text","text":"LIVE MATCH  •  TRAINING  •  ANALYTICS","textPreview":"LIVE MATCH  •  TRAINING  •  ANALYTICS","textChars":37,"textLines":1,"bbox":[92,529,396,40]}
+{"kind":"textbox","id":"sh/utg3698n","slide":1,"name":"cover-draft","text":"VISUAL DRAFT","textPreview":"VISUAL DRAFT","textChars":12,"textLines":1,"bbox":[80,642,200,28]}
+{"kind":"image","id":"im/jqxw72dk","slide":1,"name":"","bbox":[670,0,610,720]}
+{"kind":"notes","id":"nt/y90nupkv","slide":1,"text":"[Sources]\nLee Chong Wei photograph — Antony Stanley, CC BY-SA 2.0 — https://commons.wikimedia.org/wiki/File:Lee_Chong_Wei_Prepares_To_Smash_cropped.jpg"}
+{"kind":"slide","id":"sl/hwbqtkby","slide":2,"title":"1. PROBLEM: Traditional Pen-and-Paper Notation is Slow and Inefficient","textShapes":3}
+{"kind":"textbox","id":"sh/9072xkry","slide":2,"name":"TextBox 1","text":"1. PROBLEM: Traditional Pen-and-Paper Notation is Slow and Inefficient","textPreview":"1. PROBLEM: Traditional Pen-and-Paper Notation is Slow and Inefficient","textChars":70,"textLines":1,"bbox":[48,48,1183.97,96]}
+{"kind":"shape","id":"sh/ozy1ofad","slide":2,"name":"Rectangle 2","bbox":[48,124.8,1183.97,2.67]}
+{"kind":"textbox","id":"sh/b29kza94","slide":2,"name":"TextBox 3","text":"The Coaching Bottleneck\n• Coaches are distracted by manually writing tallies, losing valuable face-time with players.\n• No immediate statistics can be calculated during the critical 11-point break or between sets.\n• Paper records are easily lost, unorganized, and fail to track player progress over time.\n• Existing commercial tech options are locked behind heavy subscription and equipment walls.","textPreview":"The Coaching Bottleneck | • Coaches are distracted by manually writing tallies, losing valuable face-time with players. | • No immediate ...","textChars":397,"textLines":5,"bbox":[48,172.8,556.8,480]}
+{"kind":"textbox","id":"sh/a10jqpsj","slide":2,"name":"Rounded Rectangle 4","text":"THE MANUAL CHAOS WE ARE ELIMINATING:\n❌ Tally Marks on Paper\n   Messy handwriting that coaches must count and calculate by hand after games.\n❌ Zero Real-Time Action\n   Insights arrive too late (usually days after a match) to adjust ongoing game strategies.\n❌ Fragile & Lost Data\n   Physical binders that pile up and offer no historical progress search capability.","textPreview":"THE MANUAL CHAOS WE ARE ELIMINATING: | ❌ Tally Marks on Paper |    Messy handwriting that coaches must count and calculate by hand after ...","textChars":362,"textLines":7,"bbox":[652.8,172.8,576,460.8]}
+{"kind":"notes","id":"nt/hwbqtkby","slide":2,"text":"Highlight that traditional paper-based notation limits real-time tactical adjustments. Coaches cannot calculate percentages on the fly during a tight 11-point break, making raw tallies useless in the moment."}
+{"kind":"slide","id":"sl/ofy9wn61","slide":3,"title":"02","textShapes":15}
+{"kind":"textbox","id":"sh/6d0fytg3","slide":3,"name":"section-2","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[48,32,46,26]}
+{"kind":"textbox","id":"sh/cza94vmx","slide":3,"name":"eyebrow-2","text":"PROPOSED INNOVATION","textPreview":"PROPOSED INNOVATION","textChars":19,"textLines":1,"bbox":[98,32,430,26]}
+{"kind":"textbox","id":"sh/d0jax03i","slide":3,"name":"innovation-title","text":"One tap turns\ncourt action into\nusable insight.","textPreview":"One tap turns | court action into | usable insight.","textChars":47,"textLines":3,"bbox":[50,82,430,142]}
+{"kind":"textbox","id":"sh/298ryl4v","slide":3,"name":"innovation-subtitle","text":"The working interface already connects three jobs that coaches normally perform separately.","textPreview":"The working interface already connects three jobs that coaches normally perform separately.","textChars":91,"textLines":1,"bbox":[52,224,410,72]}
+{"kind":"textbox","id":"sh/3ah8rqlg","slide":3,"name":"benefit-01","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[52,322,44,28]}
+{"kind":"textbox","id":"sh/obq90bml","slide":3,"name":"benefit-h-01","text":"CAPTURE","textPreview":"CAPTURE","textChars":7,"textLines":1,"bbox":[102,320,150,30]}
+{"kind":"textbox","id":"sh/pcjqtg36","slide":3,"name":"benefit-b-01","text":"Record live shots and player actions court-side.","textPreview":"Record live shots and player actions court-side.","textChars":48,"textLines":1,"bbox":[102,350,360,54]}
+{"kind":"textbox","id":"sh/m5cra54z","slide":3,"name":"benefit-02","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[52,422,44,28]}
+{"kind":"textbox","id":"sh/n6ls3alk","slide":3,"name":"benefit-h-02","text":"ANALYZE","textPreview":"ANALYZE","textChars":7,"textLines":1,"bbox":[102,420,150,30]}
+{"kind":"textbox","id":"sh/n2l4fq98","slide":3,"name":"benefit-b-02","text":"See distribution, attack ratio and rally patterns.","textPreview":"See distribution, attack ratio and rally patterns.","textChars":50,"textLines":1,"bbox":[102,450,360,54]}
+{"kind":"textbox","id":"sh/m1c3mlsn","slide":3,"name":"benefit-03","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[52,522,44,28]}
+{"kind":"textbox","id":"sh/943mhgre","slide":3,"name":"benefit-h-03","text":"REVIEW","textPreview":"REVIEW","textChars":6,"textLines":1,"bbox":[102,520,150,30]}
+{"kind":"textbox","id":"sh/83ulovat","slide":3,"name":"benefit-b-03","text":"Store match history for structured player development.","textPreview":"Store match history for structured player development.","textChars":54,"textLines":1,"bbox":[102,550,360,54]}
+{"kind":"shape","id":"sh/v6l4jq94","slide":3,"name":"innovation-browser-frame","bbox":[550,108,682,420]}
+{"kind":"shape","id":"sh/a5c3ql8z","slide":3,"name":"innovation-dot-0","bbox":[566,121,9,9]}
+{"kind":"shape","id":"sh/x8nml0ra","slide":3,"name":"innovation-dot-1","bbox":[583,121,9,9]}
+{"kind":"shape","id":"sh/w7ulsvqp","slide":3,"name":"innovation-dot-2","bbox":[600,121,9,9]}
+{"kind":"textbox","id":"sh/ja54na9g","slide":3,"name":"innovation-url","text":"shuttletrace.ai","textPreview":"shuttletrace.ai","textChars":15,"textLines":1,"bbox":[636,116,562,22]}
+{"kind":"shape","id":"sh/e10f2twf","slide":3,"name":"innovation-tablet-ipad-frame","bbox":[742,476,430,207]}
+{"kind":"shape","id":"sh/03ix43e5","slide":3,"name":"innovation-tablet-camera","bbox":[1161,576.5,5,5]}
+{"kind":"textbox","id":"sh/14ryd8fq","slide":3,"name":"innovation-proof-label","text":"REAL WORKING INTERFACE","textPreview":"REAL WORKING INTERFACE","textChars":22,"textLines":1,"bbox":[520,574,205,32]}
+{"kind":"image","id":"im/0z2ds325","slide":3,"name":"","geometry":"roundRect","bbox":[558,142,666,378]}
+{"kind":"image","id":"im/fytczylk","slide":3,"name":"","geometry":"roundRect","bbox":[755,489,404,181]}
+{"kind":"notes","id":"nt/ofy9wn61","slide":3,"text":"[Sources]\nProduct interfaces supplied by the project team: post-match analytics and live-match player selection screenshots."}
+{"kind":"slide","id":"sl/jyx0ra1s","slide":4,"title":"3. NOVELTY: Digital Simplicity Over Outdated Manual Workflows","textShapes":5}
+{"kind":"textbox","id":"sh/1cj2d8b6","slide":4,"name":"TextBox 1","text":"3. NOVELTY: Digital Simplicity Over Outdated Manual Workflows","textPreview":"3. NOVELTY: Digital Simplicity Over Outdated Manual Workflows","textChars":61,"textLines":1,"bbox":[48,48,1183.97,96]}
+{"kind":"shape","id":"sh/0ba143al","slide":4,"name":"Rectangle 2","bbox":[48,124.8,1183.97,2.67]}
+{"kind":"textbox","id":"sh/rm1k7yt4","slide":4,"name":"Oval 3","text":"THE OLD WAY\n\n• Paper & pen mess\n• Math during breaks\n• Easily lost sheets\n• Unorganized binder files","textPreview":"THE OLD WAY |  | • Paper & pen mess | • Math during breaks | • Easily lost sheets | • Unorganized binder files","textChars":100,"textLines":6,"bbox":[144,211.2,307.2,307.2]}
+{"kind":"textbox","id":"sh/ql8jytsj","slide":4,"name":"TextBox 4","text":"VS","textPreview":"VS","textChars":2,"textLines":1,"bbox":[480,307.2,316.8,96]}
+{"kind":"textbox","id":"sh/doj29oba","slide":4,"name":"Oval 5","text":"SHUTTLETRACE\n\n• Tap-based mobile app\n• Real-time dashboard\n• Secure cloud archive\n• Zero hardware costs (RM0)","textPreview":"SHUTTLETRACE |  | • Tap-based mobile app | • Real-time dashboard | • Secure cloud archive | • Zero hardware costs (RM0)","textChars":109,"textLines":6,"bbox":[816,211.2,307.2,307.2]}
+{"kind":"textbox","id":"sh/sna103ap","slide":4,"name":"Rounded Rectangle 6","text":"Value Proposition: Replaces tedious pen-and-paper with immediate, error-free statistics using coaches' sedia ada mobile devices—requiring no technical setup or training.","textPreview":"Value Proposition: Replaces tedious pen-and-paper with immediate, error-free statistics using coaches' sedia ada mobile devices—requiring...","textChars":169,"textLines":1,"bbox":[48,556.8,1183.97,96]}
+{"kind":"notes","id":"nt/jyx0ra1s","slide":4,"text":"Explain that the novelty is simplicity itself. Most technology tries to overcomplicate things with cameras and expensive tracking. ShuttleTrace modernizes the classic coaching clipboard digitally and at absolute zero cost."}
+{"kind":"slide","id":"sl/i107q5of","slide":5,"title":"04","textShapes":14}
+{"kind":"textbox","id":"sh/sb6xsvu9","slide":5,"name":"section-4","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[48,32,46,26]}
+{"kind":"textbox","id":"sh/dgbulwnm","slide":5,"name":"eyebrow-4","text":"TARGET USERS","textPreview":"TARGET USERS","textChars":12,"textLines":1,"bbox":[98,32,430,26]}
+{"kind":"textbox","id":"sh/cf2tcr61","slide":5,"name":"users-title","text":"Elite insight should not be\nlimited to elite budgets.","textPreview":"Elite insight should not be | limited to elite budgets.","textChars":53,"textLines":2,"bbox":[50,90,590,118]}
+{"kind":"textbox","id":"sh/z2tcnm5s","slide":5,"name":"users-subtitle","text":"ShuttleTrace scales the same disciplined performance mindset from national-level badminton to everyday coaching environments.","textPreview":"ShuttleTrace scales the same disciplined performance mindset from national-level badminton to everyday coaching environments.","textChars":125,"textLines":1,"bbox":[52,218,535,82]}
+{"kind":"textbox","id":"sh/yhkbe1o7","slide":5,"name":"user-01","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[52,330,38,28]}
+{"kind":"textbox","id":"sh/l4bupwny","slide":5,"name":"user-h-01","text":"SCHOOL & UNIVERSITY COACHES","textPreview":"SCHOOL & UNIVERSITY COACHES","textChars":27,"textLines":1,"bbox":[100,328,430,28]}
+{"kind":"textbox","id":"sh/032tgr6d","slide":5,"name":"user-b-01","text":"Track development without buying specialist hardware.","textPreview":"Track development without buying specialist hardware.","textChars":53,"textLines":1,"bbox":[100,359,420,48]}
+{"kind":"textbox","id":"sh/n6dcr65o","slide":5,"name":"user-02","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[52,424,38,28]}
+{"kind":"textbox","id":"sh/m5kbi1oj","slide":5,"name":"user-h-02","text":"PRIVATE ACADEMIES","textPreview":"PRIVATE ACADEMIES","textChars":17,"textLines":1,"bbox":[100,422,430,28]}
+{"kind":"textbox","id":"sh/w32dkbuh","slide":5,"name":"user-b-02","text":"Offer structured reports and measurable player progress.","textPreview":"Offer structured reports and measurable player progress.","textChars":56,"textLines":1,"bbox":[100,453,420,48]}
+{"kind":"textbox","id":"sh/x4vedgvm","slide":5,"name":"user-03","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[52,518,38,28]}
+{"kind":"textbox","id":"sh/ahkvi1cb","slide":5,"name":"user-h-03","text":"RECREATIONAL PLAYERS","textPreview":"RECREATIONAL PLAYERS","textChars":20,"textLines":1,"bbox":[100,516,430,28]}
+{"kind":"textbox","id":"sh/v2twb6dw","slide":5,"name":"user-b-03","text":"Understand patterns, errors and strengths after every match.","textPreview":"Understand patterns, errors and strengths after every match.","textChars":60,"textLines":1,"bbox":[100,547,420,48]}
+{"kind":"shape","id":"sh/i54fmlc7","slide":5,"name":"users-photo-caption-bg","bbox":[660,566,536,70]}
+{"kind":"textbox","id":"sh/j6dwfqds","slide":5,"name":"users-photo-caption","text":"INSPIRED BY THE HIGHEST LEVEL.\nDESIGNED FOR EVERY LEVEL.","textPreview":"INSPIRED BY THE HIGHEST LEVEL. | DESIGNED FOR EVERY LEVEL.","textChars":56,"textLines":2,"bbox":[682,574,494,54]}
+{"kind":"image","id":"im/uhkvq14z","slide":5,"name":"","geometry":"roundRect","bbox":[640,82,276,548]}
+{"kind":"image","id":"im/yt0f21or","slide":5,"name":"","geometry":"roundRect","bbox":[930,154,300,476]}
+{"kind":"notes","id":"nt/i107q5of","slide":5,"text":"[Sources]\nLin Dan photograph — Antony Stanley, CC BY-SA 2.0 — https://commons.wikimedia.org/wiki/File:Lin_Dan_Returns_The_Shuttlecock_(7758849992).jpg\nKento Momota photograph — Nardisoero, CC BY-SA 4.0 — https://commons.wikimedia.org/wiki/File:Kento_Momota_from_Japan.jpg"}
+{"kind":"slide","id":"sl/x8f69ofe","slide":6,"title":"5. TECHNICAL FEASIBILITY: Zero Hardware Costs, Highly Reliable Architecture","textShapes":3}
+{"kind":"textbox","id":"sh/yhg7epsj","slide":6,"name":"TextBox 1","text":"5. TECHNICAL FEASIBILITY: Zero Hardware Costs, Highly Reliable Architecture","textPreview":"5. TECHNICAL FEASIBILITY: Zero Hardware Costs, Highly Reliable Architecture","textChars":75,"textLines":1,"bbox":[48,48,1183.97,96]}
+{"kind":"shape","id":"sh/zi98nu94","slide":6,"name":"Rectangle 2","bbox":[48,124.8,1183.97,2.67]}
+{"kind":"textbox","id":"sh/87ipkzal","slide":6,"name":"Rounded Rectangle 3","text":"100% Bring Your Own Device (BYOD)\n✔ Hardware Cost = RM0: Runs on iOS and Android smartphones or tablets already owned by coaches and players.\n✔ No expensive high-speed cameras, smart rackets, or sensor devices to buy or calibrate.\n✔ Extremely lightweight app install size that fits on older devices with low storage.\n✔ Runs seamlessly in offline mode, auto-syncing to the database once a Wi-Fi connection is detected.","textPreview":"100% Bring Your Own Device (BYOD) | ✔ Hardware Cost = RM0: Runs on iOS and Android smartphones or tablets already owned by coaches and pl...","textChars":417,"textLines":5,"bbox":[48,172.8,556.8,460.8]}
+{"kind":"textbox","id":"sh/98rqt4r6","slide":6,"name":"Rounded Rectangle 4","text":"Simple & Scalable App Architecture\n☁ Mobile App (Frontend)\n   Optimized React Native app that ensures ultra-smooth UI tapping response and zero button lag during rapid badminton rallies.\n☁ Cloud Server & Database (Backend)\n   Stat tallies are compressed and sent as small text files to the cloud, ensuring lightning-fast uploads with extremely low data usage.\n☁ Web Dashboard (Alternative View)\n   Allows academy administrators to print beautifully formatted PDF summaries and progress charts from any desktop browser.","textPreview":"Simple & Scalable App Architecture | ☁ Mobile App (Frontend) |    Optimized React Native app that ensures ultra-smooth UI tapping respons...","textChars":518,"textLines":7,"bbox":[652.8,172.8,576,460.8]}
+{"kind":"notes","id":"nt/x8f69ofe","slide":6,"text":"Emphasize to the judges that the technology is highly feasible because we rely on React Native (runs everywhere) and simple databases. No hardware issues to debug, ensuring the product can launch in weeks, not years."}
+{"kind":"slide","id":"sl/gnmp4jqx","slide":7,"title":"6. BENEFITS: Empowering Grassroots Sports Digitization","textShapes":5}
+{"kind":"textbox","id":"sh/cb2tkvap","slide":7,"name":"TextBox 1","text":"6. BENEFITS: Empowering Grassroots Sports Digitization","textPreview":"6. BENEFITS: Empowering Grassroots Sports Digitization","textChars":54,"textLines":1,"bbox":[48,48,1183.97,96]}
+{"kind":"shape","id":"sh/dcbud0ra","slide":7,"name":"Rectangle 2","bbox":[48,124.8,1183.97,2.67]}
+{"kind":"textbox","id":"sh/ydkbm5sv","slide":7,"name":"Rounded Rectangle 3","text":"Real-Time Match Insight\nAllows coaches to back up their court-side advice with exact percentages during a 1-minute break, boosting athlete confidence and strategy execution.","textPreview":"Real-Time Match Insight | Allows coaches to back up their court-side advice with exact percentages during a 1-minute break, boosting athl...","textChars":173,"textLines":2,"bbox":[48,172.8,556.8,201.6]}
+{"kind":"textbox","id":"sh/zedcfa9g","slide":7,"name":"Rounded Rectangle 4","text":"Effortless Digital Workflow\nSay goodbye to bulky paper binders. Every match is neatly cataloged, searchable, and stored without taking physical storage space.","textPreview":"Effortless Digital Workflow | Say goodbye to bulky paper binders. Every match is neatly cataloged, searchable, and stored without taking ...","textChars":158,"textLines":2,"bbox":[652.8,172.8,556.8,201.6]}
+{"kind":"textbox","id":"sh/kzmdova1","slide":7,"name":"Rounded Rectangle 5","text":"Highly Inclusive & Scalable\nSifar kos (Zero cost) barrier makes sports analytics accessible to underfunded village schools and small state badminton associations alike.","textPreview":"Highly Inclusive & Scalable | Sifar kos (Zero cost) barrier makes sports analytics accessible to underfunded village schools and small st...","textChars":168,"textLines":2,"bbox":[48,412.8,556.8,201.6]}
+{"kind":"textbox","id":"sh/l0vuh0rm","slide":7,"name":"Rounded Rectangle 6","text":"Actionable Player Progress\nEnables players to visualize and understand their performance trends, helping them target specific areas to improve during training.","textPreview":"Actionable Player Progress | Enables players to visualize and understand their performance trends, helping them target specific areas to ...","textChars":159,"textLines":2,"bbox":[652.8,412.8,556.8,201.6]}
+{"kind":"notes","id":"nt/gnmp4jqx","slide":7,"text":"Each benefit addresses a key sports development need: immediate stats, effortless organization, zero cost barrier, and player motivation through numbers."}
+{"kind":"slide","id":"sl/fu1gfa1s","slide":8,"title":"7. COMMERCIAL POTENTIAL: Low Overhead, High-Growth SaaS Model","textShapes":3}
+{"kind":"textbox","id":"sh/18byd4zy","slide":8,"name":"TextBox 1","text":"7. COMMERCIAL POTENTIAL: Low Overhead, High-Growth SaaS Model","textPreview":"7. COMMERCIAL POTENTIAL: Low Overhead, High-Growth SaaS Model","textChars":61,"textLines":1,"bbox":[48,48,1183.97,96]}
+{"kind":"shape","id":"sh/g72x4zyd","slide":8,"name":"Rectangle 2","bbox":[48,124.8,1183.97,2.67]}
+{"kind":"textbox","id":"sh/ri9g7uhw","slide":8,"name":"TextBox 3","text":"How We Scale Profitably\n💰 Freemium Mobile App\n   The basic notation and live scorecard app are 100% free for everyone. This guarantees rapid downloads and viral organic growth among clubs.\n💰 Premium Academy Dashboard\n   SaaS subscription model charging small private academies and leagues for bulk player analysis, PDF reports, and advanced team stats.\n💰 In-App Sponsorships\n   Premium brand placements from Malaysian sports equipment brands targeting active badminton enthusiasts directly on the scorecard UI.","textPreview":"How We Scale Profitably | 💰 Freemium Mobile App |    The basic notation and live scorecard app are 100% free for everyone. This guarante...","textChars":513,"textLines":7,"bbox":[48,172.8,556.8,480]}
+{"kind":"textbox","id":"sh/6h0fypgb","slide":8,"name":"Rounded Rectangle 4","text":"Key Market Strengths\n📈 Huge Target Base in Malaysia\n   Badminton is one of the most widely played sports in Malaysia with thousands of schools and private training courts active nationwide.\n📈 Sifar Overhead (RM0 Inventory)\n   No manufacturing costs, no physical inventory, no delivery logistics, and extremely low server maintenance fees.\n📈 Global Scalability\n   Easily translated into English, Chinese, and other languages to enter massive Asian markets like Indonesia, Thailand, and China instantly.","textPreview":"Key Market Strengths | 📈 Huge Target Base in Malaysia |    Badminton is one of the most widely played sports in Malaysia with thousands ...","textChars":504,"textLines":7,"bbox":[652.8,172.8,576,460.8]}
+{"kind":"notes","id":"nt/fu1gfa1s","slide":8,"text":"Because we sell software (SaaS), our profit margins are incredibly high. Explain that our free tier drives massive adoption, which naturally funnel-converts larger private academies to our premium analytics plan."}
+{"kind":"slide","id":"sl/udsvah03","slide":9,"title":"08","textShapes":7}
+{"kind":"textbox","id":"sh/0ru1ozyp","slide":9,"name":"section-8","text":"08","textPreview":"08","textChars":2,"textLines":1,"bbox":[48,32,46,26]}
+{"kind":"textbox","id":"sh/1cfmhgne","slide":9,"name":"eyebrow-8","text":"PROTOTYPE","textPreview":"PROTOTYPE","textChars":9,"textLines":1,"bbox":[98,32,430,26]}
+{"kind":"textbox","id":"sh/0b65obm9","slide":9,"name":"prototype-title","text":"One system. Two coaching contexts.","textPreview":"One system. Two coaching contexts.","textChars":34,"textLines":1,"bbox":[50,82,780,68]}
+{"kind":"textbox","id":"sh/nex4jq5k","slide":9,"name":"prototype-subtitle","text":"Capture on iPad at court-side. Review on the web after the match.","textPreview":"Capture on iPad at court-side. Review on the web after the match.","textChars":65,"textLines":1,"bbox":[52,146,720,44]}
+{"kind":"shape","id":"sh/mdonql4z","slide":9,"name":"prototype-web-browser-frame","bbox":[470,198,760,427]}
+{"kind":"shape","id":"sh/9gzml0nq","slide":9,"name":"prototype-web-dot-0","bbox":[486,211,9,9]}
+{"kind":"shape","id":"sh/ofq5svm5","slide":9,"name":"prototype-web-dot-1","bbox":[503,211,9,9]}
+{"kind":"shape","id":"sh/bih4na5w","slide":9,"name":"prototype-web-dot-2","bbox":[520,211,9,9]}
+{"kind":"textbox","id":"sh/ah8nu54b","slide":9,"name":"prototype-web-url","text":"shuttletrace.ai","textPreview":"shuttletrace.ai","textChars":15,"textLines":1,"bbox":[556,206,640,22]}
+{"kind":"shape","id":"sh/p0ji9kf2","slide":9,"name":"prototype-ipad-ipad-frame","bbox":[48,268,600,338]}
+{"kind":"shape","id":"sh/3y107axw","slide":9,"name":"prototype-ipad-camera","bbox":[637,434,5,5]}
+{"kind":"shape","id":"sh/cnu1kzyd","slide":9,"name":"ipad-label-bg","bbox":[70,220,206,42]}
+{"kind":"textbox","id":"sh/do3id4fy","slide":9,"name":"ipad-label","text":"iPAD • COURT-SIDE","textPreview":"iPAD • COURT-SIDE","textChars":17,"textLines":1,"bbox":[80,226,186,30]}
+{"kind":"shape","id":"sh/qlcjipgn","slide":9,"name":"web-label-bg","bbox":[982,626,228,42]}
+{"kind":"textbox","id":"sh/bml0buxs","slide":9,"name":"web-label","text":"WEB • POST-MATCH","textPreview":"WEB • POST-MATCH","textChars":16,"textLines":1,"bbox":[994,632,204,30]}
+{"kind":"image","id":"im/yho7mlc7","slide":9,"name":"","geometry":"roundRect","bbox":[478,232,744,385]}
+{"kind":"image","id":"im/md47elwz","slide":9,"name":"","geometry":"roundRect","bbox":[61,281,574,312]}
+{"kind":"notes","id":"nt/udsvah03","slide":9,"text":"[Sources]\nProduct interfaces supplied by the project team: Training Mode and Post-Match Analytics screenshots."}
+{"kind":"slide","id":"sl/m90b6t0r","slide":10,"title":"09","textShapes":8}
+{"kind":"textbox","id":"sh/0bit8b2d","slide":10,"name":"section-9","text":"09","textPreview":"09","textChars":2,"textLines":1,"bbox":[48,32,46,26]}
+{"kind":"textbox","id":"sh/xc3mho32","slide":10,"name":"eyebrow-9","text":"CONCLUSION","textPreview":"CONCLUSION","textChars":10,"textLines":1,"bbox":[98,32,430,26]}
+{"kind":"textbox","id":"sh/zelojyl8","slide":10,"name":"conclusion-title","text":"Elite-level insight.\nGrassroots-ready.","textPreview":"Elite-level insight. | Grassroots-ready.","textChars":38,"textLines":2,"bbox":[52,112,615,136]}
+{"kind":"textbox","id":"sh/ydcnatkn","slide":10,"name":"conclusion-subtitle","text":"ShuttleTrace bridges the gap between manual notation and modern performance analysis — without adding expensive hardware.","textPreview":"ShuttleTrace bridges the gap between manual notation and modern performance analysis — without adding expensive hardware.","textChars":121,"textLines":1,"bbox":[54,266,565,92]}
+{"kind":"shape","id":"sh/l036l83y","slide":10,"name":"claim-dot-0","bbox":[56,416,11,11]}
+{"kind":"textbox","id":"sh/kzu5c32t","slide":10,"name":"claim-0","text":"REAL-TIME COURT-SIDE CAPTURE","textPreview":"REAL-TIME COURT-SIDE CAPTURE","textChars":28,"textLines":1,"bbox":[82,408,460,30]}
+{"kind":"shape","id":"sh/725onyl4","slide":10,"name":"claim-dot-1","bbox":[56,480,11,11]}
+{"kind":"textbox","id":"sh/m1cnetkj","slide":10,"name":"claim-1","text":"STRUCTURED PLAYER HISTORY","textPreview":"STRUCTURED PLAYER HISTORY","textChars":25,"textLines":1,"bbox":[82,472,460,30]}
+{"kind":"shape","id":"sh/s7yt4b21","slide":10,"name":"claim-dot-2","bbox":[56,544,11,11]}
+{"kind":"textbox","id":"sh/d87uxg3m","slide":10,"name":"claim-2","text":"RM0 SPECIALIST HARDWARE","textPreview":"RM0 SPECIALIST HARDWARE","textChars":23,"textLines":1,"bbox":[82,536,460,30]}
+{"kind":"shape","id":"sh/q5gb21kb","slide":10,"name":"conclusion-tag","bbox":[54,622,454,48]}
+{"kind":"textbox","id":"sh/r6pcv6lw","slide":10,"name":"conclusion-tag-text","text":"FROM EVERY RALLY → A BETTER DECISION","textPreview":"FROM EVERY RALLY → A BETTER DECISION","textChars":36,"textLines":1,"bbox":[66,628,430,34]}
+{"kind":"image","id":"im/6dwz29kf","slide":10,"name":"","bbox":[714,0,566,720]}
+{"kind":"notes","id":"nt/m90b6t0r","slide":10,"text":"[Sources]\nTaufik Hidayat photograph — Tsutomu Takasu, CC BY 2.0 — https://commons.wikimedia.org/wiki/File:Flickr_-_tpower1978_-_Yonex_Open.jpg"}
+{"kind":"slide","id":"sl/jetc3ut0","slide":11,"title":"THANK YOU","textShapes":1}
+{"kind":"shape","id":"sh/xcryxg7y","slide":11,"name":"Rounded Rectangle 1","bbox":[48,172.8,1183.97,432]}
+{"kind":"textbox","id":"sh/wbih4b6d","slide":11,"name":"TextBox 2","text":"THANK YOU\nQ&A Session — Open for Discussion\nShuttleTrace: Modernizing Badminton Tactic Notation at Zero Cost","textPreview":"THANK YOU | Q&A Session — Open for Discussion | ShuttleTrace: Modernizing Badminton Tactic Notation at Zero Cost","textChars":108,"textLines":3,"bbox":[96,211.2,1087.97,336]}
+{"kind":"notes","id":"nt/jetc3ut0","slide":11,"text":"Thank the judges and open the floor to any of their questions about technology, scalability, or target audience."}
+{"kind":"slide","id":"sl/brxx5s","slide":12,"title":"SYSTEM REQUIREMENT ADDENDUM","textShapes":14}
+{"kind":"shape","id":"sh/q1crahcf","slide":12,"bbox":[0,0,1280,720]}
+{"kind":"shape","id":"sh/d43a5wbq","slide":12,"bbox":[0,0,12,720]}
+{"kind":"textbox","id":"sh/s3u9cru5","slide":12,"text":"SYSTEM REQUIREMENT ADDENDUM","textPreview":"SYSTEM REQUIREMENT ADDENDUM","textChars":27,"textLines":1,"bbox":[72,58,260,26]}
+{"kind":"textbox","id":"sh/f6ls76tw","slide":12,"text":"Project specification for AKP ShuttleTrace","textPreview":"Project specification for AKP ShuttleTrace","textChars":42,"textLines":1,"bbox":[70,92,680,78]}
+{"kind":"textbox","id":"sh/e5cre1cb","slide":12,"text":"Badminton match and stroke notational analysis system for coaches, analysts and structured training review.","textPreview":"Badminton match and stroke notational analysis system for coaches, analysts and structured training review.","textChars":107,"textLines":1,"bbox":[72,182,680,58]}
+{"kind":"shape","id":"sh/18na9wb2","slide":12,"bbox":[72,266,220,34]}
+{"kind":"textbox","id":"sh/07e9gbuh","slide":12,"text":"Frontend: Vue 3 + Quasar","textPreview":"Frontend: Vue 3 + Quasar","textChars":24,"textLines":1,"bbox":[86,274,192,18]}
+{"kind":"shape","id":"sh/va18v2ts","slide":12,"bbox":[310,266,220,34]}
+{"kind":"textbox","id":"sh/u9sr2xc7","slide":12,"text":"Backend: NestJS + Prisma","textPreview":"Backend: NestJS + Prisma","textChars":24,"textLines":1,"bbox":[324,274,192,18]}
+{"kind":"shape","id":"sh/0zmp8v65","slide":12,"bbox":[548,266,190,34]}
+{"kind":"textbox","id":"sh/10v6h0nq","slide":12,"text":"Database: PostgreSQL","textPreview":"Database: PostgreSQL","textChars":20,"textLines":1,"bbox":[562,274,162,18]}
+{"kind":"shape","id":"sh/ex4n6lof","slide":12,"bbox":[72,344,310,150]}
+{"kind":"shape","id":"sh/fydofq50","slide":12,"bbox":[72,344,5,150]}
+{"kind":"textbox","id":"sh/o36pcfmh","slide":12,"text":"Purpose","textPreview":"Purpose","textChars":7,"textLines":1,"bbox":[94,362,266,30]}
+{"kind":"textbox","id":"sh/p4f6l0n2","slide":12,"text":"Record live matches, capture stroke notation, store player profiles, analyze performance and generate post-match reports.","textPreview":"Record live matches, capture stroke notation, store player profiles, analyze performance and generate post-match reports.","textChars":121,"textLines":1,"bbox":[94,400,266,80]}
+{"kind":"shape","id":"sh/2147a54b","slide":12,"bbox":[404,344,310,150]}
+{"kind":"shape","id":"sh/n2xoja5w","slide":12,"bbox":[404,344,5,150]}
+{"kind":"textbox","id":"sh/47250b6d","slide":12,"text":"Primary user","textPreview":"Primary user","textChars":12,"textLines":1,"bbox":[426,362,266,30]}
+{"kind":"textbox","id":"sh/58b69gni","slide":12,"text":"Badminton coach or analyst who needs fast notation during match play and clear review after the session.","textPreview":"Badminton coach or analyst who needs fast notation during match play and clear review after the session.","textChars":104,"textLines":1,"bbox":[426,400,266,80]}
+{"kind":"shape","id":"sh/lsjuh8ba","slide":12,"bbox":[736,344,310,150]}
+{"kind":"shape","id":"sh/krado3up","slide":12,"bbox":[736,344,5,150]}
+{"kind":"textbox","id":"sh/zq1cfyt4","slide":12,"text":"Deployment target","textPreview":"Deployment target","textChars":17,"textLines":1,"bbox":[758,362,266,30]}
+{"kind":"textbox","id":"sh/ypsvmtcj","slide":12,"text":"Frontend on GitHub Pages, backend on Railway and PostgreSQL connected through DATABASE_URL.","textPreview":"Frontend on GitHub Pages, backend on Railway and PostgreSQL connected through DATABASE_URL.","textChars":91,"textLines":1,"bbox":[758,400,266,80]}
+{"kind":"textbox","id":"sh/8fudsnu1","slide":12,"text":"PROJECT SPECIFICATION  /  01","textPreview":"PROJECT SPECIFICATION  /  01","textChars":28,"textLines":1,"bbox":[72,666,340,20]}
+{"kind":"textbox","id":"sh/7ulcjitg","slide":12,"text":"AKP SHUTTLETRACE","textPreview":"AKP SHUTTLETRACE","textChars":16,"textLines":1,"bbox":[1042,666,170,20]}
+{"kind":"image","id":"im/i10fepgv","slide":12,"name":"","geometry":"roundRect","alt":"AKP ShuttleTrace post-match analytics dashboard","bbox":[810,70,390,220]}
+{"kind":"notes","id":"nt/brxx5s","slide":12,"text":"[Sources]\nProduct interface screenshots supplied in the source deck.\nProject requirements derived from the AKP ShuttleTrace project specification requested by the user and the current repository architecture.\nSlide added as a new requirement addendum; original pitch content is preserved."}
+{"kind":"slide","id":"sl/gligg9","slide":13,"title":"FUNCTIONAL REQUIREMENTS","textShapes":21}
+{"kind":"shape","id":"sh/v690zqp8","slide":13,"bbox":[0,0,1280,720]}
+{"kind":"shape","id":"sh/g72hsvqd","slide":13,"bbox":[0,0,12,720]}
+{"kind":"textbox","id":"sh/h8bi107y","slide":13,"text":"FUNCTIONAL REQUIREMENTS","textPreview":"FUNCTIONAL REQUIREMENTS","textChars":23,"textLines":1,"bbox":[72,58,260,26]}
+{"kind":"textbox","id":"sh/i9kjul8j","slide":13,"text":"System scope covers the full coaching workflow","textPreview":"System scope covers the full coaching workflow","textChars":46,"textLines":1,"bbox":[70,92,760,78]}
+{"kind":"textbox","id":"sh/3at03qp4","slide":13,"text":"The app must support everything from player setup to live notation, training logging, history review and export.","textPreview":"The app must support everything from player setup to live notation, training logging, history review and export.","textChars":112,"textLines":1,"bbox":[72,172,820,58]}
+{"kind":"shape","id":"sh/4b21wvqp","slide":13,"bbox":[72,260,258,112]}
+{"kind":"shape","id":"sh/5cbi507a","slide":13,"bbox":[72,260,5,112]}
+{"kind":"textbox","id":"sh/qdkjy58v","slide":13,"text":"Authenticate","textPreview":"Authenticate","textChars":12,"textLines":1,"bbox":[94,278,214,30]}
+{"kind":"textbox","id":"sh/red07ap0","slide":13,"text":"Register, login, current user session and logout.","textPreview":"Register, login, current user session and logout.","textChars":49,"textLines":1,"bbox":[94,316,214,42]}
+{"kind":"shape","id":"sh/rilk7qho","slide":13,"bbox":[358,260,258,112]}
+{"kind":"shape","id":"sh/6hc3yl03","slide":13,"bbox":[358,260,5,112]}
+{"kind":"textbox","id":"sh/tk3m90ze","slide":13,"text":"Manage players","textPreview":"Manage players","textChars":14,"textLines":1,"bbox":[380,278,214,30]}
+{"kind":"textbox","id":"sh/sjul0vi9","slide":13,"text":"Create, view, edit and delete player profiles.","textPreview":"Create, view, edit and delete player profiles.","textChars":46,"textLines":1,"bbox":[380,316,214,42]}
+{"kind":"shape","id":"sh/jelk36hc","slide":13,"bbox":[644,260,258,112]}
+{"kind":"shape","id":"sh/ids3ul0r","slide":13,"bbox":[644,260,5,112]}
+{"kind":"textbox","id":"sh/5g325gzi","slide":13,"text":"Record matches","textPreview":"Record matches","textChars":14,"textLines":1,"bbox":[666,278,214,30]}
+{"kind":"textbox","id":"sh/4fulwbix","slide":13,"text":"Select Player A/B, track sets, rallies, score and shot sequence.","textPreview":"Select Player A/B, track sets, rallies, score and shot sequence.","textChars":64,"textLines":1,"bbox":[666,316,214,42]}
+{"kind":"shape","id":"sh/3a54fahw","slide":13,"bbox":[930,260,258,112]}
+{"kind":"shape","id":"sh/29w3650b","slide":13,"bbox":[930,260,5,112]}
+{"kind":"textbox","id":"sh/y50ne9kj","slide":13,"text":"Track strokes","textPreview":"Track strokes","textChars":13,"textLines":1,"bbox":[952,278,214,30]}
+{"kind":"textbox","id":"sh/z69o7e14","slide":13,"text":"Store shot type, rally context, player ownership and performance category.","textPreview":"Store shot type, rally context, player ownership and performance category.","textChars":74,"textLines":1,"bbox":[952,316,214,42]}
+{"kind":"shape","id":"sh/k7ipgj29","slide":13,"bbox":[72,406,258,112]}
+{"kind":"shape","id":"sh/l8r69oju","slide":13,"bbox":[72,406,5,112]}
+{"kind":"textbox","id":"sh/m907itkf","slide":13,"text":"Analyze dashboard","textPreview":"Analyze dashboard","textChars":17,"textLines":1,"bbox":[94,424,214,30]}
+{"kind":"textbox","id":"sh/7a9obe10","slide":13,"text":"Show match summary, shot frequency, attack ratio, longest rally and radar-style comparison.","textPreview":"Show match summary, shot frequency, attack ratio, longest rally and radar-style comparison.","textChars":91,"textLines":1,"bbox":[94,462,214,42]}
+{"kind":"shape","id":"sh/8bipkj2l","slide":13,"bbox":[358,406,258,112]}
+{"kind":"shape","id":"sh/9cb6doj6","slide":13,"bbox":[358,406,5,112]}
+{"kind":"textbox","id":"sh/2dgn6pkb","slide":13,"text":"Training mode","textPreview":"Training mode","textChars":13,"textLines":1,"bbox":[380,424,214,30]}
+{"kind":"textbox","id":"sh/3epozu1w","slide":13,"text":"Set drill target, record repetitions and review training history.","textPreview":"Set drill target, record repetitions and review training history.","textChars":65,"textLines":1,"bbox":[380,462,214,42]}
+{"kind":"shape","id":"sh/54fi1w7q","slide":13,"bbox":[644,406,258,112]}
+{"kind":"shape","id":"sh/436hsrq5","slide":13,"bbox":[644,406,5,112]}
+{"kind":"textbox","id":"sh/3ix0zmpk","slide":13,"text":"Export reports","textPreview":"Export reports","textChars":14,"textLines":1,"bbox":[666,424,214,30]}
+{"kind":"textbox","id":"sh/ihozqh8z","slide":13,"text":"Generate match reports and export CSV for coach documentation.","textPreview":"Generate match reports and export CSV for coach documentation.","textChars":62,"textLines":1,"bbox":[666,462,214,42]}
+{"kind":"shape","id":"sh/d8zi5w7m","slide":13,"bbox":[930,406,258,112]}
+{"kind":"shape","id":"sh/s761wrq1","slide":13,"bbox":[930,406,5,112]}
+{"kind":"textbox","id":"sh/r6x03mpg","slide":13,"text":"Settings/backup","textPreview":"Settings/backup","textChars":15,"textLines":1,"bbox":[952,424,214,30]}
+{"kind":"textbox","id":"sh/q5ozuh8v","slide":13,"text":"Support utility settings, local fallback and data recovery path.","textPreview":"Support utility settings, local fallback and data recovery path.","textChars":64,"textLines":1,"bbox":[952,462,214,42]}
+{"kind":"textbox","id":"sh/tcvitc7i","slide":13,"text":"PROJECT SPECIFICATION  /  02","textPreview":"PROJECT SPECIFICATION  /  02","textChars":28,"textLines":1,"bbox":[72,666,340,20]}
+{"kind":"textbox","id":"sh/8bmhk7qx","slide":13,"text":"AKP SHUTTLETRACE","textPreview":"AKP SHUTTLETRACE","textChars":16,"textLines":1,"bbox":[1042,666,170,20]}
+{"kind":"notes","id":"nt/gligg9","slide":13,"text":"[Sources]\nProduct interface screenshots supplied in the source deck.\nProject requirements derived from the AKP ShuttleTrace project specification requested by the user and the current repository architecture."}
+{"kind":"slide","id":"sl/5rwsao","slide":14,"title":"FRONTEND REQUIREMENTS","textShapes":11}
+{"kind":"shape","id":"sh/5sj29wni","slide":14,"bbox":[0,0,1280,720]}
+{"kind":"shape","id":"sh/i583y1or","slide":14,"bbox":[0,0,12,720]}
+{"kind":"textbox","id":"sh/361k7m5c","slide":14,"text":"FRONTEND REQUIREMENTS","textPreview":"FRONTEND REQUIREMENTS","textChars":21,"textLines":1,"bbox":[72,58,260,26]}
+{"kind":"textbox","id":"sh/sval4b6t","slide":14,"text":"The frontend is the coach-facing control surface","textPreview":"The frontend is the coach-facing control surface","textChars":48,"textLines":1,"bbox":[70,92,670,78]}
+{"kind":"textbox","id":"sh/dwj2dgne","slide":14,"text":"Built with Vue 3, Quasar, Vue Router, Axios and ECharts/Vue-ECharts, with LocalStorage fallback for continuity.","textPreview":"Built with Vue 3, Quasar, Vue Router, Axios and ECharts/Vue-ECharts, with LocalStorage fallback for continuity.","textChars":111,"textLines":1,"bbox":[72,172,640,58]}
+{"kind":"shape","id":"sh/ru1kb658","slide":14,"bbox":[72,270,560,88]}
+{"kind":"shape","id":"sh/8zq1s76p","slide":14,"bbox":[72,270,5,88]}
+{"kind":"textbox","id":"sh/t0z21cna","slide":14,"text":"Core pages","textPreview":"Core pages","textChars":10,"textLines":1,"bbox":[94,288,516,30]}
+{"kind":"textbox","id":"sh/xsbyhgnm","slide":14,"text":"Dashboard, Login/Register, Live Match, Training Mode, Players, History, Profile and Settings.","textPreview":"Dashboard, Login/Register, Live Match, Training Mode, Players, History, Profile and Settings.","textChars":93,"textLines":1,"bbox":[94,326,516,18]}
+{"kind":"shape","id":"sh/wr2x8b61","slide":14,"bbox":[72,388,560,88]}
+{"kind":"shape","id":"sh/b6tgf65g","slide":14,"bbox":[72,388,5,88]}
+{"kind":"textbox","id":"sh/a5kf61ob","slide":14,"text":"UI responsibility","textPreview":"UI responsibility","textChars":17,"textLines":1,"bbox":[94,406,516,30]}
+{"kind":"textbox","id":"sh/lwbylgny","slide":14,"text":"Fast coach notation, player forms, report views, chart rendering and match/training navigation.","textPreview":"Fast coach notation, player forms, report views, chart rendering and match/training navigation.","textChars":95,"textLines":1,"bbox":[94,444,516,18]}
+{"kind":"shape","id":"sh/kv2hcb6d","slide":14,"bbox":[72,506,560,88]}
+{"kind":"shape","id":"sh/jutgj65s","slide":14,"bbox":[72,506,5,88]}
+{"kind":"textbox","id":"sh/ytkfa1o7","slide":14,"text":"Data handling","textPreview":"Data handling","textChars":13,"textLines":1,"bbox":[94,524,516,30]}
+{"kind":"textbox","id":"sh/t0vyp0nu","slide":14,"text":"Axios API calls with LocalStorage fallback or offline cache for prototype resilience.","textPreview":"Axios API calls with LocalStorage fallback or offline cache for prototype resilience.","textChars":85,"textLines":1,"bbox":[94,562,516,18]}
+{"kind":"textbox","id":"sh/8zmhgv69","slide":14,"text":"PROJECT SPECIFICATION  /  03","textPreview":"PROJECT SPECIFICATION  /  03","textChars":28,"textLines":1,"bbox":[72,666,340,20]}
+{"kind":"textbox","id":"sh/s3u1czul","slide":14,"text":"AKP SHUTTLETRACE","textPreview":"AKP SHUTTLETRACE","textChars":16,"textLines":1,"bbox":[1042,666,170,20]}
+{"kind":"image","id":"im/ry5w7mdo","slide":14,"name":"","geometry":"roundRect","alt":"AKP ShuttleTrace live match player selection screen","bbox":[706,86,500,300]}
+{"kind":"notes","id":"nt/5rwsao","slide":14,"text":"[Sources]\nProduct interface screenshots supplied in the source deck.\nProject requirements derived from the AKP ShuttleTrace project specification requested by the user and the current repository architecture."}
+{"kind":"slide","id":"sl/9uadan","slide":15,"title":"BACKEND REQUIREMENTS","textShapes":15}
+{"kind":"shape","id":"sh/uh4r65wv","slide":15,"bbox":[0,0,1280,720]}
+{"kind":"shape","id":"sh/hkva1kvm","slide":15,"bbox":[0,0,12,720]}
+{"kind":"textbox","id":"sh/wjm98fe1","slide":15,"text":"BACKEND REQUIREMENTS","textPreview":"BACKEND REQUIREMENTS","textChars":20,"textLines":1,"bbox":[72,58,260,26]}
+{"kind":"textbox","id":"sh/7ut8vadk","slide":15,"text":"The backend keeps badminton data structured and consistent","textPreview":"The backend keeps badminton data structured and consistent","textChars":58,"textLines":1,"bbox":[70,92,760,78]}
+{"kind":"textbox","id":"sh/mtkr25wz","slide":15,"text":"NestJS with TypeScript exposes REST endpoints, Prisma handles persistence and PostgreSQL stores match/training records.","textPreview":"NestJS with TypeScript exposes REST endpoints, Prisma handles persistence and PostgreSQL stores match/training records.","textChars":119,"textLines":1,"bbox":[72,172,780,58]}
+{"kind":"shape","id":"sh/9gvqx0vq","slide":15,"bbox":[72,282,330,112]}
+{"kind":"shape","id":"sh/8f294ve5","slide":15,"bbox":[72,282,5,112]}
+{"kind":"textbox","id":"sh/rqxs7udo","slide":15,"text":"AuthModule","textPreview":"AuthModule","textChars":10,"textLines":1,"bbox":[94,300,286,30]}
+{"kind":"textbox","id":"sh/6porepc3","slide":15,"text":"User identity, session validation and logout.","textPreview":"User identity, session validation and logout.","textChars":45,"textLines":1,"bbox":[94,338,286,42]}
+{"kind":"shape","id":"sh/gvqt0n6p","slide":15,"bbox":[452,282,330,112]}
+{"kind":"shape","id":"sh/hwzats7u","slide":15,"bbox":[452,282,5,112]}
+{"kind":"textbox","id":"sh/utobydoj","slide":15,"text":"PlayersModule","textPreview":"PlayersModule","textChars":13,"textLines":1,"bbox":[474,300,286,30]}
+{"kind":"textbox","id":"sh/fuhsrip4","slide":15,"text":"CRUD for coach-owned player profiles.","textPreview":"CRUD for coach-owned player profiles.","textChars":37,"textLines":1,"bbox":[474,338,286,42]}
+{"kind":"shape","id":"sh/sr6tw3qd","slide":15,"bbox":[832,282,330,112]}
+{"kind":"shape","id":"sh/tsfap87y","slide":15,"bbox":[832,282,5,112]}
+{"kind":"textbox","id":"sh/6pobut87","slide":15,"text":"MatchesModule","textPreview":"MatchesModule","textChars":13,"textLines":1,"bbox":[854,300,286,30]}
+{"kind":"textbox","id":"sh/7qxsnyps","slide":15,"text":"Match report, rallies, sets, shot records and soft delete history.","textPreview":"Match report, rallies, sets, shot records and soft delete history.","textChars":66,"textLines":1,"bbox":[854,338,286,42]}
+{"kind":"shape","id":"sh/kn6ts3qh","slide":15,"bbox":[262,438,330,112]}
+{"kind":"shape","id":"sh/5ofal872","slide":15,"bbox":[262,438,5,112]}
+{"kind":"textbox","id":"sh/l8ni90ve","slide":15,"text":"TrainingModule","textPreview":"TrainingModule","textChars":14,"textLines":1,"bbox":[284,456,286,30]}
+{"kind":"textbox","id":"sh/07eh0vet","slide":15,"text":"Training sessions, drill targets and repetition records.","textPreview":"Training sessions, drill targets and repetition records.","textChars":56,"textLines":1,"bbox":[284,494,286,42]}
+{"kind":"shape","id":"sh/z6507qd8","slide":15,"bbox":[642,438,330,112]}
+{"kind":"shape","id":"sh/y5wzylw3","slide":15,"bbox":[642,438,5,112]}
+{"kind":"textbox","id":"sh/d43i5gvi","slide":15,"text":"PrismaService","textPreview":"PrismaService","textChars":13,"textLines":1,"bbox":[664,456,286,30]}
+{"kind":"textbox","id":"sh/cjuhwbex","slide":15,"text":"Database access layer and schema mapping.","textPreview":"Database access layer and schema mapping.","textChars":41,"textLines":1,"bbox":[664,494,286,42]}
+{"kind":"textbox","id":"sh/qhczulwr","slide":15,"text":"PROJECT SPECIFICATION  /  04","textPreview":"PROJECT SPECIFICATION  /  04","textChars":28,"textLines":1,"bbox":[72,666,340,20]}
+{"kind":"textbox","id":"sh/x07ihkvm","slide":15,"text":"AKP SHUTTLETRACE","textPreview":"AKP SHUTTLETRACE","textChars":16,"textLines":1,"bbox":[1042,666,170,20]}
+{"kind":"image","id":"im/cnalkryl","slide":15,"name":"","geometry":"roundRect","alt":"AKP ShuttleTrace analytics screen used by backend reporting","bbox":[880,68,330,180]}
+{"kind":"notes","id":"nt/9uadan","slide":15,"text":"[Sources]\nProduct interface screenshots supplied in the source deck.\nProject requirements derived from the AKP ShuttleTrace project specification requested by the user and the current repository architecture."}
+{"kind":"slide","id":"sl/s1a5bc","slide":16,"title":"DATABASE REQUIREMENTS","textShapes":18}
+{"kind":"shape","id":"sh/hgzilg3i","slide":16,"bbox":[0,0,1280,720]}
+{"kind":"shape","id":"sh/ud8jqlkr","slide":16,"bbox":[0,0,12,720]}
+{"kind":"textbox","id":"sh/feh0jqlc","slide":16,"text":"DATABASE REQUIREMENTS","textPreview":"DATABASE REQUIREMENTS","textChars":21,"textLines":1,"bbox":[72,58,260,26]}
+{"kind":"textbox","id":"sh/sb61ob21","slide":16,"text":"Database model connects coaching records","textPreview":"Database model connects coaching records","textChars":40,"textLines":1,"bbox":[70,92,760,78]}
+{"kind":"textbox","id":"sh/tczihg3m","slide":16,"text":"The schema must preserve coach ownership, player context, match rallies, shot notation and training repetitions.","textPreview":"The schema must preserve coach ownership, player context, match rallies, shot notation and training repetitions.","textChars":112,"textLines":1,"bbox":[72,172,850,58]}
+{"kind":"shape","id":"sh/69ojm1kv","slide":16,"bbox":[72,258,346,128]}
+{"kind":"shape","id":"sh/7ax0f6lg","slide":16,"bbox":[72,258,5,128]}
+{"kind":"textbox","id":"sh/kn6hkrmp","slide":16,"text":"Ownership chain","textPreview":"Ownership chain","textChars":15,"textLines":1,"bbox":[94,276,302,30]}
+{"kind":"textbox","id":"sh/58fidw3a","slide":16,"text":"User > CoachProfile > Player\nEach coach owns their player records and session context.","textPreview":"User > CoachProfile > Player | Each coach owns their player records and session context.","textChars":86,"textLines":2,"bbox":[94,314,302,58]}
+{"kind":"shape","id":"sh/l43ido3u","slide":16,"bbox":[466,258,346,128]}
+{"kind":"shape","id":"sh/k3u14jm9","slide":16,"bbox":[466,258,5,128]}
+{"kind":"textbox","id":"sh/j210bel4","slide":16,"text":"Match structure","textPreview":"Match structure","textChars":15,"textLines":1,"bbox":[488,276,302,30]}
+{"kind":"textbox","id":"sh/y1sj294j","slide":16,"text":"Match > MatchSet > Rally > ShotRecord\nEvery point sequence stays connected to the match and player.","textPreview":"Match > MatchSet > Rally > ShotRecord | Every point sequence stays connected to the match and player.","textChars":99,"textLines":2,"bbox":[488,314,302,58]}
+{"kind":"shape","id":"sh/x0ji943y","slide":16,"bbox":[860,258,346,128]}
+{"kind":"shape","id":"sh/wfa10jmd","slide":16,"bbox":[860,258,5,128]}
+{"kind":"textbox","id":"sh/be107els","slide":16,"text":"Training structure","textPreview":"Training structure","textChars":18,"textLines":1,"bbox":[882,276,302,30]}
+{"kind":"textbox","id":"sh/adsjy947","slide":16,"text":"TrainingSession > TrainingRep\nDrill target, player, shot focus and repetition result are saved together.","textPreview":"TrainingSession > TrainingRep | Drill target, player, shot focus and repetition result are saved together.","textChars":104,"textLines":2,"bbox":[882,314,302,58]}
+{"kind":"shape","id":"sh/9cji543m","slide":16,"bbox":[72,426,346,128]}
+{"kind":"shape","id":"sh/obqhwzmh","slide":16,"bbox":[72,426,5,128]}
+{"kind":"textbox","id":"sh/0fu1czux","slide":16,"text":"Reference data","textPreview":"Reference data","textChars":14,"textLines":1,"bbox":[94,444,302,30]}
+{"kind":"textbox","id":"sh/1g3il4bi","slide":16,"text":"ShotType links live shots and training reps so analysis uses a consistent badminton vocabulary.","textPreview":"ShotType links live shots and training reps so analysis uses a consistent badminton vocabulary.","textChars":95,"textLines":1,"bbox":[94,482,302,58]}
+{"kind":"shape","id":"sh/etcjapc7","slide":16,"bbox":[466,426,346,128]}
+{"kind":"shape","id":"sh/ful0juts","slide":16,"bbox":[466,426,5,128]}
+{"kind":"textbox","id":"sh/sru18zu1","slide":16,"text":"History behavior","textPreview":"History behavior","textChars":16,"textLines":1,"bbox":[488,444,302,30]}
+{"kind":"textbox","id":"sh/ds3ih4bm","slide":16,"text":"Match and training records support soft delete so coach history can be hidden without losing data integrity.","textPreview":"Match and training records support soft delete so coach history can be hidden without losing data integrity.","textChars":108,"textLines":1,"bbox":[488,482,302,58]}
+{"kind":"shape","id":"sh/qpcj6pcv","slide":16,"bbox":[860,426,346,128]}
+{"kind":"shape","id":"sh/rql0futg","slide":16,"bbox":[860,426,5,128]}
+{"kind":"textbox","id":"sh/cne1kju5","slide":16,"text":"Reporting base","textPreview":"Reporting base","textChars":14,"textLines":1,"bbox":[882,444,302,30]}
+{"kind":"textbox","id":"sh/xo72tobq","slide":16,"text":"Dashboard and export reports pull from Match, Rally, ShotRecord, TrainingSession and TrainingRep.","textPreview":"Dashboard and export reports pull from Match, Rally, ShotRecord, TrainingSession and TrainingRep.","textChars":97,"textLines":1,"bbox":[882,482,302,58]}
+{"kind":"textbox","id":"sh/7i94jids","slide":16,"text":"Key tables: User, AuthSession, CoachProfile, Player, Match, MatchSet, Rally, ShotRecord, ShotType, TrainingSession and TrainingRep.","textPreview":"Key tables: User, AuthSession, CoachProfile, Player, Match, MatchSet, Rally, ShotRecord, ShotType, TrainingSession and TrainingRep.","textChars":131,"textLines":1,"bbox":[72,596,1000,44]}
+{"kind":"textbox","id":"sh/6h03qdwn","slide":16,"text":"PROJECT SPECIFICATION  /  05","textPreview":"PROJECT SPECIFICATION  /  05","textChars":28,"textLines":1,"bbox":[72,666,340,20]}
+{"kind":"textbox","id":"sh/tkrmlsvy","slide":16,"text":"AKP SHUTTLETRACE","textPreview":"AKP SHUTTLETRACE","textChars":16,"textLines":1,"bbox":[1042,666,170,20]}
+{"kind":"notes","id":"nt/s1a5bc","slide":16,"text":"[Sources]\nProduct interface screenshots supplied in the source deck.\nProject requirements derived from the AKP ShuttleTrace project specification requested by the user and the current repository architecture.\nDiagram is an editable summary of the requested database specification."}
+{"kind":"slide","id":"sl/y3jp17","slide":17,"title":"API AND QUALITY REQUIREMENTS","textShapes":16}
+{"kind":"shape","id":"sh/4fup4f61","slide":17,"bbox":[0,0,1280,720]}
+{"kind":"shape","id":"sh/jelobapg","slide":17,"bbox":[0,0,12,720]}
+{"kind":"textbox","id":"sh/itc725ov","slide":17,"text":"API AND QUALITY REQUIREMENTS","textPreview":"API AND QUALITY REQUIREMENTS","textChars":28,"textLines":1,"bbox":[72,58,260,26]}
+{"kind":"textbox","id":"sh/hs36907a","slide":17,"text":"REST endpoints and quality rules make the prototype production-ready","textPreview":"REST endpoints and quality rules make the prototype production-ready","textChars":68,"textLines":1,"bbox":[70,92,900,78]}
+{"kind":"textbox","id":"sh/wrup0v6p","slide":17,"text":"The backend API is grouped by auth, players, matches, training and system health checks.","textPreview":"The backend API is grouped by auth, players, matches, training and system health checks.","textChars":88,"textLines":1,"bbox":[72,172,760,58]}
+{"kind":"shape","id":"sh/vq1o7qp4","slide":17,"bbox":[72,252,330,154]}
+{"kind":"shape","id":"sh/ups7y5oj","slide":17,"bbox":[72,252,5,154]}
+{"kind":"textbox","id":"sh/9oj6507y","slide":17,"text":"Auth","textPreview":"Auth","textChars":4,"textLines":1,"bbox":[94,270,286,30]}
+{"kind":"textbox","id":"sh/8napwv6t","slide":17,"text":"POST /auth/register\nPOST /auth/login\nGET /auth/me\nPOST /auth/logout","textPreview":"POST /auth/register | POST /auth/login | GET /auth/me | POST /auth/logout","textChars":67,"textLines":4,"bbox":[94,308,286,84]}
+{"kind":"shape","id":"sh/ehobalkz","slide":17,"bbox":[454,252,330,154]}
+{"kind":"shape","id":"sh/fixsjql4","slide":17,"bbox":[454,252,5,154]}
+{"kind":"textbox","id":"sh/gj6tcv2p","slide":17,"text":"Players","textPreview":"Players","textChars":7,"textLines":1,"bbox":[476,270,286,30]}
+{"kind":"textbox","id":"sh/1kfal03a","slide":17,"text":"GET /players\nGET /players/:id\nPOST /players\nPUT /players/:id\nDELETE /players/:id","textPreview":"GET /players | GET /players/:id | POST /players | PUT /players/:id | DELETE /players/:id","textChars":80,"textLines":5,"bbox":[476,308,286,84]}
+{"kind":"shape","id":"sh/6t4b6lkn","slide":17,"bbox":[836,252,330,172]}
+{"kind":"shape","id":"sh/redsfql8","slide":17,"bbox":[836,252,5,172]}
+{"kind":"textbox","id":"sh/sfmt8v2t","slide":17,"text":"Matches","textPreview":"Matches","textChars":7,"textLines":1,"bbox":[858,270,286,30]}
+{"kind":"textbox","id":"sh/tgfahg3e","slide":17,"text":"GET /matches\nGET /matches/:id\nPOST /matches\nPOST /matches/reports\nPOST /matches/:id/rallies\nPOST /matches/:id/shots\nDELETE /matches/:id","textPreview":"GET /matches | GET /matches/:id | POST /matches | POST /matches/reports | POST /matches/:id/rallies | POST /matches/:id/shots | DELETE /m...","textChars":135,"textLines":7,"bbox":[858,308,286,102]}
+{"kind":"shape","id":"sh/ip4r21kr","slide":17,"bbox":[72,470,330,154]}
+{"kind":"shape","id":"sh/jqdsb6lw","slide":17,"bbox":[72,470,5,154]}
+{"kind":"textbox","id":"sh/nu98j21o","slide":17,"text":"Training","textPreview":"Training","textChars":8,"textLines":1,"bbox":[94,488,286,30]}
+{"kind":"textbox","id":"sh/mt07ax0j","slide":17,"text":"GET /training\nGET /training/player/:playerId\nPOST /training\nDELETE /training/:id","textPreview":"GET /training | GET /training/player/:playerId | POST /training | DELETE /training/:id","textChars":80,"textLines":4,"bbox":[94,526,286,84]}
+{"kind":"shape","id":"sh/9wrqlcju","slide":17,"bbox":[454,470,330,154]}
+{"kind":"shape","id":"sh/8vipc7i9","slide":17,"bbox":[454,470,5,154]}
+{"kind":"textbox","id":"sh/vyt8nm10","slide":17,"text":"System","textPreview":"System","textChars":6,"textLines":1,"bbox":[476,488,286,30]}
+{"kind":"textbox","id":"sh/axk7eh0f","slide":17,"text":"GET /\nGET /health","textPreview":"GET / | GET /health","textChars":17,"textLines":2,"bbox":[476,526,286,84]}
+{"kind":"textbox","id":"sh/hkbq9wj6","slide":17,"text":"Non-functional: responsive UI, backend validation, user/coach data ownership, soft delete, fast live-notation interaction and LocalStorage fallback.","textPreview":"Non-functional: responsive UI, backend validation, user/coach data ownership, soft delete, fast live-notation interaction and LocalStorag...","textChars":148,"textLines":1,"bbox":[72,624,1040,42]}
+{"kind":"textbox","id":"sh/b2pobi1w","slide":17,"text":"PROJECT SPECIFICATION  /  06","textPreview":"PROJECT SPECIFICATION  /  06","textChars":28,"textLines":1,"bbox":[72,666,340,20]}
+{"kind":"textbox","id":"sh/q1g72d0b","slide":17,"text":"AKP SHUTTLETRACE","textPreview":"AKP SHUTTLETRACE","textChars":16,"textLines":1,"bbox":[1042,666,170,20]}
+{"kind":"image","id":"im/by5kry1w","slide":17,"name":"","geometry":"roundRect","alt":"AKP ShuttleTrace training mode screen","bbox":[922,70,284,160]}
+{"kind":"notes","id":"nt/y3jp17","slide":17,"text":"[Sources]\nProduct interface screenshots supplied in the source deck.\nProject requirements derived from the AKP ShuttleTrace project specification requested by the user and the current repository architecture."}

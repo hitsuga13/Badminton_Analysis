@@ -1,0 +1,957 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/fu1gfa1s",
+    "id": "fu1gfa1s",
+    "slide": 8,
+    "layoutId": "/ppt/slideLayouts/slideLayout7.xml",
+    "layoutName": "Blank",
+    "layoutType": "blank",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "backgroundColor": "#0A1128",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1279.97,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "Office",
+    "colors": {
+      "accent1": "#4F81BD",
+      "accent2": "#C0504D",
+      "accent3": "#9BBB59",
+      "accent4": "#8064A2",
+      "accent5": "#4BACC6",
+      "accent6": "#F79646",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#1F497D",
+      "lt2": "#EEECE1",
+      "hlink": "#0000FF",
+      "folHlink": "#800080"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Arial",
+      "Calibri",
+      "Georgia"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout7.xml",
+      "name": "Blank",
+      "type": "blank",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/2",
+          "id": "2",
+          "name": "Date Placeholder 1",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "text": "1/27/13",
+          "textPreview": "1/27/13",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "1/27/13",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "1/27/13"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/3",
+          "id": "3",
+          "name": "Footer Placeholder 2",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/4",
+          "id": "4",
+          "name": "Slide Number Placeholder 3",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "text": "‹#›",
+          "textPreview": "‹#›",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "‹#›",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "‹#›"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "type": "master",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/2",
+          "id": "2",
+          "name": "Title Placeholder 1",
+          "bbox": [
+            48,
+            28.83,
+            864,
+            120
+          ],
+          "geometry": "rect",
+          "text": "Click to edit Master title style",
+          "textPreview": "Click to edit Master title style",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "autoFit": "shrinkText",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Click to edit Master title style",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Click to edit Master title style"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/3",
+          "id": "3",
+          "name": "Text Placeholder 2",
+          "bbox": [
+            48,
+            168,
+            864,
+            475.17
+          ],
+          "geometry": "rect",
+          "text": "Click to edit Master text styles\nSecond level\nThird level\nFourth level\nFifth level",
+          "textPreview": "Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level",
+          "resolvedTextStyle": {
+            "vertical": 1,
+            "autoFit": "shrinkText",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Click to edit Master text styles",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Click to edit Master text styles"
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "text": "Second level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Second level"
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "text": "Third level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Third level"
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "text": "Fourth level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Fourth level"
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "text": "Fifth level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Fifth level"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/4",
+          "id": "4",
+          "name": "Date Placeholder 3",
+          "bbox": [
+            48,
+            667.33,
+            224,
+            38.33
+          ],
+          "geometry": "rect",
+          "text": "1/27/13",
+          "textPreview": "1/27/13",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "1/27/13",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "1/27/13"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 4,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/5",
+          "id": "5",
+          "name": "Footer Placeholder 4",
+          "bbox": [
+            328,
+            667.33,
+            304,
+            38.33
+          ],
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          }
+        },
+        {
+          "order": 5,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/6",
+          "id": "6",
+          "name": "Slide Number Placeholder 5",
+          "bbox": [
+            688,
+            667.33,
+            224,
+            38.33
+          ],
+          "geometry": "rect",
+          "text": "‹#›",
+          "textPreview": "‹#›",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "‹#›",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "‹#›"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/18byd4zy",
+      "id": "2",
+      "name": "TextBox 1",
+      "bbox": [
+        48,
+        48,
+        1183.97,
+        96
+      ],
+      "geometry": "rect",
+      "text": "7. COMMERCIAL POTENTIAL: Low Overhead, High-Growth SaaS Model",
+      "textPreview": "7. COMMERCIAL POTENTIAL: Low Overhead, High-Growth SaaS Model",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "7. COMMERCIAL POTENTIAL: Low Overhead, High-Growth"
+          },
+          {
+            "index": 2,
+            "text": "SaaS Model"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "7. COMMERCIAL POTENTIAL: Low Overhead, High-Growth SaaS Model",
+          "resolvedTextStyle": {
+            "fontSize": 37.33,
+            "typeface": "Georgia",
+            "color": "#F8FAFC",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "7. COMMERCIAL POTENTIAL: Low Overhead, High-Growth SaaS Model",
+              "fontSize": 37.33,
+              "typeface": "Georgia",
+              "color": "#F8FAFC",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/g72x4zyd",
+      "id": "3",
+      "name": "Rectangle 2",
+      "bbox": [
+        48,
+        124.8,
+        1183.97,
+        2.67
+      ],
+      "geometry": "rect",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "lt1",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      },
+      "fillColor": "#00D2C4",
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ri9g7uhw",
+      "id": "4",
+      "name": "TextBox 3",
+      "bbox": [
+        48,
+        172.8,
+        556.8,
+        480
+      ],
+      "geometry": "rect",
+      "text": "How We Scale Profitably\n💰 Freemium Mobile App\n   The basic notation and live scorecard app are 100% free for everyone. This guarantees rapid downloads and viral organic growth among clubs.\n💰 Premium Academy Dashboard\n   SaaS subscription model charging small private academies and leagues for bulk player analysis, PDF reports, and advanced team stats.\n💰 In-App Sponsorships\n   Premium brand placements from Malaysian sports equipment brands targeting active badminton enthusiasts directly on the scorecard UI.",
+      "textPreview": "How We Scale Profitably | 💰 Freemium Mobile App |    The basic notation and live scorecard app are 100% free for everyone. This guarante...",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 13,
+        "lines": [
+          {
+            "index": 1,
+            "text": "How We Scale Profitably"
+          },
+          {
+            "index": 2,
+            "text": "💰 Freemium Mobile App"
+          },
+          {
+            "index": 3,
+            "text": "   The basic notation and live scorecard app are 100% free for"
+          },
+          {
+            "index": 4,
+            "text": "everyone. This guarantees rapid downloads and viral organic growth"
+          },
+          {
+            "index": 5,
+            "text": "among clubs."
+          },
+          {
+            "index": 6,
+            "text": "💰 Premium Academy Dashboard"
+          },
+          {
+            "index": 7,
+            "text": "   SaaS subscription model charging small private academies and"
+          },
+          {
+            "index": 8,
+            "text": "leagues for bulk player analysis, PDF reports, and advanced team"
+          },
+          {
+            "index": 9,
+            "text": "stats."
+          },
+          {
+            "index": 10,
+            "text": "💰 In-App Sponsorships"
+          },
+          {
+            "index": 11,
+            "text": "   Premium brand placements from Malaysian sports equipment"
+          },
+          {
+            "index": 12,
+            "text": "brands targeting active badminton enthusiasts directly on the"
+          },
+          {
+            "index": 13,
+            "text": "scorecard UI."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "How We Scale Profitably",
+          "resolvedTextStyle": {
+            "fontSize": 29.33,
+            "typeface": "Georgia",
+            "color": "#00D2C4",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "How We Scale Profitably",
+              "fontSize": 29.33,
+              "typeface": "Georgia",
+              "color": "#00D2C4",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "💰 Freemium Mobile App",
+          "resolvedTextStyle": {
+            "fontSize": 21.33,
+            "typeface": "Arial",
+            "color": "#F8FAFC",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "💰 Freemium Mobile App",
+              "fontSize": 21.33,
+              "typeface": "Arial",
+              "color": "#F8FAFC",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "   The basic notation and live scorecard app are 100% free for everyone. This guarantees rapid downloads and viral organic growth among clubs.",
+          "resolvedTextStyle": {
+            "fontSize": 17.33,
+            "typeface": "Arial",
+            "color": "#94A3B8"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "   The basic notation and live scorecard app are 100% free for everyone. This guarantees rapid downloads and viral organic growth among clubs.",
+              "fontSize": 17.33,
+              "typeface": "Arial",
+              "color": "#94A3B8"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "💰 Premium Academy Dashboard",
+          "resolvedTextStyle": {
+            "fontSize": 21.33,
+            "typeface": "Arial",
+            "color": "#F8FAFC",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "💰 Premium Academy Dashboard",
+              "fontSize": 21.33,
+              "typeface": "Arial",
+              "color": "#F8FAFC",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "   SaaS subscription model charging small private academies and leagues for bulk player analysis, PDF reports, and advanced team stats.",
+          "resolvedTextStyle": {
+            "fontSize": 17.33,
+            "typeface": "Arial",
+            "color": "#94A3B8"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "   SaaS subscription model charging small private academies and leagues for bulk player analysis, PDF reports, and advanced team stats.",
+              "fontSize": 17.33,
+              "typeface": "Arial",
+              "color": "#94A3B8"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 6,
+          "text": "💰 In-App Sponsorships",
+          "resolvedTextStyle": {
+            "fontSize": 21.33,
+            "typeface": "Arial",
+            "color": "#F8FAFC",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "💰 In-App Sponsorships",
+              "fontSize": 21.33,
+              "typeface": "Arial",
+              "color": "#F8FAFC",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 7,
+          "text": "   Premium brand placements from Malaysian sports equipment brands targeting active badminton enthusiasts directly on the scorecard UI.",
+          "resolvedTextStyle": {
+            "fontSize": 17.33,
+            "typeface": "Arial",
+            "color": "#94A3B8"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "   Premium brand placements from Malaysian sports equipment brands targeting active badminton enthusiasts directly on the scorecard UI.",
+              "fontSize": 17.33,
+              "typeface": "Arial",
+              "color": "#94A3B8"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/6h0fypgb",
+      "id": "5",
+      "name": "Rounded Rectangle 4",
+      "bbox": [
+        652.8,
+        172.8,
+        576,
+        460.8
+      ],
+      "geometry": "roundRect",
+      "text": "Key Market Strengths\n📈 Huge Target Base in Malaysia\n   Badminton is one of the most widely played sports in Malaysia with thousands of schools and private training courts active nationwide.\n📈 Sifar Overhead (RM0 Inventory)\n   No manufacturing costs, no physical inventory, no delivery logistics, and extremely low server maintenance fees.\n📈 Global Scalability\n   Easily translated into English, Chinese, and other languages to enter massive Asian markets like Indonesia, Thailand, and China instantly.",
+      "textPreview": "Key Market Strengths | 📈 Huge Target Base in Malaysia |    Badminton is one of the most widely played sports in Malaysia with thousands ...",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "lt1",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 12,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Key Market Strengths"
+          },
+          {
+            "index": 2,
+            "text": "📈 Huge Target Base in Malaysia"
+          },
+          {
+            "index": 3,
+            "text": "   Badminton is one of the most widely played sports in Malaysia"
+          },
+          {
+            "index": 4,
+            "text": "with thousands of schools and private training courts active"
+          },
+          {
+            "index": 5,
+            "text": "nationwide."
+          },
+          {
+            "index": 6,
+            "text": "📈 Sifar Overhead (RM0 Inventory)"
+          },
+          {
+            "index": 7,
+            "text": "   No manufacturing costs, no physical inventory, no delivery"
+          },
+          {
+            "index": 8,
+            "text": "logistics, and extremely low server maintenance fees."
+          },
+          {
+            "index": 9,
+            "text": "📈 Global Scalability"
+          },
+          {
+            "index": 10,
+            "text": "   Easily translated into English, Chinese, and other languages to"
+          },
+          {
+            "index": 11,
+            "text": "enter massive Asian markets like Indonesia, Thailand, and China"
+          },
+          {
+            "index": 12,
+            "text": "instantly."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Key Market Strengths",
+          "resolvedTextStyle": {
+            "fontSize": 29.33,
+            "typeface": "Georgia",
+            "color": "#F8FAFC",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Key Market Strengths",
+              "fontSize": 29.33,
+              "typeface": "Georgia",
+              "color": "#F8FAFC",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "📈 Huge Target Base in Malaysia",
+          "resolvedTextStyle": {
+            "fontSize": 21.33,
+            "typeface": "Arial",
+            "color": "#00D2C4",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "📈 Huge Target Base in Malaysia",
+              "fontSize": 21.33,
+              "typeface": "Arial",
+              "color": "#00D2C4",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "   Badminton is one of the most widely played sports in Malaysia with thousands of schools and private training courts active nationwide.",
+          "resolvedTextStyle": {
+            "fontSize": 17.33,
+            "typeface": "Arial",
+            "color": "#94A3B8"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "   Badminton is one of the most widely played sports in Malaysia with thousands of schools and private training courts active nationwide.",
+              "fontSize": 17.33,
+              "typeface": "Arial",
+              "color": "#94A3B8"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "📈 Sifar Overhead (RM0 Inventory)",
+          "resolvedTextStyle": {
+            "fontSize": 21.33,
+            "typeface": "Arial",
+            "color": "#00D2C4",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "📈 Sifar Overhead (RM0 Inventory)",
+              "fontSize": 21.33,
+              "typeface": "Arial",
+              "color": "#00D2C4",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "   No manufacturing costs, no physical inventory, no delivery logistics, and extremely low server maintenance fees.",
+          "resolvedTextStyle": {
+            "fontSize": 17.33,
+            "typeface": "Arial",
+            "color": "#94A3B8"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "   No manufacturing costs, no physical inventory, no delivery logistics, and extremely low server maintenance fees.",
+              "fontSize": 17.33,
+              "typeface": "Arial",
+              "color": "#94A3B8"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 6,
+          "text": "📈 Global Scalability",
+          "resolvedTextStyle": {
+            "fontSize": 21.33,
+            "typeface": "Arial",
+            "color": "#00D2C4",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "📈 Global Scalability",
+              "fontSize": 21.33,
+              "typeface": "Arial",
+              "color": "#00D2C4",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 7,
+          "text": "   Easily translated into English, Chinese, and other languages to enter massive Asian markets like Indonesia, Thailand, and China instantly.",
+          "resolvedTextStyle": {
+            "fontSize": 17.33,
+            "typeface": "Arial",
+            "color": "#94A3B8"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "   Easily translated into English, Chinese, and other languages to enter massive Asian markets like Indonesia, Thailand, and China instantly.",
+              "fontSize": 17.33,
+              "typeface": "Arial",
+              "color": "#94A3B8"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#1E293B",
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

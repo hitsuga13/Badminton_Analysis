@@ -1,0 +1,888 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/hwbqtkby",
+    "id": "hwbqtkby",
+    "slide": 2,
+    "layoutId": "/ppt/slideLayouts/slideLayout7.xml",
+    "layoutName": "Blank",
+    "layoutType": "blank",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "backgroundColor": "#0A1128",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1279.97,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "Office",
+    "colors": {
+      "accent1": "#4F81BD",
+      "accent2": "#C0504D",
+      "accent3": "#9BBB59",
+      "accent4": "#8064A2",
+      "accent5": "#4BACC6",
+      "accent6": "#F79646",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#1F497D",
+      "lt2": "#EEECE1",
+      "hlink": "#0000FF",
+      "folHlink": "#800080"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Arial",
+      "Calibri",
+      "Georgia"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout7.xml",
+      "name": "Blank",
+      "type": "blank",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/2",
+          "id": "2",
+          "name": "Date Placeholder 1",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "text": "1/27/13",
+          "textPreview": "1/27/13",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "1/27/13",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "1/27/13"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/3",
+          "id": "3",
+          "name": "Footer Placeholder 2",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/4",
+          "id": "4",
+          "name": "Slide Number Placeholder 3",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "text": "‹#›",
+          "textPreview": "‹#›",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "‹#›",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "‹#›"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "type": "master",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/2",
+          "id": "2",
+          "name": "Title Placeholder 1",
+          "bbox": [
+            48,
+            28.83,
+            864,
+            120
+          ],
+          "geometry": "rect",
+          "text": "Click to edit Master title style",
+          "textPreview": "Click to edit Master title style",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "autoFit": "shrinkText",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Click to edit Master title style",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Click to edit Master title style"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/3",
+          "id": "3",
+          "name": "Text Placeholder 2",
+          "bbox": [
+            48,
+            168,
+            864,
+            475.17
+          ],
+          "geometry": "rect",
+          "text": "Click to edit Master text styles\nSecond level\nThird level\nFourth level\nFifth level",
+          "textPreview": "Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level",
+          "resolvedTextStyle": {
+            "vertical": 1,
+            "autoFit": "shrinkText",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Click to edit Master text styles",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Click to edit Master text styles"
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "text": "Second level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Second level"
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "text": "Third level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Third level"
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "text": "Fourth level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Fourth level"
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "text": "Fifth level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Fifth level"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/4",
+          "id": "4",
+          "name": "Date Placeholder 3",
+          "bbox": [
+            48,
+            667.33,
+            224,
+            38.33
+          ],
+          "geometry": "rect",
+          "text": "1/27/13",
+          "textPreview": "1/27/13",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "1/27/13",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "1/27/13"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 4,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/5",
+          "id": "5",
+          "name": "Footer Placeholder 4",
+          "bbox": [
+            328,
+            667.33,
+            304,
+            38.33
+          ],
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          }
+        },
+        {
+          "order": 5,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/6",
+          "id": "6",
+          "name": "Slide Number Placeholder 5",
+          "bbox": [
+            688,
+            667.33,
+            224,
+            38.33
+          ],
+          "geometry": "rect",
+          "text": "‹#›",
+          "textPreview": "‹#›",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "‹#›",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "‹#›"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9072xkry",
+      "id": "2",
+      "name": "TextBox 1",
+      "bbox": [
+        48,
+        48,
+        1183.97,
+        96
+      ],
+      "geometry": "rect",
+      "text": "1. PROBLEM: Traditional Pen-and-Paper Notation is Slow and Inefficient",
+      "textPreview": "1. PROBLEM: Traditional Pen-and-Paper Notation is Slow and Inefficient",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "1. PROBLEM: Traditional Pen-and-Paper Notation is Slow"
+          },
+          {
+            "index": 2,
+            "text": "and Inefficient"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "1. PROBLEM: Traditional Pen-and-Paper Notation is Slow and Inefficient",
+          "resolvedTextStyle": {
+            "fontSize": 37.33,
+            "typeface": "Georgia",
+            "color": "#F8FAFC",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "1. PROBLEM: Traditional Pen-and-Paper Notation is Slow and Inefficient",
+              "fontSize": 37.33,
+              "typeface": "Georgia",
+              "color": "#F8FAFC",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ozy1ofad",
+      "id": "3",
+      "name": "Rectangle 2",
+      "bbox": [
+        48,
+        124.8,
+        1183.97,
+        2.67
+      ],
+      "geometry": "rect",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "lt1",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      },
+      "fillColor": "#00D2C4",
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/b29kza94",
+      "id": "4",
+      "name": "TextBox 3",
+      "bbox": [
+        48,
+        172.8,
+        556.8,
+        480
+      ],
+      "geometry": "rect",
+      "text": "The Coaching Bottleneck\n• Coaches are distracted by manually writing tallies, losing valuable face-time with players.\n• No immediate statistics can be calculated during the critical 11-point break or between sets.\n• Paper records are easily lost, unorganized, and fail to track player progress over time.\n• Existing commercial tech options are locked behind heavy subscription and equipment walls.",
+      "textPreview": "The Coaching Bottleneck | • Coaches are distracted by manually writing tallies, losing valuable face-time with players. | • No immediate ...",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 9,
+        "lines": [
+          {
+            "index": 1,
+            "text": "The Coaching Bottleneck"
+          },
+          {
+            "index": 2,
+            "text": "• Coaches are distracted by manually writing tallies, losing"
+          },
+          {
+            "index": 3,
+            "text": "valuable face-time with players."
+          },
+          {
+            "index": 4,
+            "text": "• No immediate statistics can be calculated during the critical"
+          },
+          {
+            "index": 5,
+            "text": "11-point break or between sets."
+          },
+          {
+            "index": 6,
+            "text": "• Paper records are easily lost, unorganized, and fail to track"
+          },
+          {
+            "index": 7,
+            "text": "player progress over time."
+          },
+          {
+            "index": 8,
+            "text": "• Existing commercial tech options are locked behind heavy"
+          },
+          {
+            "index": 9,
+            "text": "subscription and equipment walls."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "The Coaching Bottleneck",
+          "resolvedTextStyle": {
+            "fontSize": 29.33,
+            "typeface": "Georgia",
+            "color": "#00D2C4",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "The Coaching Bottleneck",
+              "fontSize": 29.33,
+              "typeface": "Georgia",
+              "color": "#00D2C4",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "• Coaches are distracted by manually writing tallies, losing valuable face-time with players.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "typeface": "Arial",
+            "color": "#F8FAFC"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• Coaches are distracted by manually writing tallies, losing valuable face-time with players.",
+              "fontSize": 20,
+              "typeface": "Arial",
+              "color": "#F8FAFC"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "• No immediate statistics can be calculated during the critical 11-point break or between sets.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "typeface": "Arial",
+            "color": "#F8FAFC"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• No immediate statistics can be calculated during the critical 11-point break or between sets.",
+              "fontSize": 20,
+              "typeface": "Arial",
+              "color": "#F8FAFC"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "• Paper records are easily lost, unorganized, and fail to track player progress over time.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "typeface": "Arial",
+            "color": "#F8FAFC"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• Paper records are easily lost, unorganized, and fail to track player progress over time.",
+              "fontSize": 20,
+              "typeface": "Arial",
+              "color": "#F8FAFC"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "• Existing commercial tech options are locked behind heavy subscription and equipment walls.",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "typeface": "Arial",
+            "color": "#F8FAFC"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "• Existing commercial tech options are locked behind heavy subscription and equipment walls.",
+              "fontSize": 20,
+              "typeface": "Arial",
+              "color": "#F8FAFC"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/a10jqpsj",
+      "id": "5",
+      "name": "Rounded Rectangle 4",
+      "bbox": [
+        652.8,
+        172.8,
+        576,
+        460.8
+      ],
+      "geometry": "roundRect",
+      "text": "THE MANUAL CHAOS WE ARE ELIMINATING:\n❌ Tally Marks on Paper\n   Messy handwriting that coaches must count and calculate by hand after games.\n❌ Zero Real-Time Action\n   Insights arrive too late (usually days after a match) to adjust ongoing game strategies.\n❌ Fragile & Lost Data\n   Physical binders that pile up and offer no historical progress search capability.",
+      "textPreview": "THE MANUAL CHAOS WE ARE ELIMINATING: | ❌ Tally Marks on Paper |    Messy handwriting that coaches must count and calculate by hand after ...",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "lt1",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 10,
+        "lines": [
+          {
+            "index": 1,
+            "text": "THE MANUAL CHAOS WE ARE ELIMINATING:"
+          },
+          {
+            "index": 2,
+            "text": "❌ Tally Marks on Paper"
+          },
+          {
+            "index": 3,
+            "text": "   Messy handwriting that coaches must count and calculate by"
+          },
+          {
+            "index": 4,
+            "text": "hand after games."
+          },
+          {
+            "index": 5,
+            "text": "❌ Zero Real-Time Action"
+          },
+          {
+            "index": 6,
+            "text": "   Insights arrive too late (usually days after a match) to adjust"
+          },
+          {
+            "index": 7,
+            "text": "ongoing game strategies."
+          },
+          {
+            "index": 8,
+            "text": "❌ Fragile & Lost Data"
+          },
+          {
+            "index": 9,
+            "text": "   Physical binders that pile up and offer no historical progress"
+          },
+          {
+            "index": 10,
+            "text": "search capability."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "THE MANUAL CHAOS WE ARE ELIMINATING:",
+          "resolvedTextStyle": {
+            "fontSize": 18.67,
+            "typeface": "Arial",
+            "color": "#00D2C4",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "THE MANUAL CHAOS WE ARE ELIMINATING:",
+              "fontSize": 18.67,
+              "typeface": "Arial",
+              "color": "#00D2C4",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "❌ Tally Marks on Paper",
+          "resolvedTextStyle": {
+            "fontSize": 21.33,
+            "typeface": "Arial",
+            "color": "#EF4444",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "❌ Tally Marks on Paper",
+              "fontSize": 21.33,
+              "typeface": "Arial",
+              "color": "#EF4444",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "   Messy handwriting that coaches must count and calculate by hand after games.",
+          "resolvedTextStyle": {
+            "fontSize": 17.33,
+            "typeface": "Arial",
+            "color": "#94A3B8"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "   Messy handwriting that coaches must count and calculate by hand after games.",
+              "fontSize": 17.33,
+              "typeface": "Arial",
+              "color": "#94A3B8"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "❌ Zero Real-Time Action",
+          "resolvedTextStyle": {
+            "fontSize": 21.33,
+            "typeface": "Arial",
+            "color": "#EF4444",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "❌ Zero Real-Time Action",
+              "fontSize": 21.33,
+              "typeface": "Arial",
+              "color": "#EF4444",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "   Insights arrive too late (usually days after a match) to adjust ongoing game strategies.",
+          "resolvedTextStyle": {
+            "fontSize": 17.33,
+            "typeface": "Arial",
+            "color": "#94A3B8"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "   Insights arrive too late (usually days after a match) to adjust ongoing game strategies.",
+              "fontSize": 17.33,
+              "typeface": "Arial",
+              "color": "#94A3B8"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 6,
+          "text": "❌ Fragile & Lost Data",
+          "resolvedTextStyle": {
+            "fontSize": 21.33,
+            "typeface": "Arial",
+            "color": "#EF4444",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "❌ Fragile & Lost Data",
+              "fontSize": 21.33,
+              "typeface": "Arial",
+              "color": "#EF4444",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 7,
+          "text": "   Physical binders that pile up and offer no historical progress search capability.",
+          "resolvedTextStyle": {
+            "fontSize": 17.33,
+            "typeface": "Arial",
+            "color": "#94A3B8"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "   Physical binders that pile up and offer no historical progress search capability.",
+              "fontSize": 17.33,
+              "typeface": "Arial",
+              "color": "#94A3B8"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#1E293B",
+      "lineColor": "#00D2C4",
+      "lineWidth": 1.33
+    }
+  ],
+  "composeRuns": []
+}

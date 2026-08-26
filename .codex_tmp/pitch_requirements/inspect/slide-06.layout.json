@@ -1,0 +1,913 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/x8f69ofe",
+    "id": "x8f69ofe",
+    "slide": 6,
+    "layoutId": "/ppt/slideLayouts/slideLayout7.xml",
+    "layoutName": "Blank",
+    "layoutType": "blank",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "backgroundColor": "#0A1128",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1279.97,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "Office",
+    "colors": {
+      "accent1": "#4F81BD",
+      "accent2": "#C0504D",
+      "accent3": "#9BBB59",
+      "accent4": "#8064A2",
+      "accent5": "#4BACC6",
+      "accent6": "#F79646",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#1F497D",
+      "lt2": "#EEECE1",
+      "hlink": "#0000FF",
+      "folHlink": "#800080"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Arial",
+      "Calibri",
+      "Georgia"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout7.xml",
+      "name": "Blank",
+      "type": "blank",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/2",
+          "id": "2",
+          "name": "Date Placeholder 1",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "text": "1/27/13",
+          "textPreview": "1/27/13",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "1/27/13",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "1/27/13"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/3",
+          "id": "3",
+          "name": "Footer Placeholder 2",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "layout",
+          "aid": "template/layout//ppt/slideLayouts/slideLayout7.xml/4",
+          "id": "4",
+          "name": "Slide Number Placeholder 3",
+          "bbox": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "text": "‹#›",
+          "textPreview": "‹#›",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "‹#›",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "‹#›"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "type": "master",
+      "elements": [
+        {
+          "order": 1,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/2",
+          "id": "2",
+          "name": "Title Placeholder 1",
+          "bbox": [
+            48,
+            28.83,
+            864,
+            120
+          ],
+          "geometry": "rect",
+          "text": "Click to edit Master title style",
+          "textPreview": "Click to edit Master title style",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "autoFit": "shrinkText",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Click to edit Master title style",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Click to edit Master title style"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 2,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/3",
+          "id": "3",
+          "name": "Text Placeholder 2",
+          "bbox": [
+            48,
+            168,
+            864,
+            475.17
+          ],
+          "geometry": "rect",
+          "text": "Click to edit Master text styles\nSecond level\nThird level\nFourth level\nFifth level",
+          "textPreview": "Click to edit Master text styles | Second level | Third level | Fourth level | Fifth level",
+          "resolvedTextStyle": {
+            "vertical": 1,
+            "autoFit": "shrinkText",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Click to edit Master text styles",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Click to edit Master text styles"
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "text": "Second level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Second level"
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "text": "Third level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Third level"
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "text": "Fourth level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Fourth level"
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "text": "Fifth level",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Fifth level"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 3,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/4",
+          "id": "4",
+          "name": "Date Placeholder 3",
+          "bbox": [
+            48,
+            667.33,
+            224,
+            38.33
+          ],
+          "geometry": "rect",
+          "text": "1/27/13",
+          "textPreview": "1/27/13",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "1/27/13",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "1/27/13"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "order": 4,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/5",
+          "id": "5",
+          "name": "Footer Placeholder 4",
+          "bbox": [
+            328,
+            667.33,
+            304,
+            38.33
+          ],
+          "geometry": "rect",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          }
+        },
+        {
+          "order": 5,
+          "kind": "shape",
+          "scope": "master",
+          "aid": "template/master//ppt/slideMasters/slideMaster1.xml/6",
+          "id": "6",
+          "name": "Slide Number Placeholder 5",
+          "bbox": [
+            688,
+            667.33,
+            224,
+            38.33
+          ],
+          "geometry": "rect",
+          "text": "‹#›",
+          "textPreview": "‹#›",
+          "resolvedTextStyle": {
+            "anchor": 2,
+            "vertical": 1,
+            "verticalAlignment": "middle",
+            "insets": {
+              "top": 4.8,
+              "right": 9.6,
+              "bottom": 4.8,
+              "left": 9.6
+            }
+          },
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "‹#›",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "‹#›"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/yhg7epsj",
+      "id": "2",
+      "name": "TextBox 1",
+      "bbox": [
+        48,
+        48,
+        1183.97,
+        96
+      ],
+      "geometry": "rect",
+      "text": "5. TECHNICAL FEASIBILITY: Zero Hardware Costs, Highly Reliable Architecture",
+      "textPreview": "5. TECHNICAL FEASIBILITY: Zero Hardware Costs, Highly Reliable Architecture",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "resizeShapeToFitText",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "5. TECHNICAL FEASIBILITY: Zero Hardware Costs, Highly"
+          },
+          {
+            "index": 2,
+            "text": "Reliable Architecture"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "5. TECHNICAL FEASIBILITY: Zero Hardware Costs, Highly Reliable Architecture",
+          "resolvedTextStyle": {
+            "fontSize": 37.33,
+            "typeface": "Georgia",
+            "color": "#F8FAFC",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "5. TECHNICAL FEASIBILITY: Zero Hardware Costs, Highly Reliable Architecture",
+              "fontSize": 37.33,
+              "typeface": "Georgia",
+              "color": "#F8FAFC",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/zi98nu94",
+      "id": "3",
+      "name": "Rectangle 2",
+      "bbox": [
+        48,
+        124.8,
+        1183.97,
+        2.67
+      ],
+      "geometry": "rect",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "lt1",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": ""
+          }
+        ]
+      },
+      "fillColor": "#00D2C4",
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/87ipkzal",
+      "id": "4",
+      "name": "Rounded Rectangle 3",
+      "bbox": [
+        48,
+        172.8,
+        556.8,
+        460.8
+      ],
+      "geometry": "roundRect",
+      "text": "100% Bring Your Own Device (BYOD)\n✔ Hardware Cost = RM0: Runs on iOS and Android smartphones or tablets already owned by coaches and players.\n✔ No expensive high-speed cameras, smart rackets, or sensor devices to buy or calibrate.\n✔ Extremely lightweight app install size that fits on older devices with low storage.\n✔ Runs seamlessly in offline mode, auto-syncing to the database once a Wi-Fi connection is detected.",
+      "textPreview": "100% Bring Your Own Device (BYOD) | ✔ Hardware Cost = RM0: Runs on iOS and Android smartphones or tablets already owned by coaches and pl...",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "lt1",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 11,
+        "lines": [
+          {
+            "index": 1,
+            "text": "100% Bring Your Own Device"
+          },
+          {
+            "index": 2,
+            "text": "(BYOD)"
+          },
+          {
+            "index": 3,
+            "text": "✔ Hardware Cost = RM0: Runs on iOS and Android"
+          },
+          {
+            "index": 4,
+            "text": "smartphones or tablets already owned by coaches and"
+          },
+          {
+            "index": 5,
+            "text": "players."
+          },
+          {
+            "index": 6,
+            "text": "✔ No expensive high-speed cameras, smart rackets, or"
+          },
+          {
+            "index": 7,
+            "text": "sensor devices to buy or calibrate."
+          },
+          {
+            "index": 8,
+            "text": "✔ Extremely lightweight app install size that fits on older"
+          },
+          {
+            "index": 9,
+            "text": "devices with low storage."
+          },
+          {
+            "index": 10,
+            "text": "✔ Runs seamlessly in offline mode, auto-syncing to the"
+          },
+          {
+            "index": 11,
+            "text": "database once a Wi-Fi connection is detected."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "100% Bring Your Own Device (BYOD)",
+          "resolvedTextStyle": {
+            "fontSize": 29.33,
+            "typeface": "Georgia",
+            "color": "#00D2C4",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "100% Bring Your Own Device (BYOD)",
+              "fontSize": 29.33,
+              "typeface": "Georgia",
+              "color": "#00D2C4",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "✔ Hardware Cost = RM0: Runs on iOS and Android smartphones or tablets already owned by coaches and players.",
+          "resolvedTextStyle": {
+            "fontSize": 18.67,
+            "typeface": "Arial",
+            "color": "#F8FAFC"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "✔ Hardware Cost = RM0: Runs on iOS and Android smartphones or tablets already owned by coaches and players.",
+              "fontSize": 18.67,
+              "typeface": "Arial",
+              "color": "#F8FAFC"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "✔ No expensive high-speed cameras, smart rackets, or sensor devices to buy or calibrate.",
+          "resolvedTextStyle": {
+            "fontSize": 18.67,
+            "typeface": "Arial",
+            "color": "#F8FAFC"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "✔ No expensive high-speed cameras, smart rackets, or sensor devices to buy or calibrate.",
+              "fontSize": 18.67,
+              "typeface": "Arial",
+              "color": "#F8FAFC"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "✔ Extremely lightweight app install size that fits on older devices with low storage.",
+          "resolvedTextStyle": {
+            "fontSize": 18.67,
+            "typeface": "Arial",
+            "color": "#F8FAFC"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "✔ Extremely lightweight app install size that fits on older devices with low storage.",
+              "fontSize": 18.67,
+              "typeface": "Arial",
+              "color": "#F8FAFC"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "✔ Runs seamlessly in offline mode, auto-syncing to the database once a Wi-Fi connection is detected.",
+          "resolvedTextStyle": {
+            "fontSize": 18.67,
+            "typeface": "Arial",
+            "color": "#F8FAFC"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "✔ Runs seamlessly in offline mode, auto-syncing to the database once a Wi-Fi connection is detected.",
+              "fontSize": 18.67,
+              "typeface": "Arial",
+              "color": "#F8FAFC"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#1E293B",
+      "lineColor": "#00D2C4",
+      "lineWidth": 1.33
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/98rqt4r6",
+      "id": "5",
+      "name": "Rounded Rectangle 4",
+      "bbox": [
+        652.8,
+        172.8,
+        576,
+        460.8
+      ],
+      "geometry": "roundRect",
+      "text": "Simple & Scalable App Architecture\n☁ Mobile App (Frontend)\n   Optimized React Native app that ensures ultra-smooth UI tapping response and zero button lag during rapid badminton rallies.\n☁ Cloud Server & Database (Backend)\n   Stat tallies are compressed and sent as small text files to the cloud, ensuring lightning-fast uploads with extremely low data usage.\n☁ Web Dashboard (Alternative View)\n   Allows academy administrators to print beautifully formatted PDF summaries and progress charts from any desktop browser.",
+      "textPreview": "Simple & Scalable App Architecture | ☁ Mobile App (Frontend) |    Optimized React Native app that ensures ultra-smooth UI tapping respons...",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "anchor": 2,
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "lt1",
+        "alignment": "left",
+        "verticalAlignment": "middle",
+        "wrap": "square",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 13,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Simple & Scalable App"
+          },
+          {
+            "index": 2,
+            "text": "Architecture"
+          },
+          {
+            "index": 3,
+            "text": "☁ Mobile App (Frontend)"
+          },
+          {
+            "index": 4,
+            "text": "   Optimized React Native app that ensures ultra-smooth UI"
+          },
+          {
+            "index": 5,
+            "text": "tapping response and zero button lag during rapid badminton"
+          },
+          {
+            "index": 6,
+            "text": "rallies."
+          },
+          {
+            "index": 7,
+            "text": "☁ Cloud Server & Database (Backend)"
+          },
+          {
+            "index": 8,
+            "text": "   Stat tallies are compressed and sent as small text files to the"
+          },
+          {
+            "index": 9,
+            "text": "cloud, ensuring lightning-fast uploads with extremely low data"
+          },
+          {
+            "index": 10,
+            "text": "usage."
+          },
+          {
+            "index": 11,
+            "text": "☁ Web Dashboard (Alternative View)"
+          },
+          {
+            "index": 12,
+            "text": "   Allows academy administrators to print beautifully formatted"
+          },
+          {
+            "index": 13,
+            "text": "PDF summaries and progress charts from any desktop browser."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Simple & Scalable App Architecture",
+          "resolvedTextStyle": {
+            "fontSize": 29.33,
+            "typeface": "Georgia",
+            "color": "#F8FAFC",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Simple & Scalable App Architecture",
+              "fontSize": 29.33,
+              "typeface": "Georgia",
+              "color": "#F8FAFC",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "☁ Mobile App (Frontend)",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "typeface": "Arial",
+            "color": "#00D2C4",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "☁ Mobile App (Frontend)",
+              "fontSize": 20,
+              "typeface": "Arial",
+              "color": "#00D2C4",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "   Optimized React Native app that ensures ultra-smooth UI tapping response and zero button lag during rapid badminton rallies.",
+          "resolvedTextStyle": {
+            "fontSize": 17.33,
+            "typeface": "Arial",
+            "color": "#94A3B8"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "   Optimized React Native app that ensures ultra-smooth UI tapping response and zero button lag during rapid badminton rallies.",
+              "fontSize": 17.33,
+              "typeface": "Arial",
+              "color": "#94A3B8"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "☁ Cloud Server & Database (Backend)",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "typeface": "Arial",
+            "color": "#00D2C4",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "☁ Cloud Server & Database (Backend)",
+              "fontSize": 20,
+              "typeface": "Arial",
+              "color": "#00D2C4",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "   Stat tallies are compressed and sent as small text files to the cloud, ensuring lightning-fast uploads with extremely low data usage.",
+          "resolvedTextStyle": {
+            "fontSize": 17.33,
+            "typeface": "Arial",
+            "color": "#94A3B8"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "   Stat tallies are compressed and sent as small text files to the cloud, ensuring lightning-fast uploads with extremely low data usage.",
+              "fontSize": 17.33,
+              "typeface": "Arial",
+              "color": "#94A3B8"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 6,
+          "text": "☁ Web Dashboard (Alternative View)",
+          "resolvedTextStyle": {
+            "fontSize": 20,
+            "typeface": "Arial",
+            "color": "#00D2C4",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "☁ Web Dashboard (Alternative View)",
+              "fontSize": 20,
+              "typeface": "Arial",
+              "color": "#00D2C4",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 7,
+          "text": "   Allows academy administrators to print beautifully formatted PDF summaries and progress charts from any desktop browser.",
+          "resolvedTextStyle": {
+            "fontSize": 17.33,
+            "typeface": "Arial",
+            "color": "#94A3B8"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "   Allows academy administrators to print beautifully formatted PDF summaries and progress charts from any desktop browser.",
+              "fontSize": 17.33,
+              "typeface": "Arial",
+              "color": "#94A3B8"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "fillColor": "#1E293B",
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}
