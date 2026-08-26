@@ -398,9 +398,12 @@ const performanceRadarOptions = computed(() => ({
   },
   series: [
     {
+      animation: false,
+      animationDurationUpdate: 0,
       type: 'radar',
       data: [
         {
+          animation: false,
           name: shortPlayerName(dashboardSummary.value.playerA),
           value: radarData.value.map((item) => item.playerA),
           areaStyle: {
@@ -413,6 +416,7 @@ const performanceRadarOptions = computed(() => ({
           symbolSize: 4,
         },
         {
+          animation: false,
           name: shortPlayerName(dashboardSummary.value.playerB),
           value: radarData.value.map((item) => item.playerB),
           areaStyle: {
