@@ -1,12 +1,18 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class PlayersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private authService: AuthService,
+  ) {}
 
-  findAll() {
+  async findAll(authorization?: string) {
+    const coachProfile = await this.getCoachProfile(authorization);
     return this.prisma.player.findMany({
+      where: coachProfile ? { coachId: coachProfile.id } : undefined,
       include: {
         trainingSessions: {
           include: {
@@ -17,7 +23,7 @@ export class PlayersService {
     });
   }
 
-  create(data: {
+  async create(data: {
     name: string;
     category: string;
     hand: string;
@@ -25,11 +31,13 @@ export class PlayersService {
     heightCm: number;
     weightKg: number;
     form: number[];
-  }) {
+  }, authorization?: string) {
+    const coachProfile = await this.getCoachProfile(authorization);
     return this.prisma.player.create({
       data: {
         ...data,
         rank: 0, // sementara, boleh calculate proper ranking later
+        coachId: coachProfile?.id,
       },
     });
   }
@@ -83,6 +91,20 @@ export class PlayersService {
           },
         },
       },
+    });
+  }
+
+  private async getCoachProfile(authorization?: string) {
+    const user = await this.authService.getOptionalUserFromAuthorization(authorization);
+    if (!user || (user.role !== 'coach' && user.role !== 'admin')) return null;
+
+    return this.prisma.coachProfile.upsert({
+      where: { userId: user.id },
+      create: {
+        userId: user.id,
+        name: user.name,
+      },
+      update: {},
     });
   }
 }

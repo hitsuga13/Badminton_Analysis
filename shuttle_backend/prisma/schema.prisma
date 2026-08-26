@@ -16,19 +16,32 @@ datasource db {
 
 model Player {
   id               Int               @id @default(autoincrement())
+  coachId          Int?
+  userId           Int?              @unique
   name             String
   category         String
   hand             String
   age              Int
+  dateOfBirth      DateTime?
   heightCm         Int
   weightKg         Int
   rank             Int
   form             Int[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  deletedAt        DateTime?
+  coach            CoachProfile?     @relation(fields: [coachId], references: [id], onDelete: SetNull)
+  user             User?             @relation("PlayerUser", fields: [userId], references: [id], onDelete: SetNull)
   matchesAsPlayer1 Match[]           @relation("Player1Matches")
   matchesAsPlayer2 Match[]           @relation("Player2Matches")
+  matchesWon       Match[]           @relation("MatchWinner")
+  matchSetsWon     MatchSet[]
   ralliesWon       Rally[]           @relation("RallyWinner")
   shotRecords      ShotRecord[]
   trainingSessions TrainingSession[]
+
+  @@index([coachId])
+  @@index([category])
 }
 
 model User {
@@ -40,6 +53,21 @@ model User {
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   sessions     AuthSession[]
+  coachProfile CoachProfile?
+  playerProfile Player?      @relation("PlayerUser")
+  recordedMatches Match[]    @relation("RecordedByCoach")
+  trainingSessions TrainingSession[] @relation("TrainingRecordedByCoach")
+}
+
+model CoachProfile {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique
+  name      String
+  phone     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  players   Player[]
 }
 
 model AuthSession {
@@ -56,8 +84,10 @@ model AuthSession {
 
 model Match {
   id           Int          @id @default(autoincrement())
+  recordedByCoachId Int?
   player1Id    Int
   player2Id    Int
+  winnerId     Int?
   player1Score Int
   player2Score Int
   date         DateTime     @default(now())
@@ -65,10 +95,43 @@ model Match {
   totalRallies Int          @default(0)
   totalShots   Int          @default(0)
   matchFormat  String?
+  pointsToWin  Int?
+  setsToWin    Int?
+  startedAt    DateTime?
+  endedAt      DateTime?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  deletedAt    DateTime?
+  recordedByCoach User?     @relation("RecordedByCoach", fields: [recordedByCoachId], references: [id], onDelete: SetNull)
   player1      Player       @relation("Player1Matches", fields: [player1Id], references: [id])
   player2      Player       @relation("Player2Matches", fields: [player2Id], references: [id])
+  winner       Player?      @relation("MatchWinner", fields: [winnerId], references: [id])
+  sets         MatchSet[]
   rallies      Rally[]
   shotRecords  ShotRecord[]
+
+  @@index([recordedByCoachId])
+  @@index([player1Id])
+  @@index([player2Id])
+  @@index([winnerId])
+  @@index([date])
+}
+
+model MatchSet {
+  id           Int       @id @default(autoincrement())
+  matchId      Int
+  setNumber    Int
+  player1Score Int       @default(0)
+  player2Score Int       @default(0)
+  winnerId     Int?
+  startedAt    DateTime?
+  endedAt      DateTime?
+  createdAt    DateTime  @default(now())
+  match        Match     @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  winner       Player?   @relation(fields: [winnerId], references: [id], onDelete: SetNull)
+
+  @@unique([matchId, setNumber])
+  @@index([winnerId])
 }
 
 model Rally {
@@ -77,13 +140,20 @@ model Rally {
   rallyNumber Int
   winnerId    Int?
   outcome     String
+  outcomeType String?
+  outcomeReason String?
   shots       Int          @default(0)
   durationMs  Int?
   startedAt   DateTime?
   endedAt     DateTime?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
   match       Match        @relation(fields: [matchId], references: [id], onDelete: Cascade)
   winner      Player?      @relation("RallyWinner", fields: [winnerId], references: [id])
   shotRecords ShotRecord[]
+
+  @@unique([matchId, rallyNumber])
+  @@index([winnerId])
 }
 
 model ShotRecord {
@@ -91,19 +161,38 @@ model ShotRecord {
   matchId   Int
   rallyId   Int?
   playerId  Int
+  shotTypeId Int?
   sequence  Int
   shot      String
   category  String?
   result    String?
   timestamp DateTime @default(now())
+  createdAt DateTime @default(now())
   match     Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
   rally     Rally?   @relation(fields: [rallyId], references: [id], onDelete: SetNull)
   player    Player   @relation(fields: [playerId], references: [id])
+  shotType  ShotType? @relation(fields: [shotTypeId], references: [id], onDelete: SetNull)
+
+  @@unique([rallyId, sequence])
+  @@index([matchId])
+  @@index([playerId])
+  @@index([shotTypeId])
+}
+
+model ShotType {
+  id          Int          @id @default(autoincrement())
+  name        String       @unique
+  category    String
+  createdAt   DateTime     @default(now())
+  shotRecords ShotRecord[]
+  trainingSessions TrainingSession[]
 }
 
 model TrainingSession {
   id               Int           @id @default(autoincrement())
+  coachId          Int?
   playerId         Int
+  shotTypeId       Int?
   shot             String
   targetReps       Int
   completedReps    Int
@@ -111,9 +200,21 @@ model TrainingSession {
   unsuccessfulReps Int
   accuracy         Int
   durationMs       Int?
+  startedAt        DateTime?
+  endedAt          DateTime?
   savedAt          DateTime      @default(now())
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  deletedAt        DateTime?
+  coach            User?         @relation("TrainingRecordedByCoach", fields: [coachId], references: [id], onDelete: SetNull)
   player           Player        @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  shotType         ShotType?      @relation(fields: [shotTypeId], references: [id], onDelete: SetNull)
   reps             TrainingRep[]
+
+  @@index([coachId])
+  @@index([playerId])
+  @@index([shotTypeId])
+  @@index([savedAt])
 }
 
 model TrainingRep {
@@ -123,4 +224,6 @@ model TrainingRep {
   successful        Boolean
   recordedAt        DateTime        @default(now())
   trainingSession   TrainingSession @relation(fields: [trainingSessionId], references: [id], onDelete: Cascade)
+
+  @@unique([trainingSessionId, repNumber])
 }

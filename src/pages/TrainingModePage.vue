@@ -176,9 +176,10 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { loadPlayers, savePlayers } from '@/data/players'
 import { loadSettings } from '@/data/settings'
+import { api } from '../boot/axios'
 
 const historyStorageKey = 'akp-shuttletrace:match-history'
 const notationStorageKey = 'akp-shuttletrace:last-match-notation'
@@ -234,6 +235,18 @@ const trainingStatusLabel = computed(() => {
   return isTrainingComplete.value ? 'Complete' : 'Active'
 })
 
+onMounted(async () => {
+  try {
+    const response = await api.get('/players')
+    if (Array.isArray(response.data) && response.data.length > 0) {
+      availablePlayers.value = response.data
+      if (!selectedPlayer.value) selectedPlayerId.value = availablePlayers.value[0]?.id ?? null
+    }
+  } catch {
+    availablePlayers.value = loadPlayers()
+  }
+})
+
 function startTraining() {
   successfulReps.value = 0
   unsuccessfulReps.value = 0
@@ -273,16 +286,40 @@ function resetTraining() {
   sessionStartedAt.value = null
 }
 
-function endTraining() {
+async function endTraining() {
   if (completedReps.value === 0) return
 
   const report = buildTrainingReport()
+  await saveTrainingToDatabase(report)
   saveTrainingHistoryReport(report)
   saveTrainingToPlayer(report)
   window.localStorage.setItem(notationStorageKey, JSON.stringify(report))
   window.dispatchEvent(new Event('akp-ai-summary-ready'))
   playTrainingSound('end')
   resetTraining()
+}
+
+async function saveTrainingToDatabase(report) {
+  try {
+    const response = await api.post('/training', {
+      ...report.training,
+      reps: report.training.records,
+      durationMs: report.rallyOutcomes[0]?.durationMs ?? 0,
+      startedAt: sessionStartedAt.value,
+      endedAt: report.match.savedAt,
+      savedAt: report.match.savedAt,
+    })
+    report.database = {
+      status: 'saved',
+      id: response.data?.id,
+      savedAt: new Date().toISOString(),
+    }
+  } catch (error) {
+    report.database = {
+      status: 'offline',
+      message: error?.response?.data?.message ?? 'Saved locally. Database sync failed.',
+    }
+  }
 }
 
 function buildTrainingReport() {

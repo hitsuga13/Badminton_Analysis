@@ -379,10 +379,11 @@
 </template>
 
 <script setup>
-import { computed, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import PlayerShotPanel from '@/components/PlayerShotPanel.vue'
 import { loadPlayers } from '@/data/players'
 import { loadSettings } from '@/data/settings'
+import { api } from '../boot/axios'
 
 const matchStatus = ref('setup')
 const currentRally = ref(1)
@@ -417,6 +418,7 @@ const matchId = ref(null)
 const notationStorageKey = 'akp-shuttletrace:last-match-notation'
 const legacyHistoryStorageKey = `court${'sense'}:match-history`
 const historyStorageKey = 'akp-shuttletrace:match-history'
+const remoteSavedIds = new Set()
 let rallyTimerId = null
 let overallTimerId = null
 let setTimerId = null
@@ -504,6 +506,25 @@ const coinFlipStatus = computed(() => {
   if (isCoinFlipping.value) return 'Coin is flipping to decide the first server.'
   if (coinWinner.value) return `${firstServerName.value} starts the first rally.`
   return 'Player A is heads. Player B is tails.'
+})
+
+onMounted(async () => {
+  try {
+    const response = await api.get('/players')
+    if (Array.isArray(response.data) && response.data.length > 0) {
+      availablePlayers.value = response.data
+      if (!findAvailablePlayer(selectedPlayerAId.value)) {
+        selectedPlayerAId.value = availablePlayers.value[0]?.id ?? null
+      }
+      if (!findAvailablePlayer(selectedPlayerBId.value)) {
+        selectedPlayerBId.value = availablePlayers.value.find(
+          (player) => player.id !== selectedPlayerAId.value,
+        )?.id ?? null
+      }
+    }
+  } catch {
+    availablePlayers.value = loadPlayers()
+  }
 })
 
 function recordAction(player, shot) {
@@ -896,8 +917,27 @@ function saveNotation(status) {
     report.analysis = { status: 'generating', summary: '' }
     saveHistoryReport(report)
     window.localStorage.setItem(notationStorageKey, JSON.stringify(report))
+    void saveMatchReportToDatabase(report)
     void generateAiSummary(report)
   }
+}
+
+async function saveMatchReportToDatabase(report) {
+  if (!report?.match?.id || remoteSavedIds.has(report.match.id)) return
+
+  try {
+    await api.post('/matches/reports', report)
+    remoteSavedIds.add(report.match.id)
+    report.database = { status: 'saved', savedAt: new Date().toISOString() }
+  } catch (error) {
+    report.database = {
+      status: 'offline',
+      message: error?.response?.data?.message ?? 'Saved locally. Database sync failed.',
+    }
+  }
+
+  window.localStorage.setItem(notationStorageKey, JSON.stringify(report))
+  saveHistoryReport(report)
 }
 
 async function generateAiSummary(report) {

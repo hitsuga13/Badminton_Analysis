@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Headers, Param, Post } from '@nestjs/common';
 import { TrainingService } from './training.service';
 
 @Controller('training')
@@ -16,7 +16,12 @@ export class TrainingController {
   }
 
   @Post()
-  create(@Body() body: any) {
-    return this.trainingService.create(body);
+  create(@Body() body: any, @Headers('authorization') authorization?: string) {
+    return this.trainingService.create(body, authorization);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.trainingService.remove(Number(id));
   }
 }

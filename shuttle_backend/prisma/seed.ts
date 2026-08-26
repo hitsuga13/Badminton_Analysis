@@ -20,13 +20,34 @@ const shotCategory = {
 async function main() {
   await clearDatabase();
 
-  await prisma.user.create({
+  const coachUser = await prisma.user.create({
     data: {
       email: 'coach@akpshuttletrace.app',
       name: 'AKP Coach',
       role: 'coach',
       passwordHash: await hashPassword('password'),
+      coachProfile: {
+        create: {
+          name: 'AKP Coach',
+          phone: '+60123456789',
+        },
+      },
     },
+    include: { coachProfile: true },
+  });
+
+  await prisma.shotType.createMany({
+    data: [
+      { name: 'Smash', category: 'attack' },
+      { name: 'Drive', category: 'attack' },
+      { name: 'Drop', category: 'neutral' },
+      { name: 'Lift', category: 'defense' },
+      { name: 'Block', category: 'defense' },
+      { name: 'Netting', category: 'neutral' },
+      { name: 'Net Shot', category: 'neutral' },
+      { name: 'Serve', category: 'neutral' },
+    ],
+    skipDuplicates: true,
   });
 
   const napi = await prisma.player.create({
@@ -39,6 +60,7 @@ async function main() {
       weightKg: 72,
       rank: 1,
       form: [1, 1, 0, 1, 1],
+      coachId: coachUser.coachProfile?.id,
     },
   });
 
@@ -52,6 +74,7 @@ async function main() {
       weightKg: 76,
       rank: 2,
       form: [1, 0, 1, 1, 0],
+      coachId: coachUser.coachProfile?.id,
     },
   });
 
@@ -65,6 +88,7 @@ async function main() {
       weightKg: 58,
       rank: 3,
       form: [0, 1, 1, 1, 1],
+      coachId: coachUser.coachProfile?.id,
     },
   });
 
@@ -79,6 +103,12 @@ async function main() {
       totalRallies: 3,
       totalShots: 14,
       matchFormat: 'Best of 3, first to 21',
+      recordedByCoachId: coachUser.id,
+      winnerId: napi.id,
+      pointsToWin: 21,
+      setsToWin: 2,
+      startedAt: new Date('2026-08-24T13:30:00.000Z'),
+      endedAt: new Date('2026-08-24T13:45:00.000Z'),
     },
   });
 
@@ -106,6 +136,7 @@ async function main() {
   ]);
 
   await createTrainingSession(
+    coachUser.id,
     napi.id,
     'Smash',
     200,
@@ -114,6 +145,7 @@ async function main() {
     '2026-08-24T15:00:00.000Z',
   );
   await createTrainingSession(
+    coachUser.id,
     napi.id,
     'Drop',
     200,
@@ -122,6 +154,7 @@ async function main() {
     '2026-08-24T16:00:00.000Z',
   );
   await createTrainingSession(
+    coachUser.id,
     lee.id,
     'Drive',
     100,
@@ -130,6 +163,7 @@ async function main() {
     '2026-08-24T17:00:00.000Z',
   );
   await createTrainingSession(
+    coachUser.id,
     aina.id,
     'Net Shot',
     100,
@@ -193,6 +227,7 @@ async function createRallyWithShots(
 }
 
 async function createTrainingSession(
+  coachId: number,
   playerId: number,
   shot: string,
   targetReps: number,
@@ -205,14 +240,18 @@ async function createTrainingSession(
 
   await prisma.trainingSession.create({
     data: {
+      coachId,
       playerId,
       shot,
+      shotTypeId: (await prisma.shotType.findUnique({ where: { name: shot } }))?.id,
       targetReps,
       completedReps,
       successfulReps,
       unsuccessfulReps,
       accuracy,
       durationMs: completedReps * 1400,
+      startedAt: new Date(new Date(savedAt).getTime() - completedReps * 1400),
+      endedAt: new Date(savedAt),
       savedAt: new Date(savedAt),
       reps: {
         create: Array.from(

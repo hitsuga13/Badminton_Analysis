@@ -192,6 +192,7 @@
 
 <script setup>
 import { computed, onMounted, ref } from 'vue'
+import { api } from '../boot/axios'
 
 const historyStorageKey = 'akp-shuttletrace:match-history'
 const legacyHistoryStorageKey = `court${'sense'}:match-history`
@@ -219,12 +220,42 @@ const activeFilterLabel = computed(
     'selected',
 )
 
-onMounted(() => {
-  history.value = loadHistory()
+onMounted(async () => {
+  history.value = await loadHistory()
   deletedHistory.value = loadDeletedHistory()
 })
 
-function loadHistory() {
+async function loadHistory() {
+  if (typeof window === 'undefined') return []
+
+  const localHistory = loadLocalHistory()
+  try {
+    const [matchesResponse, trainingResponse] = await Promise.all([
+      api.get('/matches'),
+      api.get('/training'),
+    ])
+    const remoteHistory = normalizeHistory([
+      ...normalizeRemoteMatches(matchesResponse.data),
+      ...normalizeRemoteTraining(trainingResponse.data),
+    ])
+
+    if (remoteHistory.length > 0) {
+      return normalizeHistory([
+        ...remoteHistory,
+        ...localHistory.filter(
+          (localItem) =>
+            !remoteHistory.some((remoteItem) => remoteItem.match.id === localItem.match.id),
+        ),
+      ])
+    }
+  } catch {
+    return localHistory
+  }
+
+  return localHistory
+}
+
+function loadLocalHistory() {
   if (typeof window === 'undefined') return []
 
   const storedHistory = parseStoredJson(
@@ -242,6 +273,111 @@ function loadHistory() {
   if (!latestReport?.match) return []
 
   return normalizeHistory([latestReport])
+}
+
+function normalizeRemoteMatches(matches) {
+  if (!Array.isArray(matches)) return []
+
+  return matches.map((match) => ({
+    match: {
+      id: `db-match-${match.id}`,
+      databaseId: match.id,
+      status: match.status ?? 'ended',
+      playerA: match.player1?.name ?? 'Player A',
+      playerB: match.player2?.name ?? 'Player B',
+      playerAId: match.player1Id,
+      playerBId: match.player2Id,
+      totalRallies: match.totalRallies ?? match.rallies?.length ?? 0,
+      totalShots: match.totalShots ?? match.shotRecords?.length ?? 0,
+      scoreA: match.player1Score ?? 0,
+      scoreB: match.player2Score ?? 0,
+      gamesA: match.sets?.filter((set) => set.winnerId === match.player1Id).length ?? 0,
+      gamesB: match.sets?.filter((set) => set.winnerId === match.player2Id).length ?? 0,
+      firstServer: '-',
+      firstServerCode: '-',
+      scoringFormat: match.matchFormat ?? '-',
+      savedAt: match.endedAt ?? match.date,
+    },
+    notation: (match.rallies ?? []).flatMap((rally) =>
+      (rally.shotRecords ?? []).map((shot) => ({
+        id: `db-shot-${shot.id}`,
+        rallyNumber: rally.rallyNumber,
+        player: shot.playerId === match.player1Id ? 'A' : 'B',
+        playerName: shot.player?.name ?? '-',
+        shot: shot.shotType?.name ?? shot.shot,
+        timestamp: shot.timestamp,
+        result: shot.result,
+      })),
+    ),
+    rallyOutcomes: (match.rallies ?? []).map((rally) => ({
+      rallyNumber: rally.rallyNumber,
+      outcome: rally.outcome,
+      shots: rally.shots,
+      durationMs: rally.durationMs,
+      durationLabel: formatDuration(rally.durationMs ?? 0),
+      endingType: rally.outcomeType,
+      endingReason: rally.outcomeReason,
+      pointWinnerName: rally.winner?.name ?? '-',
+    })),
+    setDurations: match.sets ?? [],
+    database: { status: 'saved', id: match.id },
+  }))
+}
+
+function normalizeRemoteTraining(sessions) {
+  if (!Array.isArray(sessions)) return []
+
+  return sessions.map((session) => ({
+    match: {
+      id: `db-training-${session.id}`,
+      databaseId: session.id,
+      status: 'training',
+      playerA: session.player?.name ?? 'Training Player',
+      playerB: session.shotType?.name ?? session.shot,
+      firstServer: session.player?.name ?? 'Training Player',
+      firstServerCode: 'Training',
+      totalRallies: session.completedReps ?? 0,
+      totalShots: session.completedReps ?? 0,
+      scoreA: session.successfulReps ?? 0,
+      scoreB: session.unsuccessfulReps ?? 0,
+      gamesA: session.successfulReps ?? 0,
+      gamesB: session.unsuccessfulReps ?? 0,
+      scoringFormat: `${session.targetReps} repetitions, ${session.accuracy}% accuracy`,
+      savedAt: session.savedAt,
+    },
+    notation: (session.reps ?? []).map((rep) => ({
+      id: `db-rep-${rep.id}`,
+      rallyNumber: rep.repNumber,
+      player: 'Training',
+      playerName: session.player?.name ?? 'Training Player',
+      shot: session.shotType?.name ?? session.shot,
+      timestamp: rep.recordedAt,
+      result: rep.successful ? 'Successful' : 'Unsuccessful',
+    })),
+    rallyOutcomes: [
+      {
+        rallyNumber: 1,
+        outcome: `${session.shotType?.name ?? session.shot} drill: ${session.successfulReps} successful, ${session.unsuccessfulReps} unsuccessful`,
+        shots: session.completedReps,
+        durationMs: session.durationMs,
+        durationLabel: formatDuration(session.durationMs ?? 0),
+        endingType: 'training',
+        pointWinnerName: `${session.accuracy}% accuracy`,
+      },
+    ],
+    training: {
+      playerId: session.playerId,
+      playerName: session.player?.name ?? 'Training Player',
+      shot: session.shotType?.name ?? session.shot,
+      targetReps: session.targetReps,
+      completedReps: session.completedReps,
+      successfulReps: session.successfulReps,
+      unsuccessfulReps: session.unsuccessfulReps,
+      accuracy: session.accuracy,
+      records: session.reps ?? [],
+    },
+    database: { status: 'saved', id: session.id },
+  }))
 }
 
 function loadDeletedHistory() {
@@ -279,11 +415,13 @@ function parseStoredJson(rawValue, fallback) {
   }
 }
 
-function deleteHistory(matchReport) {
+async function deleteHistory(matchReport) {
   const deletedReport = {
     ...matchReport,
     deletedAt: new Date().toISOString(),
   }
+
+  await softDeleteRemoteHistory(matchReport)
 
   history.value = history.value.filter((item) => item.match.id !== matchReport.match.id)
   deletedHistory.value = normalizeHistory([
@@ -292,6 +430,21 @@ function deleteHistory(matchReport) {
   ])
   selectedMatch.value = null
   persistHistory()
+}
+
+async function softDeleteRemoteHistory(matchReport) {
+  const databaseId = matchReport?.match?.databaseId
+  if (!databaseId) return
+
+  try {
+    if (historyType(matchReport) === 'training') {
+      await api.delete(`/training/${databaseId}`)
+      return
+    }
+    await api.delete(`/matches/${databaseId}`)
+  } catch {
+    // Keep local recently-deleted behavior even when backend sync is unavailable.
+  }
 }
 
 function restoreHistory(matchReport) {

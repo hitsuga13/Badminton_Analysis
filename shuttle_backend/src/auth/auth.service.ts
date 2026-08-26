@@ -37,6 +37,14 @@ export class AuthService {
         name,
         role,
         passwordHash: await this.hashPassword(data.password),
+        coachProfile:
+          role === 'coach' || role === 'admin'
+            ? {
+                create: {
+                  name,
+                },
+              }
+            : undefined,
       },
     });
 
@@ -82,6 +90,17 @@ export class AuthService {
       expiresAt,
       user: this.publicUser(user),
     };
+  }
+
+  async getUserFromToken(token: string) {
+    const session = await this.findValidSession(token);
+    return session.user;
+  }
+
+  async getOptionalUserFromAuthorization(authorization?: string) {
+    const [scheme, token] = authorization?.split(' ') ?? [];
+    if (scheme !== 'Bearer' || !token) return null;
+    return this.getUserFromToken(token);
   }
 
   private async findValidSession(token: string) {

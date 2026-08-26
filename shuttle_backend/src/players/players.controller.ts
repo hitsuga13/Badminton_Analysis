@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Headers,
   Param,
   Post,
   Put,
@@ -14,8 +15,8 @@ export class PlayersController {
   constructor(private readonly playersService: PlayersService) {}
 
   @Get()
-  findAll() {
-    return this.playersService.findAll();
+  findAll(@Headers('authorization') authorization?: string) {
+    return this.playersService.findAll(authorization);
   }
 
   @Get(':id')
@@ -24,8 +25,8 @@ export class PlayersController {
   }
 
   @Post()
-  create(@Body() body) {
-    return this.playersService.create(body);
+  create(@Body() body, @Headers('authorization') authorization?: string) {
+    return this.playersService.create(body, authorization);
   }
 
   @Put(':id')

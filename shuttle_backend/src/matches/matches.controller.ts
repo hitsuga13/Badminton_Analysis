@@ -5,8 +5,9 @@ https://docs.nestjs.com/controllers#controllers
 import {
   Body,
   Controller,
-  //Delete,
+  Delete,
   Get,
+  Headers,
   Param,
   Post,
   //Put,
@@ -28,8 +29,13 @@ export class MatchesController {
   }
 
   @Post()
-  create(@Body() body: any) {
-    return this.matchesService.create(body);
+  create(@Body() body: any, @Headers('authorization') authorization?: string) {
+    return this.matchesService.create(body, authorization);
+  }
+
+  @Post('reports')
+  createReport(@Body() body: any, @Headers('authorization') authorization?: string) {
+    return this.matchesService.createReport(body, authorization);
   }
 
   @Post(':id/rallies')
@@ -40,5 +46,10 @@ export class MatchesController {
   @Post(':id/shots')
   createShot(@Param('id') id: string, @Body() body: any) {
     return this.matchesService.createShot(Number(id), body);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.matchesService.remove(Number(id));
   }
 }
