@@ -14,9 +14,4 @@ export class AppController {
   getHealth() {
     return { ok: true };
   }
-
-  @Get('matches')
-  getMatches(): string {
-    return this.appService.getMatches();
-  }
 }
