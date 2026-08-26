@@ -1336,6 +1336,7 @@ button:disabled {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  max-height: 100vh;
   overflow: hidden;
 }
 
@@ -1475,18 +1476,22 @@ button:disabled {
 
 .shot-panel header {
   flex: 0 0 auto;
-  padding: 24px;
+  padding: clamp(12px, 2vh, 24px);
   border-bottom: 1px solid var(--cs-border);
   background: rgb(20 20 22 / 0.75);
 }
 
 .shot-panel h2 {
-  font-size: 32px;
+  overflow: hidden;
+  font-size: clamp(18px, 2.5vw, 32px);
+  line-height: 1.05;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .shot-panel header span {
   display: inline-flex;
-  margin-top: 8px;
+  margin-top: 6px;
   color: var(--cs-muted-foreground);
   font-family: var(--cs-font-mono);
   font-size: 11px;
@@ -1504,10 +1509,12 @@ button:disabled {
 .shot-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: clamp(8px, 1.4vw, 16px);
   min-height: 0;
-  overflow-y: auto;
-  padding: 24px 24px 128px;
+  flex: 1 1 auto;
+  overflow: hidden;
+  padding: clamp(10px, 2vw, 24px);
 }
 
 .shot-button {
@@ -1515,10 +1522,12 @@ button:disabled {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 128px;
-  padding: 16px;
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  padding: clamp(8px, 1.5vw, 16px);
   border: 2px solid var(--cs-border);
-  border-radius: 12px;
+  border-radius: 8px;
   background: var(--cs-secondary);
   color: var(--cs-foreground);
   transition:
@@ -1537,13 +1546,15 @@ button:disabled {
 
 .shot-button strong {
   font-family: var(--cs-font-heading);
-  font-size: 24px;
+  font-size: clamp(14px, 2vw, 24px);
+  line-height: 1;
+  text-align: center;
 }
 
 .shot-button span {
-  margin-top: 8px;
+  margin-top: clamp(3px, 0.8vh, 8px);
   font-family: var(--cs-font-mono);
-  font-size: 10px;
+  font-size: clamp(9px, 0.9vw, 10px);
   text-transform: uppercase;
   opacity: 0.65;
 }
@@ -2648,6 +2659,7 @@ tbody tr:hover {
 
   .shot-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(0, 1fr));
   }
 
   .training-variable-grid {
@@ -2680,11 +2692,87 @@ tbody tr:hover {
   .stats-grid,
   .analytics-grid,
   .insight-grid,
-  .court-split,
   .player-select-grid,
   .training-dashboard-hero,
   .training-dashboard-breakdown {
     grid-template-columns: 1fr;
+  }
+
+  .live-recorder .court-split {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .live-recorder .live-topbar {
+    align-items: center;
+    flex-direction: row;
+    height: clamp(56px, 13vh, 86px);
+    gap: 10px;
+    overflow: hidden;
+    padding: 8px 10px;
+  }
+
+  .live-recorder .live-title {
+    flex: 0 1 34%;
+    min-width: 0;
+    gap: 6px;
+  }
+
+  .live-recorder .live-title span,
+  .live-recorder .live-title i {
+    display: none;
+  }
+
+  .live-recorder .live-title strong {
+    overflow: hidden;
+    font-size: clamp(13px, 3.2vw, 18px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .live-recorder .live-actions {
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 6px;
+    overflow: hidden;
+  }
+
+  .live-recorder .rally-chip {
+    flex: 1 1 0;
+    min-width: 0;
+    justify-content: center;
+    padding: 4px 6px;
+  }
+
+  .live-recorder .rally-chip span {
+    display: none;
+  }
+
+  .live-recorder .rally-chip strong {
+    overflow: hidden;
+    font-size: clamp(13px, 3vw, 18px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .live-recorder .rally-chip--timer select,
+  .live-recorder .rally-chip:nth-of-type(3),
+  .live-recorder .rally-chip--turn {
+    display: none;
+  }
+
+  .live-recorder .danger-action {
+    width: 38px;
+    min-width: 38px;
+    min-height: 38px;
+    padding: 0;
+  }
+
+  .live-recorder .danger-action .q-icon {
+    margin: 0;
+  }
+
+  .live-recorder .danger-action {
+    font-size: 0;
   }
 
   .chart {
@@ -2696,24 +2784,38 @@ tbody tr:hover {
   }
 
   .shot-panel {
-    min-height: 420px;
+    min-height: 0;
     border-right: 0;
     border-bottom: 1px solid var(--cs-border);
   }
 
+  .live-recorder .shot-panel:first-child {
+    border-right: 1px solid var(--cs-border);
+  }
+
   .timeline-panel {
-    height: auto;
-    flex-direction: column;
+    height: clamp(96px, 20vh, 132px);
+    flex-direction: row;
   }
 
   .timeline-track {
-    min-height: 112px;
+    min-height: 0;
+    padding: 10px;
   }
 
   .timeline-controls {
-    width: 100%;
-    border-left: 0;
-    border-top: 1px solid var(--cs-border);
+    width: min(42vw, 220px);
+    gap: 8px;
+    padding: 10px;
+    border-top: 0;
+    border-left: 1px solid var(--cs-border);
+  }
+
+  .timeline-controls button {
+    min-height: 0;
+    padding: 6px 8px;
+    font-size: clamp(11px, 2.5vw, 13px);
+    line-height: 1.1;
   }
 
   .player-tools {
