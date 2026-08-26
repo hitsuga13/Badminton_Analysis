@@ -106,18 +106,20 @@
             </div>
           </div>
           <div class="radar-chart-shell">
-            <VChart class="chart chart--radar" :option="performanceRadarOptions" />
-            <button
-              v-for="(metric, index) in radarData"
-              :key="metric.subject"
-              class="radar-label-hit"
-              type="button"
-              :style="getRadarLabelStyle(index)"
-              :aria-label="`${metric.subject} values`"
-              @click="selectRadarMetric(metric)"
-            >
-              {{ metric.subject }}
-            </button>
+            <div class="radar-stage">
+              <VChart class="chart chart--radar" :option="performanceRadarOptions" />
+              <button
+                v-for="(metric, index) in radarData"
+                :key="metric.subject"
+                class="radar-label-hit"
+                type="button"
+                :style="getRadarLabelStyle(index)"
+                :aria-label="`${metric.subject} values`"
+                @click="selectRadarMetric(metric)"
+              >
+                {{ metric.subject }}
+              </button>
+            </div>
           </div>
         </article>
 

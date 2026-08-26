@@ -955,13 +955,26 @@ button:disabled {
 }
 
 .chart--radar {
-  height: 330px;
+  width: 100%;
+  height: 100%;
 }
 
 .radar-chart-shell {
-  position: relative;
+  display: flex;
+  justify-content: center;
   min-height: 330px;
   overflow: hidden;
+}
+
+.radar-stage {
+  position: relative;
+  flex: 0 0 auto;
+  width: min(100%, 360px);
+  height: 330px;
+}
+
+.radar-stage > .chart--radar {
+  height: 100%;
 }
 
 .radar-selected-summary {
@@ -2893,7 +2906,8 @@ tbody tr:hover {
     min-height: 330px;
   }
 
-  .chart--radar {
+  .radar-stage {
+    width: min(100%, 330px);
     height: 330px;
   }
 
