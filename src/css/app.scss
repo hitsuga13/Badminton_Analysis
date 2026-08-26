@@ -89,15 +89,21 @@ button:disabled {
 }
 
 .cs-sidebar {
-  display: flex;
-  flex-direction: column;
   height: 100%;
   background: var(--cs-card);
   border-color: var(--cs-border);
   color: var(--cs-foreground);
 }
 
+.cs-sidebar .q-drawer__content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
 .brand-block {
+  flex: 0 0 auto;
   display: grid;
   grid-template-columns: 32px minmax(0, 1fr);
   align-items: center;
@@ -160,6 +166,8 @@ button:disabled {
 
 .nav-list {
   flex: 1;
+  min-height: 0;
+  overflow-y: auto;
   padding: 16px;
 }
 
@@ -205,9 +213,11 @@ button:disabled {
 }
 
 .sidebar-footer {
+  flex: 0 0 auto;
   margin-top: auto;
   padding: 16px;
   border-top: 1px solid var(--cs-border);
+  background: var(--cs-card);
 }
 
 .sidebar-footer .nav-item {
