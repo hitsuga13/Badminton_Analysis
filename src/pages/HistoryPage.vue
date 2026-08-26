@@ -425,6 +425,8 @@ function parseStoredJson(rawValue, fallback) {
 }
 
 async function deleteHistory(matchReport) {
+  if (!confirmDeleteHistory(matchReport)) return
+
   const deletedReport = {
     ...matchReport,
     deletedAt: new Date().toISOString(),
@@ -439,6 +441,15 @@ async function deleteHistory(matchReport) {
   ])
   selectedMatch.value = null
   persistHistory()
+}
+
+function confirmDeleteHistory(matchReport) {
+  if (typeof window === 'undefined') return false
+
+  const matchName = `${matchReport.match.playerA} vs ${matchReport.match.playerB}`
+  return window.confirm(
+    `Delete ${matchName} from match history?\n\nThis match will move to Recently Deleted Match. If you want to restore it, go back to Recently Deleted Match and tap Restore.`,
+  )
 }
 
 async function softDeleteRemoteHistory(matchReport) {
