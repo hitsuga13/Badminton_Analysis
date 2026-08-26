@@ -1041,51 +1041,44 @@ button:disabled {
 .radar-metric-list {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 8px;
+  gap: 6px;
   margin-top: 14px;
+  padding: 4px;
+  border: 1px solid var(--cs-border);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 0.025);
 }
 
 .radar-metric-button {
-  display: grid;
-  gap: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-width: 0;
-  min-height: 52px;
-  padding: 9px 10px;
-  border: 1px solid var(--cs-border);
-  border-radius: 8px;
-  background: var(--cs-secondary);
+  min-height: 38px;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
   color: var(--cs-muted-foreground);
-  text-align: left;
-}
-
-.radar-metric-button span,
-.radar-metric-button strong {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  text-align: center;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease;
 }
 
 .radar-metric-button span {
-  font-family: var(--cs-font-mono);
-  font-size: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
   font-weight: 700;
-  text-transform: uppercase;
-}
-
-.radar-metric-button strong {
-  color: var(--cs-foreground);
-  font-family: var(--cs-font-heading);
-  font-size: 16px;
-  line-height: 1;
+  line-height: 1.1;
 }
 
 .radar-metric-button--active {
-  border-color: rgb(223 255 0 / 0.55);
-  background: rgb(223 255 0 / 0.12);
-  color: var(--cs-primary);
-}
-
-.radar-metric-button--active strong {
+  border-color: rgb(223 255 0 / 0.35);
+  background: rgb(223 255 0 / 0.14);
   color: var(--cs-primary);
 }
 
@@ -2961,7 +2954,7 @@ tbody tr:hover {
   }
 
   .radar-metric-button {
-    min-height: 48px;
+    min-height: 40px;
   }
 }
 
