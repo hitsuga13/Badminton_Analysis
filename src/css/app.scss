@@ -1383,7 +1383,7 @@ button:disabled {
 
 .live-title span {
   color: var(--cs-danger);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 800;
 }
 
@@ -1397,7 +1397,7 @@ button:disabled {
 .live-title strong {
   display: block;
   overflow: hidden;
-  max-width: 28vw;
+  max-width: 34vw;
   font-size: 13px;
   line-height: 1.15;
   text-overflow: ellipsis;
@@ -1508,6 +1508,45 @@ button:disabled {
   background: var(--cs-danger);
   color: #fff;
   font-weight: 700;
+}
+
+@media (max-width: 1280px) {
+  .live-topbar {
+    grid-template-columns: minmax(168px, 0.8fr) minmax(0, 1.2fr);
+    gap: 10px;
+    padding: 0 14px;
+  }
+
+  .live-title strong {
+    max-width: 28vw;
+    font-size: 12px;
+  }
+
+  .live-actions {
+    gap: 6px;
+  }
+
+  .live-actions .rally-chip:nth-of-type(4),
+  .live-actions .rally-chip:nth-of-type(5) {
+    display: none;
+  }
+
+  .live-scoreboard {
+    min-width: 132px;
+  }
+
+  .live-scoreboard div {
+    column-gap: 6px;
+    padding: 5px 8px;
+  }
+
+  .live-scoreboard small {
+    display: none;
+  }
+
+  .danger-action {
+    padding: 0 12px;
+  }
 }
 
 .court-split {
