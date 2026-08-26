@@ -5,6 +5,15 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { AuthService } from '../auth/auth.service';
 
+const allowedShotNames = new Set([
+  'Smash',
+  'Drive',
+  'Drop',
+  'Lift',
+  'Netting',
+  'Serve',
+]);
+
 @Injectable()
 export class MatchesService {
   constructor(
@@ -156,7 +165,8 @@ export class MatchesService {
         const rallyNumber = Number(outcome.roundNumber ?? outcome.rallyNumber);
         const rallyShots = notation.filter(
           (shot) =>
-            Number(shot.roundNumber ?? shot.rallyNumber) === rallyNumber,
+            Number(shot.roundNumber ?? shot.rallyNumber) === rallyNumber &&
+            allowedShotNames.has(shot.shot),
         );
         const winner = this.playerCodeToId(
           outcome.winner,
@@ -171,9 +181,7 @@ export class MatchesService {
             outcome: outcome.outcome ?? 'Round ended',
             outcomeType: outcome.endingType ?? null,
             outcomeReason: outcome.endingReason ?? null,
-            shots: Number(
-              outcome.rallies ?? outcome.shots ?? rallyShots.length,
-            ),
+            shots: rallyShots.length,
             durationMs: outcome.durationMs ? Number(outcome.durationMs) : null,
             startedAt: outcome.startedAt ? new Date(outcome.startedAt) : null,
             endedAt: outcome.endedAt ? new Date(outcome.endedAt) : null,
@@ -247,6 +255,10 @@ export class MatchesService {
   }
 
   createShot(matchId: number, data: any) {
+    if (!allowedShotNames.has(data.shot)) {
+      throw new BadRequestException('Unsupported shot type.');
+    }
+
     return this.prismaService.shotRecord.create({
       data: {
         matchId,

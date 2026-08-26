@@ -193,8 +193,6 @@ const shotTypes = [
   { type: 'Drive', category: 'attack' },
   { type: 'Lift', category: 'defense' },
   { type: 'Netting', category: 'neutral' },
-  { type: 'Block', category: 'defense' },
-  { type: 'Net Shot', category: 'neutral' },
   { type: 'Serve', category: 'neutral' },
 ]
 

@@ -595,7 +595,7 @@ function buildShotData(report) {
     ]
   }
 
-  const shotNames = ['Smash', 'Drop', 'Net Shot', 'Drive', 'Lift', 'Serve']
+  const shotNames = ['Smash', 'Drop', 'Netting', 'Drive', 'Lift', 'Serve']
   return shotNames.map((name) => ({
     name,
     playerA: countShots(report?.notation, 'A', name),
@@ -621,8 +621,8 @@ function buildRadarData(report) {
     },
     {
       subject: 'Net Play',
-      playerA: percentageByShot(notation, 'A', 'Net Shot'),
-      playerB: percentageByShot(notation, 'B', 'Net Shot'),
+      playerA: percentageByShot(notation, 'A', 'Netting'),
+      playerB: percentageByShot(notation, 'B', 'Netting'),
     },
     {
       subject: 'Speed',
@@ -969,11 +969,15 @@ function shotCategory(shot) {
     Drive: 'attack',
     Drop: 'neutral',
     Lift: 'defense',
-    'Net Shot': 'neutral',
+    Netting: 'neutral',
     Serve: 'neutral',
   }
 
   return categories[shot] ?? 'neutral'
+}
+
+function isSupportedShot(shot) {
+  return ['Smash', 'Drive', 'Drop', 'Lift', 'Netting', 'Serve'].includes(shot)
 }
 
 function countShots(notation = [], player, shot) {
@@ -1067,7 +1071,9 @@ function buildCsvReport(notationReport) {
     ['Sequence', 'Round Number', 'Player Code', 'Player Name', 'Shot Type', 'Timestamp'],
   ]
 
-  const notationRows = notationReport?.notation ?? []
+  const notationRows = (notationReport?.notation ?? []).filter((action) =>
+    isSupportedShot(action.shot),
+  )
 
   if (notationRows.length === 0) {
     rows.push(['No recorded notation found. Record a Live Match first to export notation data.'])

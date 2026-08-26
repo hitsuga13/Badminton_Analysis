@@ -1388,20 +1388,41 @@ button:disabled {
 }
 
 .live-title em {
-  padding: 0 8px;
+  padding: 0 6px;
   color: var(--cs-muted-foreground);
   font-style: normal;
   font-weight: 400;
 }
 
 .live-title strong {
-  display: block;
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
   overflow: hidden;
   max-width: 34vw;
   font-size: 13px;
   line-height: 1.15;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.live-title small {
+  display: block;
+  margin-top: 2px;
+  color: var(--cs-muted-foreground);
+  font-family: var(--cs-font-mono);
+  font-size: 9px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.live-player-score {
+  display: inline;
+  color: var(--cs-foreground);
+  font-family: var(--cs-font-heading);
+  font-size: inherit;
+  font-weight: 800;
+  text-transform: none;
 }
 
 .rally-chip {
@@ -1450,51 +1471,6 @@ button:disabled {
   border-color: rgb(223 255 0 / 0.4);
 }
 
-.live-scoreboard {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(58px, 1fr));
-  min-height: 44px;
-  overflow: hidden;
-  border: 1px solid var(--cs-border);
-  border-radius: 8px;
-  background: var(--cs-secondary);
-}
-
-.live-scoreboard div {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-rows: 1fr 1fr;
-  align-items: center;
-  column-gap: 8px;
-  min-width: 0;
-  padding: 5px 10px;
-}
-
-.live-scoreboard div + div {
-  border-left: 1px solid var(--cs-border);
-}
-
-.live-scoreboard span,
-.live-scoreboard small {
-  overflow: hidden;
-  color: var(--cs-muted-foreground);
-  font-family: var(--cs-font-mono);
-  font-size: 10px;
-  line-height: 1;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.live-scoreboard strong {
-  grid-row: 1 / 3;
-  grid-column: 2;
-  color: var(--cs-primary);
-  font-family: var(--cs-font-heading);
-  font-size: 26px;
-  line-height: 1;
-}
-
 .danger-action {
   display: inline-flex;
   align-items: center;
@@ -1528,19 +1504,6 @@ button:disabled {
 
   .live-actions .rally-chip:nth-of-type(4),
   .live-actions .rally-chip:nth-of-type(5) {
-    display: none;
-  }
-
-  .live-scoreboard {
-    min-width: 132px;
-  }
-
-  .live-scoreboard div {
-    column-gap: 6px;
-    padding: 5px 8px;
-  }
-
-  .live-scoreboard small {
     display: none;
   }
 
@@ -2790,10 +2753,6 @@ tbody tr:hover {
     display: none;
   }
 
-  .live-scoreboard {
-    grid-template-columns: repeat(2, minmax(48px, 1fr));
-  }
-
   .danger-action {
     padding: 0 12px;
   }
@@ -2901,29 +2860,6 @@ tbody tr:hover {
 
   .live-recorder .rally-chip--round {
     min-width: 40px;
-  }
-
-  .live-recorder .live-scoreboard {
-    flex: 1 1 auto;
-    min-width: 96px;
-  }
-
-  .live-recorder .live-scoreboard div {
-    column-gap: 5px;
-    padding: 4px 6px;
-  }
-
-  .live-recorder .live-scoreboard span,
-  .live-recorder .live-scoreboard small {
-    font-size: 8px;
-  }
-
-  .live-recorder .live-scoreboard small {
-    display: none;
-  }
-
-  .live-recorder .live-scoreboard strong {
-    font-size: clamp(18px, 4.7vw, 24px);
   }
 
   .live-recorder .danger-action {

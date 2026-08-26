@@ -240,7 +240,12 @@
           <div class="recording-dot" />
           <div>
             <span>Live Recording</span>
-            <strong>{{ playerA }} <em>vs</em> {{ playerB }}</strong>
+            <strong>
+              <span class="live-player-score">{{ firstName(playerA) }} {{ scoreA }}</span>
+              <em>vs</em>
+              <span class="live-player-score">{{ firstName(playerB) }} {{ scoreB }}</span>
+            </strong>
+            <small>Sets {{ gamesA }}-{{ gamesB }}</small>
           </div>
         </div>
 
@@ -268,18 +273,6 @@
           <div class="rally-chip rally-chip--turn">
             <span>Current Turn</span>
             <strong>{{ activePlayer || '-' }}</strong>
-          </div>
-          <div class="live-scoreboard">
-            <div>
-              <span>{{ firstName(playerA) }}</span>
-              <strong>{{ scoreA }}</strong>
-              <small>{{ gamesA }} sets</small>
-            </div>
-            <div>
-              <span>{{ firstName(playerB) }}</span>
-              <strong>{{ scoreB }}</strong>
-              <small>{{ gamesB }} sets</small>
-            </div>
           </div>
           <button class="danger-action" type="button" aria-label="End match" @click="endMatch">
             <q-icon name="stop" size="18px" />
@@ -441,8 +434,6 @@ const shotTypes = [
   { type: 'Drop', category: 'neutral' },
   { type: 'Lift', category: 'defense' },
   { type: 'Netting', category: 'neutral' },
-  { type: 'Block', category: 'defense' },
-  { type: 'Net Shot', category: 'neutral' },
   { type: 'Serve', category: 'neutral' },
 ]
 const matchFormatOptions = [
@@ -1264,13 +1255,6 @@ const shotSoundMap = {
   Lift: {
     spacing: 0.045,
     tones: [{ frequency: 300, endFrequency: 700, duration: 0.18, volume: 0.04, type: 'triangle' }],
-  },
-  'Net Shot': {
-    spacing: 0.035,
-    tones: [
-      { frequency: 860, duration: 0.045, volume: 0.035, type: 'sine' },
-      { frequency: 1020, duration: 0.045, volume: 0.03, type: 'sine' },
-    ],
   },
   default: {
     spacing: 0.04,

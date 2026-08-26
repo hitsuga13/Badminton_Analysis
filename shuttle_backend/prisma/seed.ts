@@ -11,9 +11,7 @@ const shotCategory = {
   Drive: 'attack',
   Drop: 'neutral',
   Lift: 'defense',
-  Block: 'defense',
   Netting: 'neutral',
-  'Net Shot': 'neutral',
   Serve: 'neutral',
 };
 
@@ -42,9 +40,7 @@ async function main() {
       { name: 'Drive', category: 'attack' },
       { name: 'Drop', category: 'neutral' },
       { name: 'Lift', category: 'defense' },
-      { name: 'Block', category: 'defense' },
       { name: 'Netting', category: 'neutral' },
-      { name: 'Net Shot', category: 'neutral' },
       { name: 'Serve', category: 'neutral' },
     ],
     skipDuplicates: true,
@@ -121,7 +117,7 @@ async function main() {
   await createRallyWithShots(match.id, 2, lee.id, [
     { playerId: lee.id, shot: 'Serve' },
     { playerId: napi.id, shot: 'Drop' },
-    { playerId: lee.id, shot: 'Net Shot' },
+    { playerId: lee.id, shot: 'Netting' },
     { playerId: napi.id, shot: 'Lift' },
     { playerId: lee.id, shot: 'Smash', result: 'Winner' },
   ]);
@@ -130,7 +126,6 @@ async function main() {
     { playerId: napi.id, shot: 'Serve' },
     { playerId: lee.id, shot: 'Drive' },
     { playerId: napi.id, shot: 'Drive' },
-    { playerId: lee.id, shot: 'Block' },
     { playerId: napi.id, shot: 'Netting' },
     { playerId: lee.id, shot: 'Lift' },
   ]);
@@ -165,7 +160,7 @@ async function main() {
   await createTrainingSession(
     coachUser.id,
     aina.id,
-    'Net Shot',
+    'Netting',
     100,
     84,
     16,
@@ -243,7 +238,8 @@ async function createTrainingSession(
       coachId,
       playerId,
       shot,
-      shotTypeId: (await prisma.shotType.findUnique({ where: { name: shot } }))?.id,
+      shotTypeId: (await prisma.shotType.findUnique({ where: { name: shot } }))
+        ?.id,
       targetReps,
       completedReps,
       successfulReps,
