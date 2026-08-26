@@ -12,9 +12,15 @@ export class MatchesService {
     private readonly authService: AuthService,
   ) {}
 
-  findAll() {
+  async findAll(authorization?: string) {
+    const user = await this.authService.getOptionalUserFromAuthorization(authorization);
+    const where: any = { deletedAt: null };
+    if (user?.role === 'coach' || user?.role === 'admin') {
+      where.recordedByCoachId = user.id;
+    }
+
     return this.prismaService.match.findMany({
-      where: { deletedAt: null },
+      where,
       orderBy: { date: 'desc' },
       include: {
         player1: true,
@@ -222,9 +228,15 @@ export class MatchesService {
     return 'Match Result';
   }
 
-  remove(id: number) {
+  async remove(id: number, authorization?: string) {
+    const user = await this.authService.getOptionalUserFromAuthorization(authorization);
+    const where: any = { id };
+    if (user?.role === 'coach' || user?.role === 'admin') {
+      where.recordedByCoachId = user.id;
+    }
+
     return this.prismaService.match.update({
-      where: { id },
+      where,
       data: { deletedAt: new Date(), status: 'cancelled' },
     });
   }

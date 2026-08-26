@@ -383,6 +383,7 @@ import { computed, onMounted, onUnmounted, ref } from 'vue'
 import PlayerShotPanel from '@/components/PlayerShotPanel.vue'
 import { loadPlayers } from '@/data/players'
 import { loadSettings } from '@/data/settings'
+import { isLoggedIn, scopedStorageKey } from '@/data/auth'
 import { api } from '../boot/axios'
 
 const matchStatus = ref('setup')
@@ -415,9 +416,9 @@ const coinWinner = ref(null)
 const isCoinFlipping = ref(false)
 const activePlayer = ref(null)
 const matchId = ref(null)
-const notationStorageKey = 'akp-shuttletrace:last-match-notation'
+const notationStorageKey = scopedStorageKey('akp-shuttletrace:last-match-notation')
 const legacyHistoryStorageKey = `court${'sense'}:match-history`
-const historyStorageKey = 'akp-shuttletrace:match-history'
+const historyStorageKey = scopedStorageKey('akp-shuttletrace:match-history')
 const remoteSavedIds = new Set()
 let rallyTimerId = null
 let overallTimerId = null
@@ -511,7 +512,7 @@ const coinFlipStatus = computed(() => {
 onMounted(async () => {
   try {
     const response = await api.get('/players')
-    if (Array.isArray(response.data) && response.data.length > 0) {
+    if (Array.isArray(response.data)) {
       availablePlayers.value = response.data
       if (!findAvailablePlayer(selectedPlayerAId.value)) {
         selectedPlayerAId.value = availablePlayers.value[0]?.id ?? null
@@ -523,7 +524,7 @@ onMounted(async () => {
       }
     }
   } catch {
-    availablePlayers.value = loadPlayers()
+    availablePlayers.value = isLoggedIn() ? [] : loadPlayers()
   }
 })
 
@@ -963,7 +964,7 @@ async function generateAiSummary(report) {
 function saveHistoryReport(report) {
   const rawHistory =
     window.localStorage.getItem(historyStorageKey) ??
-    window.localStorage.getItem(legacyHistoryStorageKey)
+    (isLoggedIn() ? null : window.localStorage.getItem(legacyHistoryStorageKey))
   const history = parseHistory(rawHistory)
 
   const nextHistory = [

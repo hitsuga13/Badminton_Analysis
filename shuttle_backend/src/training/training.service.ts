@@ -9,9 +9,15 @@ export class TrainingService {
     private authService: AuthService,
   ) {}
 
-  findAll() {
+  async findAll(authorization?: string) {
+    const user = await this.authService.getOptionalUserFromAuthorization(authorization);
+    const where: any = { deletedAt: null };
+    if (user?.role === 'coach' || user?.role === 'admin') {
+      where.coachId = user.id;
+    }
+
     return this.prisma.trainingSession.findMany({
-      where: { deletedAt: null },
+      where,
       orderBy: { savedAt: 'desc' },
       include: {
         player: true,
@@ -21,9 +27,15 @@ export class TrainingService {
     });
   }
 
-  findByPlayer(playerId: number) {
+  async findByPlayer(playerId: number, authorization?: string) {
+    const user = await this.authService.getOptionalUserFromAuthorization(authorization);
+    const where: any = { playerId, deletedAt: null };
+    if (user?.role === 'coach' || user?.role === 'admin') {
+      where.coachId = user.id;
+    }
+
     return this.prisma.trainingSession.findMany({
-      where: { playerId, deletedAt: null },
+      where,
       include: {
         shotType: true,
         reps: true,
@@ -79,9 +91,15 @@ export class TrainingService {
     });
   }
 
-  remove(id: number) {
+  async remove(id: number, authorization?: string) {
+    const user = await this.authService.getOptionalUserFromAuthorization(authorization);
+    const where: any = { id };
+    if (user?.role === 'coach' || user?.role === 'admin') {
+      where.coachId = user.id;
+    }
+
     return this.prisma.trainingSession.update({
-      where: { id },
+      where,
       data: { deletedAt: new Date() },
     });
   }

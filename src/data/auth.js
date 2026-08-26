@@ -29,3 +29,12 @@ export function clearAuth() {
 export function isLoggedIn() {
   return Boolean(loadAuth()?.token)
 }
+
+export function currentUserId() {
+  return loadAuth()?.user?.id ?? null
+}
+
+export function scopedStorageKey(baseKey) {
+  const userId = currentUserId()
+  return userId ? `${baseKey}:user:${userId}` : baseKey
+}

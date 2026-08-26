@@ -19,8 +19,8 @@ export class MatchesController {
   constructor(private readonly matchesService: MatchesService) {}
 
   @Get()
-  findAll() {
-    return this.matchesService.findAll();
+  findAll(@Headers('authorization') authorization?: string) {
+    return this.matchesService.findAll(authorization);
   }
 
   @Get(':id')
@@ -49,7 +49,7 @@ export class MatchesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.matchesService.remove(Number(id));
+  remove(@Param('id') id: string, @Headers('authorization') authorization?: string) {
+    return this.matchesService.remove(Number(id), authorization);
   }
 }

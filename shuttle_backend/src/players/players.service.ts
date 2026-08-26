@@ -10,9 +10,16 @@ export class PlayersService {
   ) {}
 
   async findAll(authorization?: string) {
-    const coachProfile = await this.getCoachProfile(authorization);
+    const user = await this.authService.getOptionalUserFromAuthorization(authorization);
+    const coachProfile = await this.getCoachProfileForUser(user);
+    const where = coachProfile
+      ? { coachId: coachProfile.id, deletedAt: null }
+      : user?.role === 'player'
+        ? { userId: user.id, deletedAt: null }
+        : { deletedAt: null };
+
     return this.prisma.player.findMany({
-      where: coachProfile ? { coachId: coachProfile.id } : undefined,
+      where,
       include: {
         trainingSessions: {
           include: {
@@ -32,7 +39,8 @@ export class PlayersService {
     weightKg: number;
     form: number[];
   }, authorization?: string) {
-    const coachProfile = await this.getCoachProfile(authorization);
+    const user = await this.authService.getOptionalUserFromAuthorization(authorization);
+    const coachProfile = await this.getCoachProfileForUser(user);
     return this.prisma.player.create({
       data: {
         ...data,
@@ -42,7 +50,7 @@ export class PlayersService {
     });
   }
 
-  update(
+  async update(
     id: number,
     data: Partial<{
       name: string;
@@ -52,14 +60,17 @@ export class PlayersService {
       heightCm: number;
       weightKg: number;
     }>,
+    authorization?: string,
   ) {
+    await this.assertPlayerAccess(id, authorization);
     return this.prisma.player.update({
       where: { id },
       data,
     });
   }
 
-  remove(id: number) {
+  async remove(id: number, authorization?: string) {
+    await this.assertPlayerAccess(id, authorization);
     return this.prisma.$transaction(async (tx) => {
       const relatedMatchCount = await tx.match.count({
         where: {
@@ -81,7 +92,8 @@ export class PlayersService {
     });
   }
 
-  findOne(id: number) {
+  async findOne(id: number, authorization?: string) {
+    await this.assertPlayerAccess(id, authorization);
     return this.prisma.player.findUnique({
       where: { id },
       include: {
@@ -96,6 +108,10 @@ export class PlayersService {
 
   private async getCoachProfile(authorization?: string) {
     const user = await this.authService.getOptionalUserFromAuthorization(authorization);
+    return this.getCoachProfileForUser(user);
+  }
+
+  private async getCoachProfileForUser(user: Awaited<ReturnType<AuthService['getUserFromToken']>> | null) {
     if (!user || (user.role !== 'coach' && user.role !== 'admin')) return null;
 
     return this.prisma.coachProfile.upsert({
@@ -106,5 +122,22 @@ export class PlayersService {
       },
       update: {},
     });
+  }
+
+  private async assertPlayerAccess(id: number, authorization?: string) {
+    const user = await this.authService.getOptionalUserFromAuthorization(authorization);
+    if (!user) return;
+
+    const coachProfile = await this.getCoachProfileForUser(user);
+    const player = await this.prisma.player.findFirst({
+      where: {
+        id,
+        deletedAt: null,
+        ...(coachProfile ? { coachId: coachProfile.id } : { userId: user.id }),
+      },
+      select: { id: true },
+    });
+
+    if (!player) throw new BadRequestException('Player is not available for this user.');
   }
 }

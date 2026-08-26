@@ -1,3 +1,5 @@
+import { isLoggedIn, scopedStorageKey } from './auth'
+
 export const defaultPlayers = [
   {
     id: 1,
@@ -59,21 +61,21 @@ export function clonePlayers(players = defaultPlayers) {
 }
 
 export function loadPlayers() {
-  if (typeof window === 'undefined') return clonePlayers()
+  if (typeof window === 'undefined') return isLoggedIn() ? [] : clonePlayers()
 
   try {
-    const storedPlayers = JSON.parse(window.localStorage.getItem(playersStorageKey) ?? '[]')
+    const storedPlayers = JSON.parse(window.localStorage.getItem(scopedStorageKey(playersStorageKey)) ?? '[]')
     if (Array.isArray(storedPlayers) && storedPlayers.length > 0) {
       return clonePlayers(storedPlayers)
     }
   } catch {
-    return clonePlayers()
+    return isLoggedIn() ? [] : clonePlayers()
   }
 
-  return clonePlayers()
+  return isLoggedIn() ? [] : clonePlayers()
 }
 
 export function savePlayers(players) {
   if (typeof window === 'undefined') return
-  window.localStorage.setItem(playersStorageKey, JSON.stringify(clonePlayers(players)))
+  window.localStorage.setItem(scopedStorageKey(playersStorageKey), JSON.stringify(clonePlayers(players)))
 }

@@ -109,13 +109,15 @@ import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { defaultSettings, applyTheme, loadSettings, saveSettings } from '@/data/settings'
 import { playersStorageKey } from '@/data/players'
+import { scopedStorageKey } from '@/data/auth'
 
 const router = useRouter()
 const settings = ref(loadSettings())
 const saveStatus = ref('Saved')
-const historyStorageKey = 'akp-shuttletrace:match-history'
-const deletedHistoryStorageKey = 'akp-shuttletrace:deleted-match-history'
-const notationStorageKey = 'akp-shuttletrace:last-match-notation'
+const scopedPlayersStorageKey = scopedStorageKey(playersStorageKey)
+const historyStorageKey = scopedStorageKey('akp-shuttletrace:match-history')
+const deletedHistoryStorageKey = scopedStorageKey('akp-shuttletrace:deleted-match-history')
+const notationStorageKey = scopedStorageKey('akp-shuttletrace:last-match-notation')
 
 applyTheme(settings.value.theme)
 
@@ -138,7 +140,7 @@ function exportBackup() {
   const backup = {
     version: 1,
     exportedAt: new Date().toISOString(),
-    players: JSON.parse(window.localStorage.getItem(playersStorageKey) ?? '[]'),
+    players: JSON.parse(window.localStorage.getItem(scopedPlayersStorageKey) ?? '[]'),
     history: JSON.parse(window.localStorage.getItem(historyStorageKey) ?? '[]'),
     deletedHistory: JSON.parse(window.localStorage.getItem(deletedHistoryStorageKey) ?? '[]'),
     settings: settings.value,
@@ -156,7 +158,7 @@ function importBackup(event) {
       if (!window.confirm('Replace current players, match history and settings with this backup?'))
         return
       window.localStorage.setItem(
-        playersStorageKey,
+        scopedPlayersStorageKey,
         JSON.stringify(Array.isArray(backup.players) ? backup.players : []),
       )
       window.localStorage.setItem(

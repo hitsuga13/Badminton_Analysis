@@ -202,6 +202,7 @@ import { CanvasRenderer } from 'echarts/renderers'
 import { use } from 'echarts/core'
 import VChart from 'vue-echarts'
 import { loadSettings } from '@/data/settings'
+import { isLoggedIn, scopedStorageKey } from '@/data/auth'
 
 use([
   BarChart,
@@ -219,9 +220,9 @@ const primaryColor = '#dfff00'
 const secondarySeriesColor = '#71717a'
 const cardColor = '#141416'
 const foregroundColor = '#fafafa'
-const notationStorageKey = 'akp-shuttletrace:last-match-notation'
+const notationStorageKey = scopedStorageKey('akp-shuttletrace:last-match-notation')
 const legacyNotationStorageKey = `court${'sense'}:last-match-notation`
-const historyStorageKey = 'akp-shuttletrace:match-history'
+const historyStorageKey = scopedStorageKey('akp-shuttletrace:match-history')
 const legacyHistoryStorageKey = `court${'sense'}:match-history`
 const hoveredRadarMetric = ref(null)
 const notationReport = ref(null)
@@ -710,7 +711,7 @@ function loadDashboardMatches() {
   const history = normalizeReports(
     parseStoredJson(
       window.localStorage.getItem(historyStorageKey) ??
-        window.localStorage.getItem(legacyHistoryStorageKey),
+        (isLoggedIn() ? null : window.localStorage.getItem(legacyHistoryStorageKey)),
       [],
     ),
   )
@@ -758,7 +759,7 @@ function getStoredNotationReport() {
 
   const rawReport =
     window.localStorage.getItem(notationStorageKey) ??
-    window.localStorage.getItem(legacyNotationStorageKey)
+    (isLoggedIn() ? null : window.localStorage.getItem(legacyNotationStorageKey))
   return parseStoredJson(rawReport, null)
 }
 

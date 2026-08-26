@@ -6,13 +6,13 @@ export class TrainingController {
   constructor(private readonly trainingService: TrainingService) {}
 
   @Get()
-  findAll() {
-    return this.trainingService.findAll();
+  findAll(@Headers('authorization') authorization?: string) {
+    return this.trainingService.findAll(authorization);
   }
 
   @Get('player/:playerId')
-  findByPlayer(@Param('playerId') playerId: string) {
-    return this.trainingService.findByPlayer(Number(playerId));
+  findByPlayer(@Param('playerId') playerId: string, @Headers('authorization') authorization?: string) {
+    return this.trainingService.findByPlayer(Number(playerId), authorization);
   }
 
   @Post()
@@ -21,7 +21,7 @@ export class TrainingController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.trainingService.remove(Number(id));
+  remove(@Param('id') id: string, @Headers('authorization') authorization?: string) {
+    return this.trainingService.remove(Number(id), authorization);
   }
 }

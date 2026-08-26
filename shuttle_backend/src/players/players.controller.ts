@@ -20,8 +20,8 @@ export class PlayersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.playersService.findOne(Number(id));
+  findOne(@Param('id') id: string, @Headers('authorization') authorization?: string) {
+    return this.playersService.findOne(Number(id), authorization);
   }
 
   @Post()
@@ -30,13 +30,13 @@ export class PlayersController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() body) {
-    return this.playersService.update(Number(id), body);
+  update(@Param('id') id: string, @Body() body, @Headers('authorization') authorization?: string) {
+    return this.playersService.update(Number(id), body, authorization);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    await this.playersService.remove(Number(id));
+  async remove(@Param('id') id: string, @Headers('authorization') authorization?: string) {
+    await this.playersService.remove(Number(id), authorization);
     return { deleted: true, id: Number(id) };
   }
 }

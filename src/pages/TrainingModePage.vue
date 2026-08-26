@@ -179,10 +179,11 @@
 import { computed, onMounted, ref } from 'vue'
 import { loadPlayers, savePlayers } from '@/data/players'
 import { loadSettings } from '@/data/settings'
+import { isLoggedIn, scopedStorageKey } from '@/data/auth'
 import { api } from '../boot/axios'
 
-const historyStorageKey = 'akp-shuttletrace:match-history'
-const notationStorageKey = 'akp-shuttletrace:last-match-notation'
+const historyStorageKey = scopedStorageKey('akp-shuttletrace:match-history')
+const notationStorageKey = scopedStorageKey('akp-shuttletrace:last-match-notation')
 const settings = loadSettings()
 const availablePlayers = ref(loadPlayers())
 
@@ -238,12 +239,12 @@ const trainingStatusLabel = computed(() => {
 onMounted(async () => {
   try {
     const response = await api.get('/players')
-    if (Array.isArray(response.data) && response.data.length > 0) {
+    if (Array.isArray(response.data)) {
       availablePlayers.value = response.data
       if (!selectedPlayer.value) selectedPlayerId.value = availablePlayers.value[0]?.id ?? null
     }
   } catch {
-    availablePlayers.value = loadPlayers()
+    availablePlayers.value = isLoggedIn() ? [] : loadPlayers()
   }
 })
 

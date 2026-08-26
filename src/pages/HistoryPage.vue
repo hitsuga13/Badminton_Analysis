@@ -192,13 +192,14 @@
 
 <script setup>
 import { computed, onMounted, ref } from 'vue'
+import { isLoggedIn, scopedStorageKey } from '@/data/auth'
 import { api } from '../boot/axios'
 
-const historyStorageKey = 'akp-shuttletrace:match-history'
+const historyStorageKey = scopedStorageKey('akp-shuttletrace:match-history')
 const legacyHistoryStorageKey = `court${'sense'}:match-history`
-const deletedHistoryStorageKey = 'akp-shuttletrace:deleted-match-history'
+const deletedHistoryStorageKey = scopedStorageKey('akp-shuttletrace:deleted-match-history')
 const legacyDeletedHistoryStorageKey = `court${'sense'}:deleted-match-history`
-const notationStorageKey = 'akp-shuttletrace:last-match-notation'
+const notationStorageKey = scopedStorageKey('akp-shuttletrace:last-match-notation')
 const history = ref([])
 const deletedHistory = ref([])
 const selectedMatch = ref(null)
@@ -260,14 +261,14 @@ function loadLocalHistory() {
 
   const storedHistory = parseStoredJson(
     window.localStorage.getItem(historyStorageKey) ??
-      window.localStorage.getItem(legacyHistoryStorageKey),
+      (isLoggedIn() ? null : window.localStorage.getItem(legacyHistoryStorageKey)),
     [],
   )
   if (storedHistory.length > 0) return normalizeHistory(storedHistory)
 
   const latestReport = parseStoredJson(
     window.localStorage.getItem(notationStorageKey) ??
-      window.localStorage.getItem(`court${'sense'}:last-match-notation`),
+      (isLoggedIn() ? null : window.localStorage.getItem(`court${'sense'}:last-match-notation`)),
     null,
   )
   if (!latestReport?.match) return []
@@ -386,7 +387,7 @@ function loadDeletedHistory() {
   return normalizeHistory(
     parseStoredJson(
       window.localStorage.getItem(deletedHistoryStorageKey) ??
-        window.localStorage.getItem(legacyDeletedHistoryStorageKey),
+        (isLoggedIn() ? null : window.localStorage.getItem(legacyDeletedHistoryStorageKey)),
       [],
     ),
   )
