@@ -139,7 +139,6 @@
               @click="selectRadarMetric(metric)"
             >
               <span>{{ metric.subject }}</span>
-              <strong>{{ metric.playerA }} / {{ metric.playerB }}</strong>
             </button>
           </div>
         </article>
@@ -386,8 +385,8 @@ const performanceRadarOptions = computed(() => ({
     show: false,
   },
   radar: {
-    center: ['50%', '46%'],
-    radius: '58%',
+    center: ['50%', '48%'],
+    radius: '50%',
     splitNumber: 4,
     indicator: radarData.value.map((item) => ({
       name: item.subject,
@@ -396,9 +395,9 @@ const performanceRadarOptions = computed(() => ({
     axisName: {
       color: chartTextColor,
       fontFamily: 'Inter',
-      fontSize: 13,
+      fontSize: 12,
       fontWeight: 700,
-      padding: [3, 5],
+      padding: [4, 8],
     },
     axisLine: {
       lineStyle: {
